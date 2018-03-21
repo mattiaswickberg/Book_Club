@@ -1,0 +1,23 @@
+{
+  "name": "ssis_book_club",
+  "version": "1.0.0",
+  "description": "A website where SSIS students and teachers can discuss, reflect and share thought about books",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattiaswickberg/Mjukvaruprojekt_temporary.git"
+  },
+  "author": "Mattias Wickberg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattiaswickberg/Mjukvaruprojekt_temporary/issues"
+  },
+  "homepage": "https://github.com/mattiaswickberg/Mjukvaruprojekt_temporary#readme"
+}
