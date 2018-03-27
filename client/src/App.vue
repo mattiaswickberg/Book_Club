@@ -3,7 +3,7 @@
     <img src="./assets/logo.png">
     <div>
       <h1>
-        SSIS Book Club
+        SSIS Bokcirkel
       </h1>
     </div>
     <router-view/>
