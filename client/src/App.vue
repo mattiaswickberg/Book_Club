@@ -1,6 +1,11 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
+    <div>
+      <h1>
+        SSIS Book Club
+      </h1>
+    </div>
     <router-view/>
   </div>
 </template>
