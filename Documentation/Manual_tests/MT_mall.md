@@ -10,7 +10,11 @@ Test för krav:
 
 ## Testprocedur
 
+## Förberedelser
+Användare på applikationens startsida
+Server igång
 
+## Förväntat utfall
 ## Testat
 Datum: 
 Utfall: 
