@@ -1,30 +1,32 @@
+// Take search string and make https request to KB's API
 let getBooksFromKb = function (searchString) {
-  return new Promise(function (resolve, reject) { 
-  const axios = require('axios')
-  let books = {
-    'list': [],
-    'count': 0
-  }
+  return new Promise(function (resolve, reject) {
+    const axios = require('axios')
+    let books = { // Initialise list to be returned after request
+      'list': [],
+      'count': 0
+    }
 
-  if (searchString.length === 0) {
-    resolve(books)
-  } else if (searchString.includes(' ')) {
-    searchString = searchString.replace(' ', '+')
-  }
+    if (searchString.length === 0) {
+      resolve(books) // return empty search result is search string is empty
+    } else if (searchString.includes(' ')) { // replace any spaces in search string with pluses
+      searchString = searchString.replace(' ', '+')
+    }
 
-  const url = 'https://libris.kb.se/xsearch?query=' + searchString + '&format=json&n=100'
+    // Construct url for request
+    const url = 'https://libris.kb.se/xsearch?query=' + searchString + '&format=json&n=100'
 
-  axios
+    axios
   .get(url)
   .then(response => {
     if (response.data.xsearch !== undefined) {
-      var json = response.data.xsearch
-    books.count = json.records
-    json.list.forEach(element => {
-      books.list.push(element)
-    })
+      var json = response.data.xsearch // Get data from response
+      books.count = json.records // Save search count into return object
+      json.list.forEach(element => {
+        books.list.push(element) // Save resulting books into return array
+      })
     }
-    resolve(books)
+    resolve(books) // Return result of search
   })
   .catch(error => {
     reject(error)
