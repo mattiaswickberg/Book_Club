@@ -71,8 +71,11 @@ module.exports = {
         ]
       },
       {
-        test: /\.s[a|c]ss$/,
-        loader: 'style!css!sass'
+        test: /\.(s*)css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader']
       }
     ]
   },
@@ -87,10 +90,5 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  },
-  vue: {
-    loaders: {
-      scss: 'style!css!sass'
-    }
   }
 }
