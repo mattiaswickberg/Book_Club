@@ -5,35 +5,32 @@
           <img id='logo' src="./assets/logo.png">
     </b-col>
     <b-col cols='9' id='topBar'>
-      <h1>This is the top bar</h1>
+      <div id='title'>
+              <h1>SSIS Bokcirkel</h1>
+      </div>
+
     </b-col>
     <b-col>
-
+      <div id='userArea' v-if='loggedIn'>User info</div>
+      <div id='loginForm' v-else>Login Field</div>
     </b-col>
   </b-row>
   <b-row id='middle'>
     <b-col>
-      <h1>Left sidebar</h1>
     </b-col>
     <b-col cols='9'>
-      <h1>Main area</h1>
        <div id='app'>
-
-    <div>
-      <h1>
-        SSIS Bokcirkel
-      </h1>
-    </div>
     <router-view/>
   </div>
     </b-col>
     <b-col>
-      <h1>Right sidebar</h1>
     </b-col>
   </b-row>
   <b-row id='footer'>
     <b-col cols='12'>
-          <h1>This is the footer</h1>
+      <div id='author'>
+          <h5>Site author: Mattias Wickberg</h5>
+      </div>
     </b-col>
   </b-row>
 </b-container>
@@ -41,11 +38,16 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data: {
+    loggedIn: false
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+
+$fonts: 'Avenir', Helvetica, Arial, sans-serif;
 
 $darkPink: #c40064;
 $lightPink: #fdbbd9;
@@ -63,24 +65,36 @@ $white: #ffffff;
 $grey: #f5f3ee;
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: $fonts;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $grey;
-  margin-top: 5px;
+  background-color: $grey;
+  margin-top: 0px;
+  min-height: 40rem;
+  padding: 5px;
 }
 
 #logo {
   height: 100px;
 }
 
+#header {
+    background-color: $lightPurple;
+    padding: 5px;
+}
+
 #topBar {
-  background-color: $lightPurple;
   height: 100px;
+  text-align: center;
+}
+
+#title {
+  margin-top: 20px;
 }
 
 #middle {
+    background-color: $white; 
 }
 
 #footer {
@@ -89,6 +103,14 @@ $grey: #f5f3ee;
   width: 100%;
   height: 50px;
   text-align: center;
-  background-color: $lightBlue;
+  background-color: $lightGreen;
+}
+
+#author {
+  padding: 10px;
+}
+
+h1 {
+  font-family: $fonts;
 }
 </style>
