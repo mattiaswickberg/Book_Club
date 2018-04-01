@@ -18,6 +18,9 @@ app.get('/', function (req, res) {
 app.post('/createaccount', function (req, res) {
   console.log('Recieved data')
   console.log(req.body)
+  // create user based on information and save to database
+
+  // implement csrf!
 })
 
 app.listen(3000, function () {
