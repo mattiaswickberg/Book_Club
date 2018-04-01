@@ -32,7 +32,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     disableHostCheck: true,
-    //public: 'https://mattiaswickberg.se',
+    // public: 'https://mattiaswickberg.se',
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,

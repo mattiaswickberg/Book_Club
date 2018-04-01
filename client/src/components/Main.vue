@@ -1,7 +1,20 @@
 <template>
 
 <b-container fluid>
-<div class='main'>
+  <div class='mainLoggedIn' v-if='loggedIn'>
+    <b-row>
+
+    </b-row>
+    <b-row>
+
+    </b-row>
+    <b-row>
+
+    </b-row>
+
+  </div>
+
+<div class='mainNotLoggedIn' v-else>
   <b-row>
     <b-col>
           <h1>Välkommen till SSIS bokcirkel!</h1>
@@ -18,10 +31,12 @@
     </b-col>
     <b-col></b-col>
   </b-row>
-  <b-row>
+  <b-row id='createAccountDiv'>
     <b-col></b-col>
     <b-col cols = '3'>
-      <div id='createAccount'>Skapa med mail och lösenord.</div>
+      <router-link to="createaccount">
+        <div id='createAccount'>Skapa med mail och lösenord.</div>
+        </router-link>
 </b-col>
     <b-col cols='3'>
           <div id='googleAccount'><p>Skapa konto med ditt googlekonto</p>
@@ -42,7 +57,9 @@
 export default {
   name: 'Main',
   data () {
-    return {}
+    return {
+      loggedIn: false
+    }
   }
 }
 </script>
@@ -50,11 +67,19 @@ export default {
 <style lang="scss" scoped>
 
 #createAccount {
+  width: 100%;
+  height: 100%;
   float: left;
+  background-color: darkkhaki;
+  padding: 10px;
 }
 
 #googleAccount {
+  width: 100%;
+  height: 100%;
   float: right;
+  background-color: darkkhaki;
+  padding: 10px;
 }
 
 #googleLogo {

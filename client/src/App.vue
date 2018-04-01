@@ -39,8 +39,10 @@
 <script>
 export default {
   name: 'App',
-  data: {
-    loggedIn: false
+  data () {
+    return {
+          loggedIn: false
+    }
   }
 }
 </script>
@@ -66,10 +68,11 @@ $grey: #f5f3ee;
 
 #app {
   font-family: $fonts;
+  color: $black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: $grey;
+  background-color: $white;
   margin-top: 0px;
   min-height: 40rem;
   padding: 5px;
@@ -80,21 +83,25 @@ $grey: #f5f3ee;
 }
 
 #header {
-    background-color: $lightPurple;
+    background-color: $darkPink;
     padding: 5px;
+    color: $white;
 }
 
 #topBar {
   height: 100px;
   text-align: center;
+  color: $white;
 }
 
 #title {
   margin-top: 20px;
+  color: $white;
 }
 
 #middle {
     background-color: $white; 
+    color: $black;
 }
 
 #footer {
@@ -103,14 +110,21 @@ $grey: #f5f3ee;
   width: 100%;
   height: 50px;
   text-align: center;
-  background-color: $lightGreen;
+  background-color:$darkPink;
+  color: $white;
 }
 
 #author {
   padding: 10px;
+  color: $white;
 }
 
 h1 {
   font-family: $fonts;
+}
+
+b-row {
+  padding: 10px;
+  margin: 10px;
 }
 </style>
