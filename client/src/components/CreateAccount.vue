@@ -2,42 +2,59 @@
 <div>
     <p>We all float down here</p>
 
-  <form id='createAccount' action='/createaccount' method='post'>
+  <form id='createAccount' @submit.prevent="sendForm">
+    <div class='form-group'>
+      <label for='username'>Användarnamn</label>
+      <input type='string' v-model="user.username" class='form-control' placeholder='Det namn som visas i applikationen'>
+    </div>
       <div class='form-group'>
-        <label for='inputEmail'>Mailadress</label>
-        <input type='email' class='form-control' ref='inputEmail' placeholder='Fyll i din mailadress'>
+        <label for='main'>Mailadress</label>
+        <input type='email' v-model='user.mail' class='form-control' placeholder='Fyll i din mailadress'>
       </div>
       <div class='form-group'>
-        <label for='inputPassword1'>Password</label>
-        <input type='password' class='form-control' ref='inputPassword1' placeholder='Lösenord' required>
-      </div>
-      <div class='form-group'>
-        <label for='inputPassword2'>Repeat password</label>
-        <input v-on:change='checkPassword' type='password' class='form-control' ref='inputPassword2' placeholder='Upprepa lösenord' required>
+        <label for='password'>Password</label>
+        <vue-password v-model="user.password"
+                    classes="input"
+                    :user-inputs="[user.email]"
+      >
+      </vue-password>
+        <!-- 
+        <input type='password' v-model='user.password' class='form-control' placeholder='Lösenord' required> -->
       </div>
       <button type='submit' class='btn btn-primary'>Skapa konto</button>
   </form>
-
 </div>
 </template>
 
 <script>
+import {HTTP} from '@/services/Api'
+import VuePassword from 'vue-password'
 export default {
-  name: 'CreateAccount', 
-  data () {
-    return {}
+  components: {
+    VuePassword
   },
+  data () {
+    return {
+      user: {
+      username: '',
+      password: '',
+      mail: ''
+      }
+      }
+    },
   methods: {
-      checkPassword: function () {
-        var password1 = this.$refs.inputPassword1
-        var password2 = this.$refs.inputPassword2
-        
-        if(password1.value !== password2.value) {
+/*       checkPassword: function () {
+                
+        if(password1 !== password2) {
           password2.setCustomValidity('Passwords don\'t match')
+        } else {
+          password2.setCustomValidity('')
         }
-    }, 
-
-
+    } ,
+ */     sendForm: function () {
+      console.log('Adding user')
+      return HTTP.post('createaccount', this.user)
+    }
   }
 }
 </script>
