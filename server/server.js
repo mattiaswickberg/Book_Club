@@ -25,17 +25,44 @@ app.use(function (req, res, next) {
   return next()
 })
 
-app.get('/', function (req, res) {
-  res.send('We all float down here')
+// Set up sessions ----------------------------------------------------
+
+app.use(session({
+  store: new MongoStore({
+    secret: process.env.COOKIE_SECRET,
+    url: process.env.DB_ADDRESS
+  })
+}))
+
+// CSRF handling
+/* let csurf = require('csurf')
+
+app.use(function (req, res, next) {
+  res.locals._csrfToken = req.csrfToken()
+  next()
+})
+app.use(function (err, req, res, next) {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
+  console.log(err)
+  res.status(403)
+  res.render('403')
+})
+ */
+// Flash messages
+app.use(function (req, res, next) {
+  res.locals.flash = req.session.flash
+  delete req.session.flash
+  next()
 })
 
-app.post('/createaccount', function (req, res) {
-  console.log('Recieved data')
-  console.log(req.body)
-  // create user based on information and save to database
-
-  // implement csrf!
+app.use(function (req, res, next) {
+  if (req) { res.locals.user = req.session.userName }
+  next()
 })
+
+// Import routes
+
+require('./routes/mainRoutes')(app)
 
 app.listen(3000, function () {
   console.log('Server started on localhost:3000, press Crtl-C to terminate')
