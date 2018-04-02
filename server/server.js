@@ -7,7 +7,6 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
-
 const app = express()
 
 // Middleware
@@ -18,6 +17,20 @@ app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
 
 // Start database server
 require('./lib/db').initialize()
+
+// Initialize authentication
+const auth = require('./lib/auth')(app, {
+  providers: {
+    google: {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_SECRET
+    }
+  },
+  successRedirect: '/account',
+  failureRedirect: '/unauthorised'
+})
+//auth.init()
+//auth.registerRoutes()
 
 // Set CSP
 app.use(function (req, res, next) {

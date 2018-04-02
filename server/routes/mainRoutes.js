@@ -7,6 +7,7 @@ module.exports = function (app) {
     res.send('We all float down here')
   })
 
+  // Account creation and login routes
   app.post('/createaccount', function (req, res) {
     console.log('Recieved data')
     console.log(req.body)
@@ -40,6 +41,21 @@ module.exports = function (app) {
       }
     })
   })
+
+  // Authentication with google
+
+  app.get('/account', function (req, res) {
+    if (!req.user) return res.redirect(303, '/unauthorised')
+    res.render('account', {
+      username: req.user.name
+    })
+  })
+
+  // Usual routes
+  app.get('/unauthorised',
+function (req, res) {
+  res.status('403').render('unauthorised')
+})
 
   app.use(function (req, res, next) {
     res.status(404)
