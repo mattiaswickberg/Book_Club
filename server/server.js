@@ -6,9 +6,10 @@ const cors = require('cors')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const path = require('path')
 const MongoStore = require('connect-mongo')(session)
-const app = express()
 const mongoose = require('mongoose')
+const app = express()
 
 // Middleware
 app.use(morgan('combined'))
@@ -16,6 +17,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
 
+app.use(express.static(path.join(__dirname, '../client/dist')))
 // Start database server
 require('./lib/db').initialize()
 
