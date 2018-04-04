@@ -1,5 +1,6 @@
 <template>
 <b-container fluid>
+  <div id='body'>
   <b-row id='header'>
     <b-col>
           <img id='logo' src="./assets/logo.png">
@@ -33,6 +34,7 @@
       </div>
     </b-col>
   </b-row>
+  </div>
 </b-container>
 </template>
 
@@ -67,6 +69,9 @@ $white: #ffffff;
 $grey: #f5f3ee;
 
 #app {
+  background-image: url('./assets/book_circle.jpeg');
+  background-size: 100%;
+  background-repeat: no-repeat;
   font-family: $fonts;
   color: $black;
   -webkit-font-smoothing: antialiased;
@@ -89,7 +94,7 @@ $grey: #f5f3ee;
 }
 
 #topBar {
-  height: 100px;
+  height: auto;
   text-align: center;
   color: $white;
 }

@@ -18,6 +18,7 @@ app.use(cors())
 app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
 
 app.use(express.static(path.join(__dirname, '../client/dist')))
+
 // Start database server
 require('./lib/db').initialize()
 
@@ -32,7 +33,7 @@ const auth = require('./lib/auth')(app, {
       clientSecret: process.env.GOOGLE_SECRET
     }
   },
-  successRedirect: '/account',
+  successRedirect: '/',
   failureRedirect: '/unauthorised'
 })
 auth.init()

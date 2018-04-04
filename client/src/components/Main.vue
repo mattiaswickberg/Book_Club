@@ -1,7 +1,7 @@
 <template>
 
 <b-container fluid>
-  <div class='mainLoggedIn' v-if='loggedIn'>
+  <div id='mainLoggedIn' v-if='loggedIn'>
     <b-row>
 
     </b-row>
@@ -14,41 +14,35 @@
 
   </div>
 
-<div class='mainNotLoggedIn' v-else>
+<div id='mainNotLoggedIn' v-else>
   <b-row>
     <b-col>
-          <h1>Välkommen till SSIS bokcirkel!</h1>
     </b-col>
-  </b-row>
-  <b-row>
-    <b-col></b-col>
-    <b-col cols='8'>
-      <p>
+    <b-col cols='4'>
+      <div id='welcome'>
+          <h1>Välkommen till SSIS bokcirkel!</h1>
+          <p>
       Här kommer du att kunna lägga till böcker du läst, eller vill läsa, och diskutera, 
       kommentera och rekommendera böcker till andra elever på skolan. 
-    </p>
-    <p>För att skapa ett konto, välj ett av nedanstående alternativ.</p>
-    </b-col>
-    <b-col></b-col>
-  </b-row>
-  <b-row id='createAccountDiv'>
-    <b-col></b-col>
-    <b-col cols = '3'>
+      </p>
+      <p>För att skapa ett konto, välj ett av nedanstående alternativ.</p>
       <router-link to="createaccount">
-        <div id='createAccount'>Skapa med mail och lösenord.</div>
-        </router-link>
-</b-col>
-    <b-col cols='3'>
+        <b-button id='loginButton' :size='lg' :variant='success'>
+          Skapa med mail och lösenord.
+        </b-button> </router-link>
+            <div id='createAccountDiv'> 
+            </div>
+            <div>
       <a href='http://localhost:3000/auth/google'>
-        <div id='googleAccount'><p>Skapa konto med ditt googlekonto</p>
-          <a href=''><img id='googleLogo' src='../assets/google.jpg'></a></div>
+      <b-button id='loginButton' :size="lg" :variant="primary">Logga in med ditt googlekonto
+            <img id='googleLogo' src='../assets/google.jpg'>
+            </b-button>
       </a>
+      <p>Eller logga in uppe till höger</p>
+      <p> </p>
+      </div>
+      </div>
     </b-col>
-    <b-col></b-col>
-  </b-row>
-  <b-row>
-    <b-col></b-col>
-    <b-col><p>Eller logga in om du redan har ett konto.</p></b-col>
     <b-col></b-col>
   </b-row>
   </div>
@@ -68,11 +62,26 @@ export default {
 
 <style lang="scss" scoped>
 
+#welcome {
+  background-color: hsla(279, 56%, 31%, 0.75);
+  color: white;
+  font-size: 120%;
+}
+
+#loginButton {
+  background-color: #c2eee7;
+  color: black;
+  width: 100%;  
+  font-size: 130%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
 #createAccount {
   width: 100%;
   height: 100%;
   float: left;
-  background-color: darkkhaki;
   padding: 10px;
 }
 
@@ -80,11 +89,10 @@ export default {
   width: 100%;
   height: 100%;
   float: right;
-  background-color: darkkhaki;
   padding: 10px;
 }
 
 #googleLogo {
-  max-height: 150px;
+  max-height: 50px;
 }
 </style>
