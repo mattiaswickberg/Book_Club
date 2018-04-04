@@ -3,9 +3,9 @@ let User = require('../models/User')
 let createAccount = require('../lib/createAccount')
 // Main routes
 module.exports = function (app) {
-  app.get('/', function (req, res) {
+/*   app.get('/', function (req, res) {
     res.send('We all float down here')
-  })
+  } )*/
 
   // Account creation and login routes
   app.post('/createaccount', function (req, res) {
