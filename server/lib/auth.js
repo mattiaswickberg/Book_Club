@@ -1,6 +1,6 @@
 let User = require('../models/User')
 let passport = require('passport')
-let GoogleStrategy = require('passport-google-oauth').Strategy
+let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
 passport.serializeUser(function (user, done) {
   done(null, user._id)
@@ -14,7 +14,6 @@ passport.deserializeUser(function (id, done) {
 })
 
 module.exports = function (app, options) {
-
   if (!options.successRedirect) {
     options.successRedirect = '/account'
   }
@@ -25,7 +24,6 @@ module.exports = function (app, options) {
 
   return {
     init: function () {
-
       // Configure strategy
       passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,

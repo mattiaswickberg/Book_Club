@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const app = express()
+const mongoose = require('mongoose')
 
 // Middleware
 app.use(morgan('combined'))
@@ -19,6 +20,9 @@ app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
 require('./lib/db').initialize()
 
 // Initialize authentication
+
+require('./lib/auth')
+
 const auth = require('./lib/auth')(app, {
   providers: {
     google: {
@@ -29,8 +33,8 @@ const auth = require('./lib/auth')(app, {
   successRedirect: '/account',
   failureRedirect: '/unauthorised'
 })
-//auth.init()
-//auth.registerRoutes()
+auth.init()
+auth.registerRoutes()
 
 // Set CSP
 app.use(function (req, res, next) {
@@ -41,12 +45,11 @@ app.use(function (req, res, next) {
 // Set up sessions ----------------------------------------------------
 
 app.use(session({
-  store: new MongoStore({
-    secret: process.env.COOKIE_SECRET,
-    url: process.env.DB_ADDRESS
-  })
+  secret: process.env.COOKIE_SECRET,
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+  resave: false,
+  saveUninitialized: false
 }))
-
 // CSRF handling
 /* let csurf = require('csurf')
 

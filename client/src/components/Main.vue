@@ -39,8 +39,10 @@
         </router-link>
 </b-col>
     <b-col cols='3'>
-          <div id='googleAccount'><p>Skapa konto med ditt googlekonto</p>
+      <a href='http://localhost:3000/auth/google'>
+        <div id='googleAccount'><p>Skapa konto med ditt googlekonto</p>
           <a href=''><img id='googleLogo' src='../assets/google.jpg'></a></div>
+      </a>
     </b-col>
     <b-col></b-col>
   </b-row>
