@@ -18,7 +18,7 @@
   <b-row>
     <b-col>
     </b-col>
-    <b-col cols='4'>
+    <b-col cols='5'>
       <div id='welcome'>
           <h1>Välkommen till SSIS bokcirkel!</h1>
           <p>
@@ -72,7 +72,7 @@ export default {
   background-color: #c2eee7;
   color: black;
   width: 100%;  
-  font-size: 130%;
+  font-size: 120%;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
