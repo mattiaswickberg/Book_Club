@@ -15,11 +15,11 @@ passport.deserializeUser(function (id, done) {
 
 module.exports = function (app, options) {
   if (!options.successRedirect) {
-    options.successRedirect = '/account'
+    options.successRedirect = '/'
   }
 
   if (!options.failureRedirect) {
-    options.failureRedirect = '/login'
+    options.failureRedirect = '/'
   }
 
   return {
@@ -28,7 +28,7 @@ module.exports = function (app, options) {
       passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: '/auth/google/callback'
+        callbackURL: 'http://localhost:3000/auth/google/callback'
       },
     function (token, tokenSecret, profile, done) {
       let authId = 'google:' + profile.id
@@ -38,10 +38,10 @@ module.exports = function (app, options) {
 
         user = new User({
           authId: authId,
-          username: profile.displayName,
-          joined: Date.now(),
-          role: 'student'
+          username: profile.displayName
         })
+        console.log(user)
+
         user.save(function (err) {
           if (err) return done(err, null)
           done(null, user)

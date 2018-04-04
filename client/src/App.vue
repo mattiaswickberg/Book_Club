@@ -13,7 +13,7 @@
     </b-col>
     <b-col>
       <div id='userArea' v-if='loggedIn'>User info</div>
-      <div id='loginForm' v-else>Login Field</div>
+      <div id='loginForm' v-else><a href="/auth/google">Sign In with Google</a></div>
     </b-col>
   </b-row>
   <b-row id='middle'>

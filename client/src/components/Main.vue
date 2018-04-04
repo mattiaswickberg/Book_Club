@@ -76,6 +76,7 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
+  word-wrap: normal;
 }
 
 #createAccount {

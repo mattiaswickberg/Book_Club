@@ -7,7 +7,6 @@ let UserSchema = new mongoose.Schema({
   mail: String,
   joined: {type: Date, default: Date.now},
   bookCases: Array,
-  googleSignIn: {type: Boolean, default: false},
   signedIn: Array,
   role: {type: String, default: 'student'}
 })

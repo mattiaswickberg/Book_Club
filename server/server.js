@@ -33,7 +33,7 @@ const auth = require('./lib/auth')(app, {
       clientSecret: process.env.GOOGLE_SECRET
     }
   },
-  successRedirect: '/',
+  successRedirect: 'http://localhost:3000',
   failureRedirect: '/unauthorised'
 })
 auth.init()

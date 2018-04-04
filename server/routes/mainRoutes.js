@@ -19,16 +19,16 @@ module.exports = function (app) {
           intro: 'Username taken',
           message: 'The username you wanted is unfortunately not available'
         }
-        res.redirect(303, 'createaccount')
+        res.redirect(303, '/')
       } else {
         User.find({mail: req.body.mail}).then(function (data) {
           if (data.length > 0) {
             req.session.flash = {
               type: 'danger',
               intro: 'mail already used',
-              message: 'There is already an accoutn with that email address'
+              message: 'There is already an account with that email address'
             }
-            res.redirect(303, 'createaccount')
+            res.redirect(303, '/')
           } else {
             createAccount(req.body)
             req.session.flash = {
@@ -54,22 +54,22 @@ module.exports = function (app) {
   // Usual routes
   app.get('/unauthorised',
 function (req, res) {
-  res.status('403').render('unauthorised')
+  res.status('403').redirect('/')
 })
 
   app.use(function (req, res, next) {
     res.status(404)
-    res.render('403')
+    res.redirect('/')
   })
 
   app.use(function (req, res, next) {
     res.status(404)
-    res.render('404')
+    res.redirect('/')
   })
 
   app.use(function (err, req, res, next) {
     console.error(err.stack)
     res.status(500)
-    res.render('500')
+    res.redirect('/')
   })
 }

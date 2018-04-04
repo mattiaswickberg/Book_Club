@@ -1,7 +1,5 @@
 <template>
 <div>
-    <p>We all float down here</p>
-
   <form id='createAccount' @submit.prevent="sendForm">
     <div class='form-group'>
       <label for='username'>Användarnamn</label>
@@ -61,4 +59,8 @@ export default {
 
 <style lang="scss" scoped>
 
+#createAccount {
+  background-color: hsla(279, 56%, 31%, 0.75);
+  color: white;
+}
 </style>
