@@ -18,7 +18,7 @@
   <b-row>
     <b-col>
     </b-col>
-    <b-col cols='5'>
+    <b-col sm='5'>
       <div id='welcome'>
           <h1>Välkommen till SSIS bokcirkel!</h1>
           <p>
