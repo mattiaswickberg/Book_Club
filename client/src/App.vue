@@ -79,8 +79,8 @@ $grey: #f5f3ee;
   text-align: center;
   background-color: $white;
   margin-top: 0px;
-  min-height: 40rem;
-  padding: 5px;
+  min-height: 100%;
+  padding-bottom: 50px;
 }
 
 #logo {
@@ -110,13 +110,15 @@ $grey: #f5f3ee;
 }
 
 #footer {
-  position: relative;
+  position: absolute;
   bottom: 0px;
   width: 100%;
   height: 50px;
   text-align: center;
   background-color:$darkPink;
   color: $white;
+  right: 0px;
+  left: 0px;
 }
 
 #author {
