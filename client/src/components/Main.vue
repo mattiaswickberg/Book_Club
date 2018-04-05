@@ -39,7 +39,6 @@
             </b-button>
       </a>
       <p>Eller logga in uppe till höger</p>
-      <p> </p>
       </div>
       </div>
     </b-col>
@@ -62,10 +61,16 @@ export default {
 
 <style lang="scss" scoped>
 
+#mainNotLoggedIn {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
 #welcome {
   background-color: hsla(279, 56%, 31%, 0.75);
   color: white;
   font-size: 120%;
+  padding: 20px;
 }
 
 #loginButton {
