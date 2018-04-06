@@ -3,71 +3,50 @@ let passport = require('passport')
 let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
 passport.serializeUser(function (user, done) {
-  done(null, user._id)
-})
+  done(null, user.id)
+});
 
 passport.deserializeUser(function (id, done) {
   User.findById(id, function (err, user) {
-    if (err || !user) return done(err, null)
-    done(null, user)
+    done(err, user)
   })
 })
 
-module.exports = function (app, options) {
-  if (!options.successRedirect) {
-    options.successRedirect = '/'
-  }
+// Use the GoogleStrategy within Passport.
+//   Strategies in Passport require a `verify` function, which accept
+//   credentials (in this case, an accessToken, refreshToken, and Google
+//   profile), and invoke a callback with a user object.
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_SECRET,
+  callbackURL: 'http://localhost:3000/auth/google/callback'
+},
+  function (accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      User.findOne({ 'googleId': profile.id }, function (err, user) {
+        if (err) return done
 
-  if (!options.failureRedirect) {
-    options.failureRedirect = '/'
-  }
+        if (user) {
+          console.log('User logged in with Google')
+          return done(null, user)
+        } else {
+          // create new user
+          console.log('Creating new user')
+          var newUser = new User()
 
-  return {
-    init: function () {
-      // Configure strategy
-      passport.use(new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: 'http://localhost:3000/auth/google/callback'
-      },
-    function (token, tokenSecret, profile, done) {
-      let authId = 'google:' + profile.id
-      User.findOne({authId: authId}, function (err, user) {
-        if (err) return done(err, null)
-        if (user) return done(null, user)
+          newUser.googleId = profile.id
+          newUser.googleToken = accessToken
+          newUser.username = profile.displayName
+          newUser.mail = profile.emails[0].value
+          // newUser.image = profile...
 
-        user = new User({
-          authId: authId,
-          username: profile.displayName
-        })
-        console.log(user)
-
-        user.save(function (err) {
-          if (err) return done(err, null)
-          done(null, user)
-        })
-      })
-    }))
-    },
-    registerRoutes: function () {
-      app.get('/auth/google', function (req, res, next) {
-        if (req.query.redirect) {
-          req.session.authRedirect = req.query.redirect
+          newUser.save(function (err) {
+            if (err) throw err
+            console.log('New user created')
+            return done(null, newUser)
+          })
         }
-
-        passport.authenticate('google', {
-          scope: 'profile'
-        })(req, res, next)
       })
-
-      app.get('/auth/google/callback',
-    passport.authenticate('google',
-  {failureRedirect: options.failureRedirect}),
-function (req, res) {
-  let redirect = req.session.authRedirect
-  if (redirect) delete req.session.authRedirect
-  res.redirect(303, redirect || options.successRedirect)
-})
-    }
+    })
   }
-}
+))

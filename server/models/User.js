@@ -2,6 +2,8 @@ let mongoose = require('mongoose')
 
 let UserSchema = new mongoose.Schema({
   authId: String,
+  googleId: String,
+  googleToken: String,
   username: {type: String, required: true},
   password: String,
   mail: String,

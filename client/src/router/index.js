@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import CreateAccount from '@/components/CreateAccount'
 import Authorisation from '@/components/Authorisation'
+import Account from '@/components/Account'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -28,6 +29,12 @@ export default new Router({
       path: '/auth',
       name: 'Authorisation',
       component: Authorisation
+    },
+
+    {
+      path: '/account',
+      name: 'Account',
+      component: Account
     }
   ]
 })

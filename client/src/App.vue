@@ -80,7 +80,6 @@ $grey: #f5f3ee;
   background-color: $white;
   margin-top: 0px;
   min-height: 100%;
-  padding-bottom: 50px;
 }
 
 #logo {
@@ -107,6 +106,7 @@ $grey: #f5f3ee;
 #middle {
     background-color: $white; 
     color: $black;
+    padding-bottom: 50px;
 }
 
 #footer {

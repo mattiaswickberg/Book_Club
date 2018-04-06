@@ -1,6 +1,8 @@
 // Import other stuff
 let User = require('../models/User')
 let createAccount = require('../lib/createAccount')
+let passport = require('passport')
+
 // Main routes
 module.exports = function (app) {
   app.get('/', function (req, res) {
@@ -44,6 +46,14 @@ module.exports = function (app) {
 
   // Authentication with google
 
+  app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
+
+  app.get('/auth/google/callback',
+passport.authenticate('google', {
+  successRedirect: '/account',
+  failureRedirect: '/auth'
+}))
+
   app.get('/account', function (req, res) {
     if (!req.user) return res.redirect(303, '/unauthorised')
     res.render('account', {
@@ -54,20 +64,18 @@ module.exports = function (app) {
   // Usual routes
   app.get('/unauthorised',
 function (req, res) {
+  console.log('403')
   res.status('403').redirect('/')
 })
 
   app.use(function (req, res, next) {
-    res.status(404)
-    res.redirect('/')
-  })
-
-  app.use(function (req, res, next) {
+    console.log('404')
     res.status(404)
     res.redirect('/')
   })
 
   app.use(function (err, req, res, next) {
+    console.log('500')
     console.error(err.stack)
     res.status(500)
     res.redirect('/')

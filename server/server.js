@@ -10,6 +10,7 @@ const path = require('path')
 const MongoStore = require('connect-mongo')(session)
 const mongoose = require('mongoose')
 const app = express()
+const passport = require('passport')
 
 // Middleware
 app.use(morgan('combined'))
@@ -23,21 +24,9 @@ app.use(express.static(path.join(__dirname, '../client/dist')))
 require('./lib/db').initialize()
 
 // Initialize authentication
-
 require('./lib/auth')
-
-const auth = require('./lib/auth')(app, {
-  providers: {
-    google: {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_SECRET
-    }
-  },
-  successRedirect: 'http://localhost:3000',
-  failureRedirect: '/unauthorised'
-})
-auth.init()
-auth.registerRoutes()
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Set CSP
 app.use(function (req, res, next) {
@@ -67,6 +56,7 @@ app.use(function (err, req, res, next) {
   res.render('403')
 })
  */
+
 // Flash messages
 app.use(function (req, res, next) {
   res.locals.flash = req.session.flash
