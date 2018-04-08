@@ -1,7 +1,7 @@
 <template>
 
 <b-container fluid>
-  <div id='mainLoggedIn' v-if='loggedIn'>
+  <div id='mainLoggedIn' v-if='user'>
     <b-row>
 
     </b-row>
@@ -49,12 +49,22 @@
 </template>
 
 <script>
+import isLoggedInMixin from '@/mixins/checkAuth'
+
 export default {
   name: 'Main',
+  mixins: [isLoggedInMixin],
   data () {
     return {
-      loggedIn: false
+      user: false
     }
+  },
+    created() {
+    this.checkIfLoggedIn()
+    .then(response => {
+      this.user = response
+    })
+    .catch(error => console.log(error))
   }
 }
 </script>

@@ -10,7 +10,8 @@ let UserSchema = new mongoose.Schema({
   joined: {type: Date, default: Date.now},
   bookCases: Array,
   signedIn: Array,
-  role: {type: String, default: 'student'}
+  role: {type: String, default: 'student'},
+  image: String
 })
 
 let User = mongoose.model('User', UserSchema)

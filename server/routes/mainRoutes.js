@@ -3,10 +3,16 @@ module.exports = function (app) {
     res.render('index.html')
   })
 
+  app.get('/sessionstatus', function (req, res) {
+    console.log('Req.user is: ')
+    console.log(req.user)
+    res.send(req.user)
+  })
+
   app.get('/account', function (req, res) {
     if (!req.user) return res.redirect(303, '/unauthorised')
     res.render('account', {
-      username: req.user.name
+      username: req.user.username
     })
   })
 

@@ -12,16 +12,24 @@ const mongoose = require('mongoose')
 const app = express()
 const passport = require('passport')
 
+// Start database server
+require('./lib/db').initialize()
+
 // Middleware
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
-
 app.use(express.static(path.join(__dirname, '../client/dist')))
 
-// Start database server
-require('./lib/db').initialize()
+// Set up sessions ----------------------------------------------------
+
+app.use(session({
+  secret: process.env.COOKIE_SECRET,
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+  resave: false,
+  saveUninitialized: false
+}))
 
 // Initialize authentication
 require('./lib/auth')
@@ -34,14 +42,6 @@ app.use(function (req, res, next) {
   return next()
 })
 
-// Set up sessions ----------------------------------------------------
-
-app.use(session({
-  secret: process.env.COOKIE_SECRET,
-  store: new MongoStore({mongooseConnection: mongoose.connection}),
-  resave: false,
-  saveUninitialized: false
-}))
 // CSRF handling
 /* let csurf = require('csurf')
 

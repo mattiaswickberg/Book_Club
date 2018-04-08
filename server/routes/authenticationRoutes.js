@@ -38,7 +38,7 @@ module.exports = function (app) {
     })
   })
 
-  // Login with sername/password
+  // Login with username/password
   app.get('/login',
 passport.authenticate('local', {
   successRedirect: '/account',
@@ -52,7 +52,7 @@ passport.authenticate('local', {
 
   app.get('/auth/google/callback',
 passport.authenticate('google', {
-  successRedirect: '/account',
-  failureRedirect: '/auth'
+  successRedirect: 'http://localhost:3000/#/account',
+  failureRedirect: '#/auth'
 }))
 }

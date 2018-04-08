@@ -12,7 +12,7 @@
 
     </b-col>
     <b-col>
-      <div id='userArea' v-if='loggedIn'>User info</div>
+      <div id='userArea' v-if='user'>User info</div>
       <div id='loginForm' v-else>
         <form id='loginForm' action="/login" method="post">
     <div>
@@ -56,12 +56,21 @@ Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
 </template>
 
 <script>
+import isLoggedInMixin from '@/mixins/checkAuth'
 export default {
   name: 'App',
+  mixins: [isLoggedInMixin],
   data () {
     return {
-          loggedIn: false
+          user: false
     }
+  },
+  created() {
+    this.checkIfLoggedIn()
+    .then(response => {
+      this.user = response
+    })
+    .catch(error => console.log(error))
   }
 }
 </script>

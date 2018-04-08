@@ -49,6 +49,7 @@ passport.use(new GoogleStrategy({
         } else {
           // create new user
           console.log('Creating new user')
+          console.log(profile.photos[0].value)
           console.log(profile)
           var newUser = new User()
 
@@ -56,7 +57,7 @@ passport.use(new GoogleStrategy({
           newUser.googleToken = accessToken
           newUser.username = profile.displayName
           newUser.mail = profile.emails[0].value
-          newUser.image = profile.image.url
+          newUser.image = profile.photos[0].value
 
           newUser.save(function (err) {
             if (err) throw err
