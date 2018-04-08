@@ -5,7 +5,7 @@
     <b-col>
           <img id='logo' src="./assets/logo.png">
     </b-col>
-    <b-col cols='9' id='topBar'>
+    <b-col cols='8' id='topBar'>
       <div id='title'>
               <h1>SSIS Bokcirkel</h1>
       </div>
@@ -13,7 +13,24 @@
     </b-col>
     <b-col>
       <div id='userArea' v-if='loggedIn'>User info</div>
-      <div id='loginForm' v-else><a href="/auth/google">Sign In with Google</a></div>
+      <div id='loginForm' v-else>
+        <form id='loginForm' action="/login" method="post">
+    <div>
+        <input type="text" name="username" placeholder="username"/>
+    </div>
+    <div>
+        <input type="password" name="password" placeholder="password"/>
+    </div>
+    <div>
+        <input type="submit" value="Log In"/>
+    </div>
+</form>
+<a href="/auth/google">
+<b-button id='loginButton' :size="sm" :variant="primary">
+Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
+</b-button>
+</a>
+</div>
     </b-col>
   </b-row>
   <b-row id='middle'>
@@ -83,6 +100,10 @@ $grey: #f5f3ee;
 
 #logo {
   height: 100px;
+}
+
+#googleLogo {
+  max-width: 20px;
 }
 
 #header {
