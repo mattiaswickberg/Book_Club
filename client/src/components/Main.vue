@@ -3,8 +3,9 @@
 <b-container fluid>
   <div id='mainLoggedIn' v-if='user'>
     <b-row>
+      <b-col></b-col>
       <b-col sm='5'>
-        <div>
+        <div id='loggedIn'>
           <h1>Välkommen {{user.username}}!</h1>
           <p>
             Placeholder text to fill out some space lalala.
@@ -16,6 +17,7 @@
           </h1>
         </div>
       </b-col>
+      <b-col></b-col>
     </b-row>
 
   </div>
@@ -78,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 
-#mainNotLoggedIn {
+#loggedIn {
   background-color: hsla(279, 56%, 31%, 0.75);
   color: white;
   padding: 20px;

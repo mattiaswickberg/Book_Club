@@ -3,7 +3,9 @@
   <div id='body'>
   <b-row id='header'>
     <b-col>
-          <img id='logo' src="./assets/logo.png">
+      <router-link to='main'>
+        <img id='logo' src="./assets/logo.png">
+        </router-link>
     </b-col>
     <b-col cols='8' id='topBar'>
       <div id='title'>

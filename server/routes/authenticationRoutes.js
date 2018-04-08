@@ -10,21 +10,21 @@ module.exports = function (app) {
     // create user based on information and save to database
     User.find({username: req.body.username}).then(function (data) {
       if (data.length > 0) {
-        req.session.flash = {
+        var flash = {
           type: 'danger',
           intro: 'Username taken',
           message: 'The username you wanted is unfortunately not available'
         }
-        res.redirect(303, '/')
+        res.send(flash)
       } else {
         User.find({mail: req.body.mail}).then(function (data) {
           if (data.length > 0) {
-            req.session.flash = {
+            var flash = {
               type: 'danger',
               intro: 'mail already used',
               message: 'There is already an account with that email address'
             }
-            res.redirect(303, '/')
+            res.send(flash)
           } else {
             createAccount(req.body)
             req.session.flash = {
