@@ -63,7 +63,6 @@ export default {
 
 #mainNotLoggedIn {
   margin-top: 100px;
-  margin-bottom: 50px;
 }
 
 #welcome {

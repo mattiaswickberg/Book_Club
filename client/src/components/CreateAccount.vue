@@ -27,6 +27,7 @@
 <script>
 import {HTTP} from '@/services/Api'
 import VuePassword from 'vue-password'
+import router from '@/router/index'
 export default {
   components: {
     VuePassword
@@ -41,17 +42,16 @@ export default {
       }
     },
   methods: {
-/*       checkPassword: function () {
-                
-        if(password1 !== password2) {
-          password2.setCustomValidity('Passwords don\'t match')
-        } else {
-          password2.setCustomValidity('')
-        }
-    } ,
- */     sendForm: function () {
+
+     sendForm: function () {
       console.log('Adding user')
       return HTTP.post('createaccount', this.user)
+      .then( function (response) {
+        console.log(response)
+        if(response) {
+          router.push('account')
+        }
+      })
     }
   }
 }

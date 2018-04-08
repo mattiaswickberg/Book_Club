@@ -1,8 +1,5 @@
-var User = require('../models/User')
-
-// Set up password hashing
-let bcrypt = require('bcrypt')
-const saltRounds = 10
+let User = require('../models/User')
+let passwordHash = require('./passwordHash')
 
 let createUser = function (data) {
   // Check mail and password
@@ -15,20 +12,19 @@ let createUser = function (data) {
   }
 
   // Salt and hash password
-  bcrypt.hash(data.password, saltRounds).then(function (hash) {
+  let hash = passwordHash(data.password)
      // Create new user from form data
-    let newUser = new User({
-      username: data.username,
-      password: hash,
-      mail: data.mail
-    })
+  let newUser = new User({
+    username: data.username,
+    password: hash,
+    mail: data.mail
+  })
     // save new user to database
-    newUser.save(function (error) {
-      if (error) {
-        console.log('User error: ')
-        console.log(error)
-      }
-    })
+  newUser.save(function (error) {
+    if (error) {
+      console.log('User error: ')
+      console.log(error)
+    }
   })
 }
 

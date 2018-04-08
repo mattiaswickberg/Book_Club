@@ -1,6 +1,8 @@
 let User = require('../models/User')
 let passport = require('passport')
 let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+let LocalStrategy = require('passport-local').Strategy
+let passwordHash = require('./passwordHash')
 
 passport.serializeUser(function (user, done) {
   done(null, user.id)
@@ -11,6 +13,21 @@ passport.deserializeUser(function (id, done) {
     done(err, user)
   })
 })
+
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    User.findOne({username: username}, function (err, user) {
+      if (err) { return done(err) }
+      if (!user) {
+        return done(null, false, {message: 'Incorrect username'})
+      }
+      if (!user.validPassword(passwordHash(password))) {
+        return done(null, false, { message: 'Incorrect password' })
+      }
+      return done(null, user)
+    })
+  }
+))
 
 // Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
