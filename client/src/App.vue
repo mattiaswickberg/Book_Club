@@ -15,8 +15,9 @@
     </b-col>
     <b-col>
       <div id='userArea' v-if='user'>
-        <img src='user.image'> 
-        <br> User info: {{user.username}} 
+        <img :src='user.image'> 
+        <br> {{user.username}} 
+        <b-button id='logoutButton' :size='sm' :variant='primary' v-on:click='logout'>Logga ut</b-button>
         </div>
       <div id='loginForm' v-else>
         <form id='loginForm' action="/login" method="post">
@@ -62,6 +63,7 @@ Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
 
 <script>
 import isLoggedInMixin from '@/mixins/checkAuth'
+import {HTTP} from '@/services/Api'
 export default {
   name: 'App',
   mixins: [isLoggedInMixin],
@@ -77,6 +79,11 @@ export default {
       console.log(this.user)
     })
     .catch(error => console.log(error))
+  },
+  methods: {
+    logout: function (event) {
+      return HTTP.get('logout')
+    }
   }
 }
 </script>

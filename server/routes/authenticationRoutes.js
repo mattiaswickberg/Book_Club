@@ -7,6 +7,7 @@ module.exports = function (app) {
   app.post('/createaccount', function (req, res) {
     console.log('Recieved data')
     console.log(req.body)
+
     // create user based on information and save to database
     User.find({username: req.body.username}).then(function (data) {
       if (data.length > 0) {
@@ -55,4 +56,9 @@ passport.authenticate('google', {
   successRedirect: 'http://localhost:3000/#/account',
   failureRedirect: '#/auth'
 }))
+
+  app.get('/logout', function (req, res) {
+    req.logout()
+    res.redirect('/')
+  })
 }

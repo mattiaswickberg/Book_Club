@@ -4,7 +4,7 @@
   <div id='mainLoggedIn' v-if='user'>
     <b-row>
       <b-col></b-col>
-      <b-col sm='5'>
+      <b-col sm='6'>
         <div id='loggedIn'>
           <h1>Välkommen {{user.username}}!</h1>
           <p>
