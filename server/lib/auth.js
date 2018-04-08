@@ -32,6 +32,7 @@ passport.use(new GoogleStrategy({
         } else {
           // create new user
           console.log('Creating new user')
+          console.log(profile)
           var newUser = new User()
 
           newUser.googleId = profile.id
