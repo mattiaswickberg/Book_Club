@@ -9,7 +9,8 @@ const isLoggedInMixin = {
       return new Promise((resolve, reject) => {
         HTTP.get('/sessionstatus')
             .then(response => {
-              resolve(response.data.user)
+              console.log(response)
+              resolve(response.data)
             })
             .catch(error => {
               reject(error.response.data)

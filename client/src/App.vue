@@ -12,7 +12,7 @@
 
     </b-col>
     <b-col>
-      <div id='userArea' v-if='user'>User info</div>
+      <div id='userArea' v-if='user'>User info: {{user.username}} </div>
       <div id='loginForm' v-else>
         <form id='loginForm' action="/login" method="post">
     <div>
@@ -69,6 +69,7 @@ export default {
     this.checkIfLoggedIn()
     .then(response => {
       this.user = response
+      console.log(this.user)
     })
     .catch(error => console.log(error))
   }

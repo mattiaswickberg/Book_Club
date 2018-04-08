@@ -6,7 +6,7 @@
 
     </b-row>
     <b-row>
-
+      {{user.username}}
     </b-row>
     <b-row>
 
@@ -63,6 +63,7 @@ export default {
     this.checkIfLoggedIn()
     .then(response => {
       this.user = response
+      console.log(this.user)
     })
     .catch(error => console.log(error))
   }
@@ -72,7 +73,10 @@ export default {
 <style lang="scss" scoped>
 
 #mainNotLoggedIn {
-  margin-top: 100px;
+  background-color: hsla(279, 56%, 31%, 0.75);
+  color: white;
+  padding: 20px;
+  font-size: 120%;
 }
 
 #welcome {
