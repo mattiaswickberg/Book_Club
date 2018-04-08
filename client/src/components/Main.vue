@@ -3,13 +3,19 @@
 <b-container fluid>
   <div id='mainLoggedIn' v-if='user'>
     <b-row>
-
-    </b-row>
-    <b-row>
-      {{user.username}}
-    </b-row>
-    <b-row>
-
+      <b-col sm='5'>
+        <div>
+          <h1>Välkommen {{user.username}}!</h1>
+          <p>
+            Placeholder text to fill out some space lalala.
+          </p>
+        </div>
+        <div id='adminInfo'>
+          <h1>
+            Info div for admins
+          </h1>
+        </div>
+      </b-col>
     </b-row>
 
   </div>

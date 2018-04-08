@@ -12,7 +12,10 @@
 
     </b-col>
     <b-col>
-      <div id='userArea' v-if='user'>User info: {{user.username}} </div>
+      <div id='userArea' v-if='user'>
+        <img src='user.image'> 
+        <br> User info: {{user.username}} 
+        </div>
       <div id='loginForm' v-else>
         <form id='loginForm' action="/login" method="post">
     <div>
