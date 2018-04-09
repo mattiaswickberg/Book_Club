@@ -10,6 +10,9 @@
     <b-col cols='8' id='topBar'>
       <div id='title'>
               <h1>SSIS Bokcirkel</h1>
+              <form id='searchField' @submit.prevent='searchBook'>
+                <input type=text v-model='search.data' placeholder="Sök bok"><button type='submit'><i class="material-icons">search</i></button>
+              </form>
       </div>
 
     </b-col>
@@ -69,7 +72,10 @@ export default {
   mixins: [isLoggedInMixin],
   data () {
     return {
-          user: false
+          user: false,
+          search : {
+            data: ''
+          }
     }
   },
   created() {
@@ -83,7 +89,14 @@ export default {
   methods: {
     logout: function (event) {
       return HTTP.get('logout')
-    }
+    },
+    searchBook: function() {
+      console.log('searching for: ' + this.search.data)
+      return HTTP.post('search', this.search)
+      .then( function(response) {
+        console.log(response)
+      })
+      }
   }
 }
 </script>
@@ -176,5 +189,14 @@ h1 {
 b-row {
   padding: 10px;
   margin: 10px;
+}
+
+#searchButton {
+  width: 35px;
+  height: 35px;
+}
+
+form input button {
+  display: inline-block;
 }
 </style>

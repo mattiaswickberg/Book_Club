@@ -1,7 +1,14 @@
 let Book = require('../models/Book')
 let BookCase = require('../models/BookCase')
+let getListFromKb = require('../lib/getListFromKb')
 
 module.exports = function (app) {
+  app.post('/search', function (req, res) {
+    getListFromKb(req.body.data).then(function (data) {
+      res.send(data)
+    })
+  })
+
   app.get('/book', function (req, res) {
     // Get book from database and send back
   })
