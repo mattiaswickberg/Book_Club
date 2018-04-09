@@ -2,7 +2,6 @@ let Book = require('../models/Book')
 let BookCase = require('../models/BookCase')
 
 module.exports = function (app) {
-
   app.get('/book', function (req, res) {
     // Get book from database and send back
   })
@@ -24,6 +23,22 @@ module.exports = function (app) {
   })
   app.post('/bookcase', function (req, res) {
     // Create new bookcase
+    if (req.body.title.length === 0) {
+      res.send('Title missing')
+    } else {
+      let newBookCase = new BookCase({
+        user: req.user._id,
+        title: req.body.title
+      })
+
+      newBookCase.save(function (error) {
+        if (error) {
+          console.log(error)
+        }
+      })
+
+      res.send('Bookcase created')
+    }
   })
 
   app.delete('/bookcase', function (req, res) {

@@ -6,7 +6,6 @@ module.exports = function (app) {
   // Account creation and login routes
   app.post('/createaccount', function (req, res) {
     console.log('Recieved data')
-    console.log(req.body)
 
     // create user based on information and save to database
     User.find({username: req.body.username}).then(function (data) {

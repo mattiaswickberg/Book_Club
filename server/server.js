@@ -71,6 +71,7 @@ app.use(function (req, res, next) {
 
 // Import routes
 require('./routes/authenticationRoutes')(app)
+require('./routes/bookRoutes')(app)
 require('./routes/mainRoutes')(app)
 
 app.listen(3000, function () {
