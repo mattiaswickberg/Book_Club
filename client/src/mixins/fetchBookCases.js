@@ -2,7 +2,6 @@ import {HTTP} from '@/services/Api'
 
 const fetchBookCasesMixin = {
   created () {
-    console.log('Authenticating')
   },
   methods: {
     fetchBookCases (userId) {

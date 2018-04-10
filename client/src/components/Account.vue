@@ -7,8 +7,13 @@
         <div>
           <h1> Account page</h1>
           <div id='bookCases'>
-            <!-- Render book cases and books <div v-for='cases in cases'> -->
-
+            <!-- Render book cases and books -->
+              <div v-for='item in cases' :key='item.name' class='caseDiv'>
+                {{item.name}}
+                <div v-for='item in item.books' :key='item.title' class='book'>
+                  {{item.title}}
+                </div>
+              </div>
             </div>
         </div>
       </b-col>
@@ -41,11 +46,13 @@
 
 <script>
 import isLoggedInMixin from '@/mixins/checkAuth'
+import fetchBookCasesMixin from '@/mixins/fetchBookCases'
+import fetchBooksMixin from '@/mixins/fetchBooks'
 import {HTTP} from '@/services/Api'
 
 export default {
   name: 'Account',
-    mixins: [isLoggedInMixin],
+    mixins: [isLoggedInMixin, fetchBookCasesMixin],
   data () {
     return {
       user: false,
@@ -57,11 +64,17 @@ export default {
     }
   },
     created() {
+      // Check who's logged in
     this.checkIfLoggedIn()
     .then(response => {
+      // Save user in variable
       this.user = response
       console.log(this.user)
       // fetch book cases from user
+      this.fetchBookCases(user._id)
+      .then(response => {
+        this.cases = response
+      })
     })
     .catch(error => console.log(error))
   },
@@ -87,4 +100,11 @@ export default {
 
 <style lang="scss" scoped>
 
+.caseDiv {
+  overflow:hidden;
+}
+
+.book {
+  display:inline;
+}
 </style>

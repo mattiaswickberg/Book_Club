@@ -2,7 +2,6 @@ import {HTTP} from '@/services/Api'
 
 const isLoggedInMixin = {
   created () {
-    console.log('Authenticating')
   },
   methods: {
     checkIfLoggedIn () {

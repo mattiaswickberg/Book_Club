@@ -7,7 +7,7 @@
         <img id='logo' src="./assets/logo.png">
         </router-link>
     </b-col>
-    <b-col cols='8' id='topBar'>
+    <b-col cols='6' id='topBar'>
       <div id='title'>
               <h1>SSIS Bokcirkel</h1>
               <form id='searchField' @submit.prevent='searchBook'>
