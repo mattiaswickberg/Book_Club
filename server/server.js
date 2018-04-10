@@ -32,7 +32,7 @@ app.use(session({
 }))
 
 // Initialize authentication
-require('./lib/auth')
+require('./lib/auth/auth')
 app.use(passport.initialize())
 app.use(passport.session())
 

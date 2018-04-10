@@ -1,6 +1,6 @@
 let passport = require('passport')
 let User = require('../models/User')
-let createAccount = require('../lib/createAccount')
+let createAccount = require('../lib/auth/createAccount')
 
 module.exports = function (app) {
   // Account creation and login routes
