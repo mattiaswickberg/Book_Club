@@ -22,6 +22,10 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(require('cookie-parser')(process.env.COOKIE_SECRET))
 app.use(express.static(path.join(__dirname, '../client/dist')))
+app.use(function (err, req, res, next) {
+  console.log(err)
+  next()
+})
 
 // Set up sessions ----------------------------------------------------
 

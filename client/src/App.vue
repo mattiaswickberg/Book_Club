@@ -86,7 +86,7 @@ export default {
     this.checkIfLoggedIn()
     .then(response => {
       this.user = response
-      console.log(this.user)
+      console.log(response)
     })
     .catch(error => console.log(error))
   },
@@ -96,9 +96,15 @@ export default {
     },
     login: function () {
       return HTTP.post('login', this.userData)
+      .then(response => {
+        console.log(response.data)
+        if(response.data === 'success') {
+          this.$router.push({ name: 'Account' })
+        }
+      })
     },
     searchBook: function() {
-      router.go('/searchresult', this.search)
+      router.push('/searchresult', this.search)
       console.log('searching for: ' + this.search.data)
      /*   return HTTP.post('search', this.search)
       .then( function(response) {

@@ -14,16 +14,16 @@ passport.deserializeUser(function (id, done) {
   })
 })
 
-passport.use(new LocalStrategy({
-  passReqToCallback: true
-},
-  function (req, username, password, done) {
+passport.use(new LocalStrategy(
+  function (username, password, done) {
     User.findOne({username: username}, function (err, user) {
       if (err) { return done(err) }
       if (!user) {
+        console.log('Incorrect username')
         return done(null, false, {message: 'Incorrect username'})
       }
       if (!user.validPassword(password)) {
+        console.log('Incorrect password')
         return done(null, false, { message: 'Incorrect password' })
       }
       console.log('User logged in: ' + user.username)

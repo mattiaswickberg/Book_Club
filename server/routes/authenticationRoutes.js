@@ -40,10 +40,16 @@ module.exports = function (app) {
 
   // Login with username/password
   app.post('/login',
-passport.authenticate('local', { failureRedirect: '/' }),
+passport.authenticate('local', {failureRedirect: '/'}),
 function (req, res) {
-  res.redirect('http://localhost:3000/#/account')
+  res.send('success')
 })
+
+/* {
+  successRedirect: '/account',
+  failureRedirect: '/login',
+  failureFlash: true
+})) */
 
   // Authentication with google
 

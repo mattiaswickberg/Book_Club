@@ -10,10 +10,8 @@ module.exports = function (app) {
   })
 
   app.get('/account', function (req, res) {
-    if (!req.user) return res.redirect(303, '/unauthorised')
-    res.render('account', {
-      username: req.user.username
-    })
+    console.log('redirecting to account')
+    res.redirect(303, 'http://localhost:3000/#/account')
   })
 
   // Usual routes

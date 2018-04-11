@@ -71,7 +71,7 @@ export default {
       this.user = response
       console.log(this.user)
       // fetch book cases from user
-      this.fetchBookCases(user._id)
+      this.fetchBookCases(this.user._id)
       .then(response => {
         this.cases = response
       })
