@@ -1,5 +1,5 @@
-let User = require('../models/User')
-let BookCase = require('../models/BookCase')
+let User = require('../../models/User')
+let BookCase = require('../../models/BookCase')
 let passwordHash = require('./passwordHash')
 
 let createUser = function (data) {

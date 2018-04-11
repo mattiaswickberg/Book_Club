@@ -23,12 +23,12 @@
         <b-button id='logoutButton' :size='sm' :variant='primary' v-on:click='logout'>Logga ut</b-button>
         </div>
       <div id='loginForm' v-else>
-        <form id='loginForm' action="/login" method="post">
+        <form id='loginForm' @submit.prevent="login">
     <div>
-        <input type="text" name="username" placeholder="username"/>
+        <input type="text" v-model="userData.username" placeholder="username"/>
     </div>
     <div>
-        <input type="password" name="password" placeholder="password"/>
+        <input type="password" v-model="userData.password" placeholder="password"/>
     </div>
     <div>
         <input type="submit" value="Log In"/>
@@ -75,6 +75,10 @@ export default {
           user: false,
           search : {
             data: ''
+          },
+          userData: {
+            username: '',
+            password: ''
           }
     }
   },
@@ -90,13 +94,18 @@ export default {
     logout: function (event) {
       return HTTP.get('logout')
     },
+    login: function () {
+      return HTTP.post('login', this.userData)
+    },
     searchBook: function() {
+      router.go('/searchresult', this.search)
       console.log('searching for: ' + this.search.data)
-      return HTTP.post('search', this.search)
+     /*   return HTTP.post('search', this.search)
       .then( function(response) {
         console.log(response)
-      })
-      }
+
+      }) */
+    }
   }
 }
 </script>

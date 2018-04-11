@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
+const flash = require('connect-flash')
 const MongoStore = require('connect-mongo')(session)
 const mongoose = require('mongoose')
 const app = express()
@@ -30,6 +31,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
+// Flash messages
+app.use(flash())
 
 // Initialize authentication
 require('./lib/auth/auth')
@@ -56,13 +60,6 @@ app.use(function (err, req, res, next) {
   res.render('403')
 })
  */
-
-// Flash messages
-app.use(function (req, res, next) {
-  res.locals.flash = req.session.flash
-  delete req.session.flash
-  next()
-})
 
 app.use(function (req, res, next) {
   if (req) { res.locals.user = req.session.userName }

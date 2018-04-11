@@ -65,6 +65,12 @@ export default new Router({
       component: EditAccount
     },
     {
+      path: '/searchresult/:search',
+      name: 'SearchResult',
+      component: SearchResult,
+      props: true
+    },
+    {
       path: '/404',
       name: '404',
       component: p404

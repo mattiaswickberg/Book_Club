@@ -1,4 +1,5 @@
 let mongoose = require('mongoose')
+let passwordHash = require('../lib/auth/passwordHash')
 
 let UserSchema = new mongoose.Schema({
   googleId: String,
@@ -12,6 +13,10 @@ let UserSchema = new mongoose.Schema({
   role: {type: String, default: 'student'},
   image: String
 })
+
+UserSchema.methods.validPassword = function (psw) {
+  return (passwordHash(psw) === this.password)
+}
 
 let User = mongoose.model('User', UserSchema)
 module.exports = User

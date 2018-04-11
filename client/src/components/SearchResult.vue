@@ -5,6 +5,13 @@
       <b-col></b-col>
       <b-col>
   <h1> Display search result page</h1>
+  <div class='pagination'>
+    <ul>
+      <li v-for="item in search" :key='item.title'>
+        {{item}}
+      </li>
+    </ul>
+  </div>
 
       </b-col>
       <b-col></b-col>
@@ -21,6 +28,7 @@ import isLoggedInMixin from '@/mixins/checkAuth'
 export default {
   name: 'SearchResult',
   mixins: [isLoggedInMixin],
+  props: ['search'],
   data () {
     return {
       user: false
@@ -33,6 +41,16 @@ export default {
       console.log(this.user)
     })
     .catch(error => console.log(error))
+  },
+    methods: {
+    searchBook: function() {
+      console.log('searching for: ' + this.search.data)
+      return HTTP.post('search', this.search)
+      .then( function(response) {
+        console.log(response)
+        
+      })
+    }
   }
 }
 </script>
