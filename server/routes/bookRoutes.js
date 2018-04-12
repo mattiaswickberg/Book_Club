@@ -35,11 +35,17 @@ module.exports = function (app) {
   })
 
   app.get('/bookcase', function (req, res) {
-    // Get bookcase from database
+    // Get book case from database
     console.log(req.body.data)
   })
+
+  app.get('/bookcases', function (req, res) {
+    // Get a user's book cases
+    console.log(req.body.data)
+  })
+
   app.post('/bookcase', function (req, res) {
-    // Create new bookcase
+    // Create new book case
     if (req.body.title.length === 0) {
       res.send('Title missing')
     } else {
