@@ -83,24 +83,22 @@ export default {
     }
   },
   created() {
-    this.checkIfLoggedIn()
-    .then(response => {
-      this.user = response
-      console.log(response)
-    })
-    .catch(error => console.log(error))
+    if (this.$session.exists()) {
+      this.user = true
+    }
   },
   methods: {
     logout: function (event) {
+      this.$session.destroy()
       return HTTP.get('logout')
     },
     login: function () {
       return HTTP.post('login', this.userData)
       .then(response => {
-        console.log(response.data)
-        if(response.data === 'success') {
-          this.$router.push({ name: 'Account' })
-        }
+        // console.log(response.data)
+        this.$session.start()
+        this.$session.set('user', response.data)
+        this.$router.push({ name: 'Account' })
       })
     },
     searchBook: function() {

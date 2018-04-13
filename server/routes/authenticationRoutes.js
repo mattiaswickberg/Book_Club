@@ -43,7 +43,7 @@ module.exports = function (app) {
 passport.authenticate('local', {failureRedirect: '/'}),
 function (req, res) {
   // console.log(req.user)
-  res.send('req.user')
+  res.send(req.user)
 })
 
 /* {
@@ -57,10 +57,14 @@ function (req, res) {
   app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
   app.get('/auth/google/callback',
-passport.authenticate('google', {
-  successRedirect: 'http://localhost:3000/#/account',
+passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
+  console.log(req.user)
+  res.redirect(303, 'http://localhost:3000/#/auth')
+})
+
+  /* successRedirect: 'http://localhost:3000/#/account',
   failureRedirect: '#/auth'
-}))
+})) */
 
   app.get('/logout', function (req, res) {
     req.logout()

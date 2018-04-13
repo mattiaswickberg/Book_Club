@@ -65,18 +65,13 @@ export default {
   },
     created() {
       // Check who's logged in
-    this.checkIfLoggedIn()
-    .then(response => {
-      // Save user in variable
-      this.user = response
-      console.log(this.user)
+      console.log(this.$session.getAll())
+
       // fetch book cases from user
-      this.fetchBookCases(this.user._id)
+      this.fetchBookCases(this.$session.user._id)
       .then(response => {
         this.cases = response
       })
-    })
-    .catch(error => console.log(error))
   },
   methods: {
     addNewCase: function() {

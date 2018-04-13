@@ -8,8 +8,21 @@
 
 <script>
 export default {
-  
-}
+  created() {
+        HTTP.get('/sessionstatus')
+            .then(response => {
+        // console.log(response.data)
+        this.$session.start()
+        this.$session.set('user', response.data)
+            })
+            .catch(error => {
+              reject(error.response.data)
+            })
+      },
+      mounted() {
+        this.$router.push({ name: 'Account' })
+      }
+    }
 </script>
 
 <style lang="scss" scoped>

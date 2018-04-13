@@ -68,12 +68,9 @@ export default {
     }
   },
     created() {
-    this.checkIfLoggedIn()
-    .then(response => {
-      this.user = response
-      console.log(this.user)
-    })
-    .catch(error => console.log(error))
+    if (this.$session.exists()) {
+      this.user = true
+    }
   }
 }
 </script>
