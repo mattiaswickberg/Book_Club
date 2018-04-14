@@ -58,7 +58,8 @@ export default {
       user: false,
       newCase: false,
       bookCase: {
-        title: ''
+        title: '',
+        user: ''
       },
       cases: []
     }
@@ -85,11 +86,15 @@ export default {
         }
     },
     createBookCase: function() {
-      console.log('Adding book case' + this.bookCase)
+      this.bookCase.user = this.$session.get('user')
       return HTTP.post('bookcase', this.bookCase)
-      .then( function (response) {
-        console.log(response)
+      .then(response => {
+        // console.log(response)
         this.newCase = false
+      let user = this.$session.get('user')
+      this.fetchBookCases(user._id)      .then(response => {
+        this.cases = response
+      })
       })
     }
   }

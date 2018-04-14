@@ -56,7 +56,7 @@ module.exports = function (app) {
       res.send('Title missing')
     } else {
       let newBookCase = new BookCase({
-        user: req.user._id,
+        user: req.body.user,
         title: req.body.title
       })
 
