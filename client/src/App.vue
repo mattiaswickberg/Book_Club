@@ -3,7 +3,7 @@
   <div id='body'>
   <b-row id='header'>
     <b-col>
-      <router-link to='main'>
+      <router-link to='/'>
         <img id='logo' src="./assets/logo.png">
         </router-link>
     </b-col>

@@ -50,7 +50,7 @@ export default {
         console.log('response is')
         console.log(response)
         if(response) {
-          router.push('account')
+          router.push('accountcreated')
         }
       })
     }

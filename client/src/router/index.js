@@ -13,6 +13,7 @@ import SearchResult from '@/components/SearchResult'
 import p404 from '@/components/404'
 import p403 from '@/components/403'
 import p500 from '@/components/500'
+import AccountCreated from '@/components/AccountCreated'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -43,6 +44,11 @@ export default new Router({
       path: '/account',
       name: 'Account',
       component: Account
+    },
+    {
+      path: '/accountcreated',
+      name: 'Account Created',
+      component: AccountCreated
     },
     {
       path: '/addbookcase',
