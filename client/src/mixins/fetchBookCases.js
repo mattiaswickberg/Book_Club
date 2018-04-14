@@ -6,9 +6,8 @@ const fetchBookCasesMixin = {
   methods: {
     fetchBookCases (userId) {
       return new Promise((resolve, reject) => {
-        HTTP.get('/bookcases', userId)
+        HTTP.get('/bookcases?' + 'userID=' + userId)
             .then(response => {
-              console.log(response)
               resolve(response.data)
             })
             .catch(error => {

@@ -9,7 +9,7 @@
           <div id='bookCases'>
             <!-- Render book cases and books -->
               <div v-for='item in cases' :key='item.name' class='caseDiv'>
-                {{item.name}}
+                {{item.title}}
                 <div v-for='item in item.books' :key='item.title' class='book'>
                   {{item.title}}
                 </div>
@@ -65,11 +65,14 @@ export default {
   },
     created() {
       // Check who's logged in
-      console.log(this.$session.getAll())
+      console.log(this.$session.get('user'))
 
       // fetch book cases from user
-      this.fetchBookCases(this.$session.user._id)
+      let user = this.$session.get('user')
+      this.fetchBookCases(user._id)
       .then(response => {
+        console.log('Book cases are: ')
+        console.log(response)
         this.cases = response
       })
   },
@@ -97,6 +100,7 @@ export default {
 
 .caseDiv {
   overflow:hidden;
+  background-color: olive;
 }
 
 .book {

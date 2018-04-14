@@ -1,6 +1,7 @@
 let Book = require('../models/Book')
 let BookCase = require('../models/BookCase')
 let getListFromKb = require('../lib/books/getListFromKb')
+let getBookCases = require('../lib/bookcases/getBookCases')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -41,7 +42,12 @@ module.exports = function (app) {
 
   app.get('/bookcases', function (req, res) {
     // Get a user's book cases
-    console.log(req.body.data)
+    getBookCases(req.query.userID).then(response => {
+      res.send(response)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   })
 
   app.post('/bookcase', function (req, res) {
