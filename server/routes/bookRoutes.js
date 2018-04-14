@@ -1,11 +1,13 @@
-let Book = require('../models/Book')
+// let Book = require('../models/Book')
 let BookCase = require('../models/BookCase')
 let getListFromKb = require('../lib/books/getListFromKb')
 let getBookCases = require('../lib/bookcases/getBookCases')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
-    getListFromKb(req.body.data).then(function (data) {
+    console.log('Searching...')
+    console.log(req.body)
+    getListFromKb(req.body.search).then(function (data) {
       res.send(data)
     })
   })

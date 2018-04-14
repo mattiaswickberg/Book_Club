@@ -87,6 +87,9 @@ export default {
       this.user = true
     }
   },
+  watch: {
+
+  },
   methods: {
     logout: function (event) {
       this.$session.destroy()
@@ -102,13 +105,7 @@ export default {
       })
     },
     searchBook: function() {
-      router.push('/searchresult', this.search)
-      console.log('searching for: ' + this.search.data)
-     /*   return HTTP.post('search', this.search)
-      .then( function(response) {
-        console.log(response)
-
-      }) */
+      this.$router.push('/searchresult/' + this.search.data)
     }
   }
 }
