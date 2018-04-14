@@ -1,5 +1,5 @@
 let User = require('../../models/User')
-let BookCase = require('../../models/BookCase')
+let createBookCase = require('../bookcases/createBookCase')
 let passwordHash = require('./passwordHash')
 
 let createUser = function (data) {
@@ -26,19 +26,8 @@ let createUser = function (data) {
       console.log('User error: ')
       console.log(error)
     }
-    User.findOne({_id: newUser._id}).then(function (data) {
-      let newBookCase = new BookCase({
-        user: newUser._id,
-        title: 'My first bookcase'
-      })
-
-      newBookCase.save(function (error) {
-        if (error) {
-          console.log(error)
-        }
-      })
-    })
-  })    
+    createBookCase(data.username, 'My book case')
+  })
 }
 
 module.exports = createUser

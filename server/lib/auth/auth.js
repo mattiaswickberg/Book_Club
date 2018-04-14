@@ -1,6 +1,6 @@
 let User = require('../../models/User')
-let BookCase = require('../../models/BookCase')
 let passport = require('passport')
+let createBookCase = require('../bookcases/createBookCase')
 let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 let LocalStrategy = require('passport-local').Strategy
 
@@ -54,7 +54,7 @@ passport.use(new GoogleStrategy({
           console.log('Creating new user')
           console.log(profile.photos[0].value)
           console.log(profile)
-          var newUser = new User()
+          let newUser = new User()
 
           newUser.googleId = profile.id
           newUser.googleToken = accessToken
@@ -65,20 +65,7 @@ passport.use(new GoogleStrategy({
           newUser.save(function (err) {
             if (err) throw err
             console.log('New user created')
-
-            User.findOne({_id: newUser._id}).then(function (data) {
-              let newBookCase = new BookCase({
-                user: newUser._id,
-                title: 'My first bookcase'
-              })
-
-              newBookCase.save(function (error) {
-                if (error) {
-                  console.log(error)
-                }
-              })
-            })
-
+            createBookCase(profile.displayname, 'My book case')
             return done(null, newUser)
           })
         }
