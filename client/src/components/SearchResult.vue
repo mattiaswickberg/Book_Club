@@ -11,21 +11,20 @@
         <th>Omslag: </th>
         <th>Författare: </th>
         <th>Titel: </th>
-        <th>ISBN: </th>
         <th>Typ: </th>
-        <th>Språk: </th>
+        <th>Originalspråk: </th>
         <th>År: </th>
+        <th>Lägg till</th>
       </tr>
-      <tr v-for="item in searchResult" :key='item.title'>
-        <td></td>
+      <tr id='bookRow' v-for="(item, index) in searchResult" :key='item.isbn[0]'>
+        <td>
+          {{item.imageurls}}
+        </td>
         <td>
           {{item.creator}}
         </td>
         <td>
           {{item.title}}
-        </td>
-        <td>
-          {{item.isbn}}
         </td>
         <td>
           {{item.type}}
@@ -36,7 +35,11 @@
         <td>
           {{item.date}}
         </td>
+        <td>
+          <b-form-select v-model='bookCase' :options='bookCaseNames' class='mb-3' /><b-btn variant='success' v-on:click='addBook(index)'>Lägg till i bokhylla</b-btn>
+          </td>
       </tr>
+      
     </table>
   </div>
 
@@ -51,17 +54,31 @@
 
 <script>
 import isLoggedInMixin from '@/mixins/checkAuth'
+import fetchBookCasesMixin from '@/mixins/fetchBookCases'
 import {HTTP} from '@/services/Api'
 export default {
   name: 'SearchResult',
-  mixins: [isLoggedInMixin],
+  mixins: [isLoggedInMixin, fetchBookCasesMixin],
   data () {
     return {
-      searchResult: []
+      searchResult: [],
+      bookCaseNames: [],
+      bookCases: [],
+      bookCase: ''
     }
   },
     created() {
       this.getSearchResults(this.$route.params)
+      // fetch book cases from user
+      let user = this.$session.get('user')
+      this.fetchBookCases(user._id)
+      .then(response => {
+        this.bookCases = response
+        response.forEach(element => {
+          this.bookCaseNames.push(element.title)
+        })
+        console.log(this.bookCases)
+      })
   },
     watch: {
     '$route.params.search'(newSearch, oldSearch) {
@@ -76,7 +93,23 @@ export default {
         console.log(response.data.list)
         this.searchResult = response.data.list
       })
+      },
+      addBook(index) {
+        var selectedBookCase = this.bookCases[0]._id
+        this.bookCases.forEach(element => {
+          if (element.title === this.bookCase) {
+            selectedBookCase = element._id
+          }
+        })
+        HTTP.post('/book', {
+          book: this.searchResult[index], 
+          bookcase: selectedBookCase,
+          user: this.$session.get('user')
+      })
       }
+  },
+  mounted() {
+
   }
 }
 </script>

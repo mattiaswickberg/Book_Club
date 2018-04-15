@@ -2,6 +2,7 @@
 let BookCase = require('../models/BookCase')
 let getListFromKb = require('../lib/books/getListFromKb')
 let getBookCases = require('../lib/bookcases/getBookCases')
+let addBook = require('../lib/books/addBook')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -14,32 +15,32 @@ module.exports = function (app) {
 
   app.get('/book', function (req, res) {
     // Get book from database and send back
-    console.log(req.body.data)
+    console.log(req.body)
   })
 
   app.get('/books', function (req, res) {
     // Get books in Book Case and send back
-    console.log(req.body.data)
+    console.log(req.body)
   })
 
   app.post('/book', function (req, res) {
     // Add book to desired bookcase
-    console.log(req.body.data)
+    addBook(req.body)
   })
 
   app.delete('/book', function (req, res) {
     // Delete book from bookcase
-    console.log(req.body.data)
+    console.log(req.body)
   })
 
   app.put('/book', function (req, res) {
     // Update book
-    console.log(req.body.data)
+    console.log(req.body)
   })
 
   app.get('/bookcase', function (req, res) {
     // Get book case from database
-    console.log(req.body.data)
+    console.log(req.body)
   })
 
   app.get('/bookcases', function (req, res) {
@@ -74,11 +75,11 @@ module.exports = function (app) {
 
   app.delete('/bookcase', function (req, res) {
     // Delete bookcase from database
-    console.log(req.body.data)
+    console.log(req.body)
   })
 
   app.put('/bookcase', function (req, res) {
     // Update bookcase
-    console.log(req.body.data)
+    console.log(req.body)
   })
 }
