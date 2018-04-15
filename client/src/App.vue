@@ -87,9 +87,6 @@ export default {
       this.user = true
     }
   },
-  watch: {
-
-  },
   methods: {
     logout: function (event) {
       this.$session.destroy()

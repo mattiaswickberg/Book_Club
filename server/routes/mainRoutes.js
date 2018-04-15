@@ -11,7 +11,7 @@ module.exports = function (app) {
 
   app.get('/account', function (req, res) {
     console.log('redirecting to account')
-    res.redirect(303, 'http://localhost:3000/#/account')
+    res.redirect(303, process.env.SERVER_URL + '/#/account')
   })
 
   // Usual routes

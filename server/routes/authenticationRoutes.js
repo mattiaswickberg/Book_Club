@@ -59,12 +59,8 @@ function (req, res) {
   app.get('/auth/google/callback',
 passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
   console.log(req.user)
-  res.redirect(303, 'http://localhost:3000/#/auth')
+  res.redirect(303, process.env.SERVER_URL + '/#/auth')
 })
-
-  /* successRedirect: 'http://localhost:3000/#/account',
-  failureRedirect: '#/auth'
-})) */
 
   app.get('/logout', function (req, res) {
     req.logout()
