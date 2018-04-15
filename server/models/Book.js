@@ -7,8 +7,9 @@ let BookSchema = new mongoose.Schema({
   isbn: String,
   picture: String,
   comments: [{body: String, date: {type: Date, default: Date.now}}],
-  rating: Number,
-  dateAdded: {type: Date, default: Date.now}
+  ratings: [{user: String, rating: Number, date: {type: Date, default: Date.now}}],
+  dateAdded: {type: Date, default: Date.now},
+  users: []
 })
 
 let Book = mongoose.model('Book', BookSchema)

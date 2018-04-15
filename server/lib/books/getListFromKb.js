@@ -1,3 +1,4 @@
+let consolidateBookVersions = require('./consolidateBooks')
 // Take search string and make https request to KB's API
 let getBooksFromKb = function (searchString) {
   return new Promise(function (resolve, reject) {
@@ -14,7 +15,7 @@ let getBooksFromKb = function (searchString) {
     }
 
     // Construct url for request
-    const url = 'https://libris.kb.se/xsearch?query=' + searchString + '&format=json&n=100'
+    const url = 'https://libris.kb.se/xsearch?query=' + searchString + '&format=json&n=100&order=-chronological'
 
     axios
   .get(url)
@@ -26,6 +27,9 @@ let getBooksFromKb = function (searchString) {
         books.list.push(element) // Save resulting books into return array
       })
     }
+    consolidateBookVersions(books.list).then(response => {
+      books.list = response
+    })
     resolve(books) // Return result of search
   })
   .catch(error => {
