@@ -69,10 +69,8 @@ import isLoggedInMixin from '@/mixins/checkAuth'
 import {HTTP} from '@/services/Api'
 export default {
   name: 'App',
-  mixins: [isLoggedInMixin],
   data () {
     return {
-          user: false,
           search : {
             data: ''
           },
@@ -82,9 +80,11 @@ export default {
           }
     }
   },
-  created() {
-    if (this.$session.exists()) {
-      this.user = true
+  computed: {
+    user() {
+      if (this.$session.exists()) {
+      return true
+    }
     }
   },
   methods: {
@@ -103,6 +103,11 @@ export default {
     },
     searchBook: function() {
       this.$router.push('/searchresult/' + this.search.data)
+    },
+    userLoggedIn: function() {
+          if (this.$session.exists()) {
+      return true
+    }
     }
   }
 }
@@ -128,9 +133,6 @@ $white: #ffffff;
 $grey: #f5f3ee;
 
 #app {
-  background-image: url('./assets/book_circle.jpeg');
-  background-size: 100%;
-  background-repeat: no-repeat;
   font-family: $fonts;
   color: $black;
   -webkit-font-smoothing: antialiased;

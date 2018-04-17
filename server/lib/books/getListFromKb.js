@@ -8,7 +8,7 @@ let getBooksFromKb = function (searchString) {
       'count': 0
     }
 
-    if (searchString.length === 0) {
+    if (searchString === undefined || searchString.length === 0) {
       resolve(books) // return empty search result is search string is empty
     } else if (searchString.includes(' ')) { // replace any spaces in search string with pluses
       searchString = searchString.replace(' ', '+')

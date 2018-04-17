@@ -10,9 +10,10 @@
             <!-- Render book cases and books -->
               <div v-for='item in cases' :key='item.name' class='caseDiv'>
                 {{item.title}}
-                <div v-for='item in item.books' :key='item.title' class='book'>
+                {{item.books}}
+                <!-- <div v-for='item in item.books' :key='item.title' class='book'>
                   {{item.title}}
-                </div>
+                </div> -->
               </div>
             </div>
         </div>
@@ -92,7 +93,8 @@ export default {
         // console.log(response)
         this.newCase = false
       let user = this.$session.get('user')
-      this.fetchBookCases(user._id)      .then(response => {
+      this.fetchBookCases(user._id)      
+      .then(response => {
         this.cases = response
       })
       })
@@ -105,7 +107,9 @@ export default {
 
 .caseDiv {
   overflow:hidden;
-  background-color: olive;
+  background-color: whitesmoke;
+  border: solid grey 1px;
+  margin: 1px;
 }
 
 .book {

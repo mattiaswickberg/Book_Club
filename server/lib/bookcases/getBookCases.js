@@ -1,11 +1,22 @@
 let Bookcase = require('../../models/BookCase')
-module.exports = function (userID) {
-  return new Promise(function (resolve, reject) {
-    Bookcase.find({user: userID}).then(response => {
-      resolve(response)
+let getBooks = require('../books/getBooks')
+module.exports = async function (userID) {
+  let cases = []
+  await Bookcase.find({user: userID}).then(async response => {
+      // console.log(response)
+    await response.forEach(async element => {
+      let bcase = {case: {}, books: []}
+        // console.log('bookcase')
+        // console.log(element)
+      if (element._id !== null || element._id !== undefined) {
+        bcase.case = element
+        bcase.books.push(await getBooks(element._id))
+        cases.push(bcase)
+        console.log(bcase)
+      }
     })
-    .catch(err => {
-      reject(err)
-    })
+    console.log('Cases: ')
+    console.log(cases)
+    return (cases)
   })
 }
