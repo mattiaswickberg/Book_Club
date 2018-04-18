@@ -1,5 +1,6 @@
 /* global test, expect */
 
+/*
 let login = require('../server/lib/')
 
 test('31.1: Login med fel lösenord ska returnera den informationen', () => {
@@ -19,4 +20,5 @@ test('31.1: Login med fel lösenord ska returnera den informationen', () => {
     })
     expect(data).toEqual('User does not exist')
     })
+   */
   

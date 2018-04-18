@@ -1,8 +1,11 @@
 let Bookcase = require('../../models/BookCase')
 let getBooks = require('../books/getBooks')
 module.exports = async function (userID) {
-  let cases = []
-  await Bookcase.find({user: userID}).then(async response => {
+  if (typeof userID !== 'string') {
+    return null
+  } else {
+    let cases = []
+    await Bookcase.find({user: userID}).then(async response => {
       // console.log(response)
     await response.forEach(async element => {
       let bcase = {case: {}, books: []}
@@ -19,4 +22,5 @@ module.exports = async function (userID) {
     console.log(cases)
     return (cases)
   })
+  }
 }

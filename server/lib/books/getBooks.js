@@ -3,5 +3,7 @@ const Book = require('../../models/Book')
 const getBook = require('../books/getBook')
  */
 module.exports = async function (caseID) {
-
+  if (typeof caseID !== 'string') {
+    return null
+  }
 }

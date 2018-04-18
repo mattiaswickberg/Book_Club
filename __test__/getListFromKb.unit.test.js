@@ -1,5 +1,5 @@
 /* global test, expect */
-let getList = require('../server/lib/getListFromKb')
+let getList = require('../server/lib/books/getListFromKb')
 
 test('10.3: GetListFromKb should return object with empty array when provided with empty string', () => {
   expect.assertions(1)

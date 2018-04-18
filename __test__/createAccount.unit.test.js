@@ -1,6 +1,6 @@
 /* global test, expect */
 
-let createAccount = require('../server/lib/createAccount')
+let createAccount = require('../server/lib/auth/createAccount')
 
 test('7.1: CreateAccount without valid mail should return invalid mail message', () => {
   expect.assertions(1)
@@ -10,7 +10,7 @@ test('7.1: CreateAccount without valid mail should return invalid mail message',
     mail: 'bubbahubba'
   })
   expect(data).toEqual('Invalid mail address')
-  })
+})
 
 test('7.2: CreateAccount with password shorter than 8 characters should return short password message', () => {
   expect.assertions(1)

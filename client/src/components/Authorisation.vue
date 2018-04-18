@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import {HTTP} from '@/services/Api'
 export default {
   created() {
         HTTP.get('/sessionstatus')
