@@ -11,9 +11,9 @@
               <div v-for='item in cases' :key='item.name' class='caseDiv'>
                 {{item.title}}
                 {{item.books}}
-                <!-- <div v-for='item in item.books' :key='item.title' class='book'>
+                 <div v-for='item in item.books' :key='item.title' class='book'>
                   {{item.title}}
-                </div> -->
+                </div> 
               </div>
             </div>
         </div>

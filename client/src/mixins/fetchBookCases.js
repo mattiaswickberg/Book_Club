@@ -8,6 +8,7 @@ const fetchBookCasesMixin = {
       return new Promise((resolve, reject) => {
         HTTP.get('/bookcases?' + 'userID=' + userId)
             .then(response => {
+              // console.log(response.data)
               resolve(response.data)
             })
             .catch(error => {

@@ -73,6 +73,8 @@ export default {
       let user = this.$session.get('user')
       this.fetchBookCases(user._id)
       .then(response => {
+        console.log('Fething book cases...')
+        console.log(response)
         this.bookCases = response
         response.forEach(element => {
           this.bookCaseNames.push(element.title)

@@ -46,6 +46,7 @@ module.exports = function (app) {
   app.get('/bookcases', function (req, res) {
     // Get a user's book cases
     getBookCases(req.query.userID).then(response => {
+      // console.log(response)
       res.send(response)
     })
     .catch(err => {

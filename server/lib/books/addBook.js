@@ -40,7 +40,11 @@ let addToBookCase = function (book) {
     console.log('response is:')
     console.log(response)
 
-    bookToAdd = response._id
+    bookToAdd = {
+      _id: response._id,
+      title: response.title,
+      author: response.author
+    }
   })
 
   Bookcase.findById(book.bookcase).then(response => {
