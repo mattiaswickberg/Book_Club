@@ -1,11 +1,13 @@
 let Bookcase = require('../../models/BookCase')
 module.exports = function (userID) {
   return new Promise(function (resolve, reject) {
+    // console.log('Finding book case: ' + userID)
     if (typeof userID !== 'string') {
-      resolve('not a valid userID')
+      resolve('Not a valid userID')
     } else {
-      Bookcase.find({user: userID}).then(response => {
-        // console.log(response)
+      let query = (Bookcase.find({user: userID}))
+      query.exec().then(response => {
+        // console.log('response is: ' + response)
         let cases = []
         response.forEach(element => {
           let books = element.books.filter(function (item) {
@@ -16,6 +18,11 @@ module.exports = function (userID) {
         })
         // console.log(cases)
         resolve(cases)
+      })
+      .catch(err => {
+        console.log('Error')
+        console.log(err)
+        resolve('Invalid ID')
       })
     }
   })

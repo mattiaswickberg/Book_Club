@@ -7,7 +7,8 @@ module.exports = function (bookID) {
     } else {
       Book.findById(bookID, function (err, book) {
         if (err) {
-          reject(err)
+          console.log(err)
+          resolve('Invalid book ID')
         } else if (typeof book === 'object') {
           resolve(book)
         } else {
