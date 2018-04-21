@@ -3,19 +3,27 @@
   <b-container fluid>
     <b-row>
       <b-col></b-col>
-      <b-col>
+      <b-col cols='12'>
         <div>
           <h1> Account page</h1>
-          <div id='bookCases'>
+          <b-container fluid>
+            <b-row id='bookCases'>
+            </b-row>
             <!-- Render book cases and books -->
-              <div v-for='item in cases' :key='item.name' class='caseDiv'>
-                {{item.title}}
-                {{item.books}}
-                 <div v-for='item in item.books' :key='item.title' class='book'>
-                  {{item.title}}
-                </div> 
-              </div>
-            </div>
+              <b-row v-for='item in cases' :key='item.name' class='caseDiv'>
+                <table>
+                  <tr>
+                  <th>{{item.title}}</th>
+                  </tr>
+                  <tr>
+                  <td v-for='item in item.books' :key='item.title' class='book'>
+                   <p><strong>{{item.author}}</strong></p>
+                   <p><i>{{item.title}}</i></p>
+                  </td>
+                  </tr>
+                </table>
+              </b-row>
+          </b-container>
         </div>
       </b-col>
       <b-col></b-col>
@@ -24,7 +32,7 @@
       <b-col></b-col>
       <b-col></b-col>
       <b-col>
-        <b-button :size='lg' :variant='primary' v-on:click='addNewCase'>Lägg till bokhylla</b-button>
+        <b-button size='lg' variant='primary' v-on:click='addNewCase'>Lägg till bokhylla</b-button>
       </b-col>
     </b-row>
     <b-row>
@@ -67,14 +75,15 @@ export default {
   },
     created() {
       // Check who's logged in
-      console.log(this.$session.get('user'))
+/*       console.log('checking user')
+      console.log(this.$session.get('user')) */
 
       // fetch book cases from user
       let user = this.$session.get('user')
       this.fetchBookCases(user._id)
       .then(response => {
-        console.log('Book cases are: ')
-        console.log(response)
+/*         console.log('Book cases are: ')
+        console.log(response) */
         this.cases = response
       })
   },
@@ -110,9 +119,11 @@ export default {
   background-color: whitesmoke;
   border: solid grey 1px;
   margin: 1px;
-}
+  }
 
 .book {
-  display:inline;
+  display: inline-block;
+  border: 1px solid black;
+  padding: 5px;
 }
 </style>

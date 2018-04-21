@@ -37,8 +37,8 @@ let addToBookCase = function (book) {
   console.log(book)
   let bookToAdd
   Book.findOne({isbn: book.book.isbn}).then(response => {
-    console.log('response is:')
-    console.log(response)
+/*     console.log('response is:')
+    console.log(response) */
 
     bookToAdd = {
       _id: response._id,
@@ -49,10 +49,18 @@ let addToBookCase = function (book) {
 
   Bookcase.findById(book.bookcase).then(response => {
     let books = response.get('books')
-    books.push(bookToAdd)
-    response.set('books', books)
-    response.save(function (error) {
-      if (error) { console.log(error) }
+    let bookExists = false
+    books.forEach(element => {
+      if (element._id === bookToAdd._id) {
+        bookExists = true
+      }
     })
+    if (!bookExists) {
+      books.push(bookToAdd)
+      response.set('books', books)
+      response.save(function (error) {
+        if (error) { console.log(error) }
+      })
+    }
   })
 }

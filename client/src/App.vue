@@ -20,7 +20,7 @@
       <div id='userArea' v-if='user'>
         <img :src='user.image'> 
         <br> {{user.username}} 
-        <b-button id='logoutButton' :size='sm' :variant='primary' v-on:click='logout'>Logga ut</b-button>
+        <b-button id='logoutButton' size='sm' variant='primary' v-on:click='logout'>Logga ut</b-button>
         </div>
       <div id='loginForm' v-else>
         <form id='loginForm' @submit.prevent="login">
@@ -35,7 +35,7 @@
     </div>
 </form>
 <a href="/auth/google">
-<b-button id='loginButton' :size="sm" :variant="primary">
+<b-button id='loginButton' size="sm" variant="primary">
 Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
 </b-button>
 </a>
@@ -45,7 +45,7 @@ Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
   <b-row id='middle'>
     <b-col>
     </b-col>
-    <b-col cols='9'>
+    <b-col cols='10'>
        <div id='app'>
     <router-view/>
   </div>
@@ -77,14 +77,15 @@ export default {
           userData: {
             username: '',
             password: ''
-          }
+          },
+          user: ''
     }
   },
-  computed: {
-    user() {
-      if (this.$session.exists()) {
-      return true
-    }
+  mounted() {
+    if(this.$session.exists()) {
+      this.user = this.$session.get('user')
+      console.log('Checking if session exists')
+      console.log(this.user)
     }
   },
   methods: {
@@ -98,6 +99,7 @@ export default {
         // console.log(response.data)
         this.$session.start()
         this.$session.set('user', response.data)
+        this.user = response.data
         this.$router.push({ name: 'Account' })
       })
     },
