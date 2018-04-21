@@ -10,6 +10,7 @@ import Book from '@/components/Book'
 import BookCase from '@/components/BookCase'
 import EditAccount from '@/components/EditAccount'
 import SearchResult from '@/components/SearchResult'
+import ViewBook from '@/components/ViewBook'
 import p404 from '@/components/404'
 import p403 from '@/components/403'
 import p500 from '@/components/500'
@@ -59,6 +60,11 @@ export default new Router({
       path: '/book',
       name: 'Book',
       component: Book
+    },
+    {
+      path: '/viewbook',
+      name: 'ViewBook',
+      component: ViewBook
     },
     {
       path: '/bookcase',

@@ -17,8 +17,12 @@
                   </tr>
                   <tr>
                   <td v-for='item in item.books' :key='item.title' class='book'>
+                    <router-link :to="{ name: 'ViewBook', params: {id: item._id}}">
+                  <div>
                    <p><strong>{{item.author}}</strong></p>
                    <p><i>{{item.title}}</i></p>
+                   </div>
+                   </router-link>
                   </td>
                   </tr>
                 </table>
