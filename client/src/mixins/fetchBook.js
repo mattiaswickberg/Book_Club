@@ -6,8 +6,9 @@ const fetchBookMixin = {
   methods: {
     fetchBook (bookId) {
       return new Promise((resolve, reject) => {
-        HTTP.get('/books', bookId)
+        HTTP.get('/book?' + 'bookID=' + bookId)
             .then(response => {
+              console.log('Fetching book')
               console.log(response)
               resolve(response.data)
             })

@@ -16,11 +16,11 @@
                   <th>{{item.title}}</th>
                   </tr>
                   <tr>
-                  <td v-for='item in item.books' :key='item.title' class='book'>
-                    <router-link :to="{ name: 'ViewBook', params: {id: item._id}}">
+                  <td v-for='book in item.books' :key='book.title' class='book'>
+                    <router-link :to="{ name: 'ViewBook', params: {id: book._id, bookcase: item._id}}">
                   <div>
-                   <p><strong>{{item.author}}</strong></p>
-                   <p><i>{{item.title}}</i></p>
+                   <p><strong>{{book.author}}</strong></p>
+                   <p><i>{{book.title}}</i></p>
                    </div>
                    </router-link>
                   </td>

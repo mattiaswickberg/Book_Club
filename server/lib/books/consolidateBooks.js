@@ -1,4 +1,3 @@
-const axios = require('axios')
 
 module.exports = function (books) {
   return new Promise(function (resolve, reject) {
@@ -10,7 +9,7 @@ module.exports = function (books) {
     // console.log(books)
     while (books.length > 0) {
       books.forEach(element => {
-        if (element.date == undefined) {
+        if (element.date === undefined) {
           books.splice(books.indexOf(element), 1)
         }
       })

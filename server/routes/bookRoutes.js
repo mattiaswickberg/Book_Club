@@ -3,6 +3,7 @@ let BookCase = require('../models/BookCase')
 let getListFromKb = require('../lib/books/getListFromKb')
 let getBookCases = require('../lib/bookcases/getBookCases')
 let addBook = require('../lib/books/addBook')
+let getBook = require('../lib/books/getBook')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -15,7 +16,10 @@ module.exports = function (app) {
 
   app.get('/book', function (req, res) {
     // Get book from database and send back
-    console.log(req.body)
+    getBook(req.query.bookID)
+    .then(response => {
+      res.send(response)
+    })
   })
 
   app.get('/books', function (req, res) {
@@ -30,7 +34,8 @@ module.exports = function (app) {
 
   app.delete('/book', function (req, res) {
     // Delete book from bookcase
-    console.log(req.body)
+    console.log('Deleting book: ')
+    console.log(req.query)
   })
 
   app.put('/book', function (req, res) {

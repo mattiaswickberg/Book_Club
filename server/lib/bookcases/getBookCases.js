@@ -5,7 +5,7 @@ module.exports = function (userID) {
       resolve('not a valid userID')
     } else {
       Bookcase.find({user: userID}).then(response => {
-        console.log(response)
+        // console.log(response)
         let cases = []
         response.forEach(element => {
           let books = element.books.filter(function (item) {
@@ -14,7 +14,7 @@ module.exports = function (userID) {
           element.books = books
           cases.push(element)
         })
-        console.log(cases)
+        // console.log(cases)
         resolve(cases)
       })
     }
