@@ -12,7 +12,7 @@ export default {
   created() {
         HTTP.get('/sessionstatus')
             .then(response => {
-        // console.log(response.data)
+        console.log(response.data)
         this.$session.start()
         this.$session.set('user', response.data)
             })
