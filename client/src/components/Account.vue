@@ -19,8 +19,8 @@
                   <td v-for='book in item.books' :key='book.title' class='book'>
                     <router-link :to="{ name: 'ViewBook', params: {id: book._id, bookcase: item._id}}">
                   <div>
-                   <p><strong>{{book.author}}</strong></p>
-                   <p><i>{{book.title}}</i></p>
+                   <p><img v-bind:src="book.images[0].smallThumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
+                   <figcaption>{{book.author}}: {{book.title}}</figcaption>
                    </div>
                    </router-link>
                   </td>
@@ -72,7 +72,7 @@ export default {
       newCase: false,
       bookCase: {
         title: '',
-        user: ''
+        user: '',
       },
       cases: []
     }
@@ -89,6 +89,8 @@ export default {
 /*         console.log('Book cases are: ')
         console.log(response) */
         this.cases = response
+        console.log(this.cases)
+
       })
   },
   methods: {
@@ -130,4 +132,5 @@ export default {
   border: 1px solid black;
   padding: 5px;
 }
+
 </style>

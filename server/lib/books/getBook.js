@@ -1,4 +1,5 @@
 let Book = require('../../models/Book')
+let getImage = require('../books/getImage')
 
 module.exports = function (bookID) {
   return new Promise(function (resolve, reject) {

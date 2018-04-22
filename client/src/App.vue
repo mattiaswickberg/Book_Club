@@ -115,7 +115,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 $fonts: 'Avenir', Helvetica, Arial, sans-serif;
 
@@ -210,4 +210,10 @@ b-row {
 form input button {
   display: inline-block;
 }
+
+a {
+  color: black;
+}
+
+
 </style>
