@@ -21,7 +21,7 @@ export default {
             })
       },
       mounted() {
-        this.$router.push({ name: 'Account' })
+        // this.$router.push({ name: 'Account' })
       }
     }
 </script>

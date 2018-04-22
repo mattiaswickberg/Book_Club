@@ -208,6 +208,10 @@ b-row {
   height: 35px;
 }
 
+#loginForm {
+  display:inline-block;
+}
+
 form input button {
   display: inline-block;
 }
