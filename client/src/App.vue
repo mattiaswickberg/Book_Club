@@ -85,11 +85,10 @@ export default {
     }
   },
   mounted() {
-    if(this.$session.exists()) {
-      this.user = this.$session.get('user')
-      console.log('Checking if session exists')
-      console.log(this.user)
-    }
+    this.userLoggedIn()
+  },
+  updated() {
+    this.userLoggedIn()
   },
   methods: {
     logout: function (event) {
@@ -110,8 +109,10 @@ export default {
       this.$router.push('/searchresult/' + this.search.data)
     },
     userLoggedIn: function() {
-          if (this.$session.exists()) {
-      return true
+    if(this.$session.exists()) {
+      this.user = this.$session.get('user')
+      console.log('Checking if session exists')
+      console.log(this.user)
     }
     }
   }
