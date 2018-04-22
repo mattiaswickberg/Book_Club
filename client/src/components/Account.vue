@@ -19,8 +19,8 @@
                   <td v-for='book in item.books' :key='book.title' class='book'>
                     <router-link :to="{ name: 'ViewBook', params: {id: book._id, bookcase: item._id}}">
                   <div>
-                   <p><img v-bind:src="book.images[0].smallThumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
-                   <figcaption>{{book.author}}: {{book.title}}</figcaption>
+                   <p><img class='bookImage' v-bind:src="book.images[0].smallThumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
+                   <figcaption>{{book.title}}</figcaption>
                    </div>
                    </router-link>
                   </td>
@@ -131,6 +131,12 @@ export default {
   display: inline-block;
   border: 1px solid black;
   padding: 5px;
+  width: 150px;
+  height: 175px;
+}
+
+.bookImage {
+  height: 100px;
 }
 
 </style>

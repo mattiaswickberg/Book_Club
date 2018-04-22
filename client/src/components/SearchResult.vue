@@ -107,6 +107,9 @@ export default {
           book: this.searchResult[index], 
           bookcase: selectedBookCase,
           user: this.$session.get('user')
+      }).then(response => {
+        console.log(response)
+        this.$router.push('/account')
       })
       }
   },

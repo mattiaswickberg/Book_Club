@@ -1,3 +1,4 @@
+// let getImage = require('../books/getImage')
 
 module.exports = function (books) {
   return new Promise(function (resolve, reject) {
@@ -15,7 +16,7 @@ module.exports = function (books) {
       })
 
       let book = books[0]
-      let newBook = {creator: book.creator, title: book.title, isbn: [book.isbn], type: book.type, date: book.date, language: book.language, imageurls: []}
+      let newBook = {creator: book.creator, title: book.title, isbn: [book.isbn], type: book.type, date: book.date, language: book.language, images: []}
       for (var i = 0; i < books.length; i += 1) {
         if (book.creator === books[i].creator && book.title === books[i].title && book.language === books[i].language) {
           newBook.isbn.push(books[i].isbn)
@@ -28,9 +29,16 @@ module.exports = function (books) {
       consolidatedBooks.push(newBook)
       books.shift()
     }
-     // console.log(consolidatedBooks)
+     // get images for books
+    /* consolidatedBooks.forEach(element => {
+      if (element.isbn !== undefined) {
+        return getImage(element.isbn).then(image => {
+          element.images.push(image)
+        })
+      }
+    }) */
 
-    // return array
+    console.log(consolidatedBooks)
     resolve(consolidatedBooks)
   })
 }

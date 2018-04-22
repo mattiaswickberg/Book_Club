@@ -30,6 +30,7 @@ module.exports = function (app) {
   app.post('/book', function (req, res) {
     // Add book to desired bookcase
     addBook(req.body)
+    res.send(200, 'book added')
   })
 
   app.delete('/book', function (req, res) {

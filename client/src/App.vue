@@ -1,27 +1,27 @@
 <template>
 <b-container fluid>
-  <div id='body'>
+  <div>
   <b-row id='header'>
-    <b-col>
-      <router-link to='/'>
-        <img id='logo' src="./assets/logo.png">
-        </router-link>
-    </b-col>
-    <b-col cols='6' id='topBar'>
-      <div id='title'>
-              <h1>SSIS Bokcirkel</h1>
-              <form id='searchField' @submit.prevent='searchBook'>
-                <input type=text v-model='search.data' placeholder="Sök bok"><button type='submit'><i class="material-icons">search</i></button>
-              </form>
-      </div>
+    <b-col cols='12'>
+    <b-navbar toggleable='md' type='dark' variant='info'>
+      <b-navbar-toggle target='nav_collapse'></b-navbar-toggle>
+      <b-navbar-brand href='#/'><img id='logo' src="./assets/logo.png"></b-navbar-brand>
+      <b-collapse is-nav id='nav_collapse'>
+        <b-navbar-nav>
+          <b-nav-item href='#/account'>Account</b-nav-item> 
+          <b-nav-item href='#/profile'>Profile</b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class='ml-auto'>
+        <b-nav-form id='searchField' @submit.prevent='searchBook'>
+                <b-form-input type=text v-model='search.data' placeholder="Sök bok"/>
+                  <b-button type='submit'><i class="material-icons">search</i></b-button>
+              </b-nav-form>
 
-    </b-col>
-    <b-col>
-      <div id='userArea' v-if='user'>
-        <img :src='user.image'> 
-        <br> {{user.username}} 
-        <b-button id='logoutButton' size='sm' variant='primary' v-on:click='logout'>Logga ut</b-button>
-        </div>
+              <div id='userArea' v-if='user'>
+                <img :src='user.image'> 
+                <p> {{user.username}} </p>  
+                <b-button id='logoutButton' size='sm' v-on:click='logout'>Logga ut</b-button>
+                </div>
       <div id='loginForm' v-else>
         <form id='loginForm' @submit.prevent="login">
     <div>
@@ -40,6 +40,9 @@ Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
 </b-button>
 </a>
 </div>
+</b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     </b-col>
   </b-row>
   <b-row id='middle'>
@@ -153,15 +156,8 @@ $grey: #f5f3ee;
 }
 
 #header {
-    background-color: $darkPink;
-    padding: 5px;
+    padding: 0px;
     color: $white;
-}
-
-#topBar {
-  height: auto;
-  text-align: center;
-  color: $white;
 }
 
 #title {
@@ -186,6 +182,11 @@ $grey: #f5f3ee;
   right: 0px;
   left: 0px;
   margin-top: 10px;
+}
+
+#userArea, #loginForm {
+  padding: 5px;
+  margin: 5px;
 }
 
 #author {
