@@ -85,7 +85,6 @@ export default {
     }
   },
   mounted() {
-    this.userLoggedIn()
   },
   updated() {
     this.userLoggedIn()
@@ -112,7 +111,7 @@ export default {
     if(this.$session.exists()) {
       this.user = this.$session.get('user')
       console.log('Checking if session exists')
-      console.log(this.user)
+      console.log(this.user)  
     }
     }
   }

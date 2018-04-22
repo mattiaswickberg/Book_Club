@@ -41,7 +41,7 @@
             <div id='createAccountDiv'> 
             </div>
             <div>
-      <a href='http://localhost:3000/auth/google'>
+      <a href='/auth/google'>
       <b-button id='loginButton' :size="lg" :variant="primary">Logga in med ditt googlekonto
             <img id='googleLogo' src='../assets/google.jpg'>
             </b-button>
