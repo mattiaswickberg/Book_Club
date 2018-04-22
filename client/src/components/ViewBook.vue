@@ -7,6 +7,7 @@
   <h1> {{book.title}}</h1>
   <div id='displayBookDetails'>
     <div class='mainBookDetails'>
+      <img v-bind:src="book.images[0].thumbnail">
       <p>Författare: {{book.author}}</p>
       <p>Titel: {{book.title}}</p>
       <p>Utgivningsår: {{book.publishedYear}}</p>
