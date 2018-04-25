@@ -10,7 +10,16 @@ let BookSchema = new mongoose.Schema({
       smallThumbnail: './static/blank-book-cover-small.png',
       thumbnail: './static/blank-book-cover.png'
     }]},
-  comments: [{body: String, date: {type: Date, default: Date.now}}],
+  comments: [{
+    user: String,
+    comment: String,
+    date: {type: Date, default: Date.now},
+    replies: [{
+      user: String,
+      comment: String,
+      date: {type: Date, default: Date.now}
+    }]
+  }],
   ratings: [{user: String, rating: Number, date: {type: Date, default: Date.now}}],
   dateAdded: {type: Date, default: Date.now},
   users: []

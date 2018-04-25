@@ -13,9 +13,7 @@ module.exports = function (data) {
     }
     let comment = {
       user: data.username,
-      dateAdded: Date.now(),
-      comment: data.comment,
-      replies: []
+      comment: data.comment
     }
     let query = Book.findById(data.bookID)
     query.exec().then(function (doc) {
