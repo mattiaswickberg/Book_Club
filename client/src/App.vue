@@ -85,9 +85,9 @@ export default {
     }
   },
   mounted() {
+    this.userLoggedIn()
   },
   updated() {
-    this.userLoggedIn()
   },
   methods: {
     logout: function (event) {

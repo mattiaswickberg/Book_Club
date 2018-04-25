@@ -2,11 +2,11 @@
 
 let getBookCases = require('../server/lib/bookcases/getBookCases')
 
-test('28.4: getBookcases should return error message if provided with something other than an array', () => {
+test('28.4: getBookcases should return error message if called without argument', () => {
   expect.assertions(1)
-  getBookCases('saurhfaushfd')
+  getBookCases()
   .then(response => {
     console.log(response)
-    expect(response).toEqual('Invalid ID')
+    expect(response).toEqual('Not a valid userID')
   })
 })

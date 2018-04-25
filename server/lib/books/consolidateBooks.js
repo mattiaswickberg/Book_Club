@@ -38,7 +38,7 @@ module.exports = function (books) {
       }
     }) */
 
-    console.log(consolidatedBooks)
+    // console.log(consolidatedBooks)
     resolve(consolidatedBooks)
   })
 }
