@@ -4,6 +4,7 @@ let getListFromKb = require('../lib/books/getListFromKb')
 let getBookCases = require('../lib/bookcases/getBookCases')
 let addBook = require('../lib/books/addBook')
 let getBook = require('../lib/books/getBook')
+let addRatingToBook = require('../lib/books/addRatingToBook')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -88,5 +89,15 @@ module.exports = function (app) {
   app.put('/bookcase', function (req, res) {
     // Update bookcase
     console.log(req.body)
+  })
+
+  app.post('/rating', function (req, res) {
+    addRatingToBook(req.body).then(response => {
+      if (response === 'Rating saved') {
+        res.send(200, response)
+      } else {
+        res.send(418, response)
+      }
+    })
   })
 }

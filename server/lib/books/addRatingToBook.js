@@ -11,20 +11,20 @@ module.exports = function (data) {
       let ratings = doc.get('ratings')
       // Check if user already rated book
       ratings.forEach(element => {
-        if (element.user === data.userID) {
+        if (element.user === data.user._id) {
           ratings.splice(ratings.indexOf(element), 1)
         }
       })
       // Add new rating
       ratings.push({
-        user: data.userID,
+        user: data.user._id,
         rating: data.rating
       })
       doc.set('ratings', ratings)
       // Save book to database
       doc.save(function (err, doc) {
         if (err) { resolve(err) }
-        resolve('rating saved')
+        resolve('Rating saved')
       })
     })
   })
