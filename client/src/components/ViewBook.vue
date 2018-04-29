@@ -86,7 +86,6 @@ export default {
       bookCases: [],
       chosenBookCase: '',
       bookcase: '',
-      comment: '',
       commentText: ''
     }
   },
@@ -123,7 +122,7 @@ export default {
     addComment: function() {
       HTTP.post('/comment', {
         bookID: this.book._id,
-        comment: this.comment,
+        comment: this.commentText,
         user: this.$session.get('user')
       }).then(response => {
         console.log(response)

@@ -5,6 +5,7 @@ let getBookCases = require('../lib/bookcases/getBookCases')
 let addBook = require('../lib/books/addBook')
 let getBook = require('../lib/books/getBook')
 let addRatingToBook = require('../lib/books/addRatingToBook')
+let addComment = require('../lib/books/addCommentToBook')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -96,6 +97,14 @@ module.exports = function (app) {
       if (response === 'Rating saved') {
         res.send(200, response)
       } else {
+        res.send(418, response)
+      }
+    })
+  })
+
+  app.post('/comment', function (req, res) {
+    addComment(req.body).then(response => {
+      if (response === 'Comment saved') { res.send(200, response) } else {
         res.send(418, response)
       }
     })

@@ -12,7 +12,7 @@ module.exports = function (data) {
       resolve('No comment found')
     }
     let comment = {
-      user: data.username,
+      user: data.user.username,
       comment: data.comment
     }
     let query = Book.findById(data.bookID)
