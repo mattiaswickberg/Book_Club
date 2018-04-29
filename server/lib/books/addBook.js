@@ -59,18 +59,18 @@ let addToBookCase = function (book) {
     let books = response.get('books')
     let bookExists = false
     books.forEach(element => {
-      console.log('Element is: ')
-      console.log(element)
+      // console.log('Element is: ')
+      // console.log(element)
       if (element !== null && element !== undefined) {
-        if (element._id === bookToAdd._id) {
+        if (element._id.toString() === bookToAdd._id) {
           bookExists = true
         }
       }
     })
     if (!bookExists) {
       books.push(bookToAdd)
-      console.log('adding book ')
-      console.log(books)
+      // console.log('adding book ')
+      // console.log(books)
       response.set('books', books)
       response.save(function (error) {
         if (error) { console.log(error) }

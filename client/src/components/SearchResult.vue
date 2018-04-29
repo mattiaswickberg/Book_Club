@@ -14,11 +14,12 @@
         <th>Typ: </th>
         <th>Originalspråk: </th>
         <th>År: </th>
-        <th>Lägg till</th>
+        <th>Detaljer</th>
+        <!-- <th>Lägg till</th> -->
       </tr>
-      <tr id='bookRow' v-for="(item, index) in searchResult" :key='item.isbn[0]'>
+      <tr id='bookRow' v-for="(item) in searchResult" :key='item.isbn[0]'>
         <td>
-          {{item.imageurls}}
+          <img class='bookCover' src='/static/blank-book-cover-small.png'>
         </td>
         <td>
           {{item.creator}}
@@ -35,9 +36,12 @@
         <td>
           {{item.date}}
         </td>
-        <td>
+        <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
+          <td>Visa mer</td>
+        <!-- <td>
           <b-form-select v-model='bookCase' :options='bookCaseNames' class='mb-3' /><b-btn variant='success' v-on:click='addBook(index)'>Lägg till i bokhylla</b-btn>
-          </td>
+          </td> -->
+          </router-link>
       </tr>
       
     </table>
@@ -132,6 +136,10 @@ export default {
 td {
   border: solid black 1px;
   padding: 2px;
+}
+
+.bookCover {
+  width:50px;
 }
 
 </style>

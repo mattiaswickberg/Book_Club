@@ -15,6 +15,7 @@ import p404 from '@/components/404'
 import p403 from '@/components/403'
 import p500 from '@/components/500'
 import AccountCreated from '@/components/AccountCreated'
+import ViewBookDetails from '@/components/ViewBookdetails'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -81,6 +82,11 @@ export default new Router({
       name: 'SearchResult',
       component: SearchResult,
       props: true
+    },
+    {
+      path: '/viewBookDetails',
+      name: 'ViewBookDetails',
+      component: ViewBookDetails
     },
     {
       path: '/404',
