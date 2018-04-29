@@ -18,7 +18,8 @@
     </div>
 
     <div id='bookAdditional'>
-      ratings: {{book.ratings}} <!--Change this to computed value -->
+      Your rating: {{book.ratings}} <!--Change this to computed value -->
+      Average rating: {{book.ratings}}
       comments: {{book.comments}} <!-- change this to v-for that displays comments as separate divs-->
     </div>
   </div>
@@ -28,9 +29,20 @@
     <b-row>
       <b-col></b-col>
       <b-col cols='6'>
-        <b-btn variant='primary'>Rate book</b-btn>
-        <b-btn variant='success'>Add Comment</b-btn>
-        <b-btn variant='warning' v-on:click='removeBook'>Remove from your bookcase</b-btn>
+        <b-btn variant='primary' v-on:click='rateBook'>Betygsätt bok</b-btn>
+        <b-btn v-b-toggle.collapseComment variant='success'>Kommentera</b-btn>
+        <b-btn variant='warning' v-on:click='removeBook'>Ta bort bok från bokhylla</b-btn>
+        <b-collapse id='collapseComment' class='mt-2'>
+          <b-form>
+            <b-label>Kommentar:</b-label>
+            <b-form-textarea id='comment'
+            v-model='commentText'
+            placeholder='Skriv din kommentar här'
+            :rows='4'>
+            </b-form-textarea>
+            <b-btn variant='success' v-on:click='addComment'>Spara kommentar</b-btn>
+          </b-form>
+        </b-collapse>
       </b-col>
       <b-col></b-col>
     </b-row>

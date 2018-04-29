@@ -2,7 +2,7 @@
 <b-container fluid>
   <div>
   <b-row id='header'>
-    <b-col cols='12'>
+    <b-col id = 'headerCol' cols='12'>
     <b-navbar toggleable='md' type='dark' variant='info'>
       <b-navbar-toggle target='nav_collapse'></b-navbar-toggle>
       <b-navbar-brand href='#/'><img id='logo' src="./assets/logo.png"></b-navbar-brand>
@@ -158,6 +158,11 @@ $grey: #f5f3ee;
 #header {
     padding: 0px;
     color: $white;
+    width: auto;
+}
+
+#headerCol {
+  padding: 0px;
 }
 
 #title {
@@ -174,7 +179,7 @@ $grey: #f5f3ee;
 #footer {
   position: relative;
   bottom: 0px;
-  width: 100%;
+  width: auto;
   height: 50px;
   text-align: center;
   background-color:$darkPink;
