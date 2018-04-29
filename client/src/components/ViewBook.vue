@@ -4,8 +4,8 @@
     <b-row>
       <b-col></b-col>
       <b-col cols='6'>
-  <h1> {{book.title}}</h1>
   <div id='displayBookDetails'>
+      <h1> {{book.title}}</h1>
     <div class='mainBookDetails'>
       <img v-bind:src="book.images[0].thumbnail">
       <p>Författare: {{book.author}}</p>
@@ -18,9 +18,9 @@
     </div>
 
     <div id='bookAdditional'>
-      Your rating: {{rating}} 
-      Average rating: {{averageRating}} <!--Change this to computed value -->
-      comments: {{book.comments}} <!-- change this to v-for that displays comments as separate divs-->
+      Ditt betyg: {{rating}} 
+      Medelbetyg: {{averageRating}} 
+      Antal kommentarer: {{commentsNumber}} 
     </div>
   </div>
       </b-col>
@@ -29,10 +29,15 @@
     <b-row>
       <b-col></b-col>
       <b-col cols='6'>
+        <p></p>
         <b-btn v-b-toggle.collapseRating variant='primary'>Betygsätt bok</b-btn>
         <b-btn v-b-toggle.collapseComment variant='success'>Kommentera</b-btn>
         <b-btn v-b-toggle.collapseAddBook variant='warning'>Lägg till i bokhylla</b-btn>
-        <b-btn variant='danger' v-on:click='removeBook'>Ta bort bok</b-btn>
+        <b-btn v-b-toggle.collapseRemove variant='danger'>Ta bort bok</b-btn>
+        <b-collapse id='collapseRemove' class='mt-2'>
+          Are you sure you want to remove this book from your bookcase?
+          <b-btn v-b-toggle.collapseRemove variant='danger' v-on:click='removeBook'>Remove Book</b-btn>
+          </b-collapse> 
         <b-collapse id='collapseRating' class='mt-2'>
           <b-form>
             <label>Betyg:</label>
@@ -59,8 +64,21 @@
         </b-collapse>
         <b-collapse id='collapseAddBook' class='mt-2'>
             <b-form-select v-model='chosenBookCase' :options='bookCaseNames' class='mb-3' />
-            <b-btn variant='success' v-on:click='addBook(index)'>Lägg till i bokhylla</b-btn>
+            <b-btn variant='success' v-on:click='addBook()'>Lägg till i bokhylla</b-btn>
         </b-collapse>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
+    <b-row>
+      <b-col></b-col>
+      <b-col>
+        <p></p>
+        <div id='commentDiv' v-for='comment in book.comments' :key='comment._id'>
+        <p id='commentBody'>{{comment.comment}}</p>
+        <p id='commentUser'> Added by user: {{comment.user}} at {{comment.date}}</p>
+        <b-btn size='sm' id='reply' v-on:click='replyToComment(comment._id)'>Svara</b-btn>
+        <!-- Add collapse to reply to comment and method-->
+      </div>      
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -103,12 +121,20 @@ export default {
         count += 1        
       })
       if( count > 0) { return (sum / count).toPrecision(3) } else { return 'unrated' }
+    },
+    commentsNumber: function () {
+      return this.book.comments.length
     }
   },
 
   methods: {
     removeBook: function () {
-      HTTP.delete('/book', {params: {bookID: this.book._id, caseID: this.bookcase}})
+      HTTP.delete('/book', {
+        params: {
+          bookID: this.book._id, 
+          caseID: this.bookcase
+          }
+          }).then(response => {(console.log(response))})
     },
     addBook: function () {
       HTTP.post('/book', {
@@ -136,8 +162,10 @@ export default {
       }).then(response => {
         console.log(response)
       })
+    },
+    replyToComment: function (commentID) {
+      console.log(commentID)
     }
-
   },
   created () {
     this.fetchBook(this.$route.params.id)
@@ -176,5 +204,22 @@ font-size: 120%;
 
 #minorBookDetails {
 font-size: 80%;
+}
+
+#commentDiv {
+  border: 1px solid black;
+  background-color: bisque;
+}
+
+#commentBody {
+  font-size: 110%;
+}
+
+#commentUser {
+  font-size: 80%;
+}
+
+#reply {
+  float: right;
 }
 </style>

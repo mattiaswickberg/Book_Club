@@ -1,21 +1,28 @@
 let Bookcase = require('../../models/BookCase')
-module.exports = function (bookID, caseID) {
+
+module.exports = function (data) {
   return new Promise(function (resolve, reject) {
     // Check bookID and caseID
-    if (typeof bookID !== 'string') { resolve('Not a valid book ID') }
-    if (typeof caseID !== 'string') { resolve('Not a valid case ID') }
+    if (typeof data.bookID !== 'string') { resolve('Not a valid book ID') }
+    if (typeof data.caseID !== 'string') { resolve('Not a valid case ID') }
     // Get bookcase from database
-    let query = Bookcase.findById(caseID)
+    let query = Bookcase.findById(data.caseID)
     query.exec().then(bookCase => {
+      // console.log(bookCase)
       // Get book list from bookcase and remove book
       let books = bookCase.get('books')
-      let newBooks = books.filter(book => book._id !== bookID)
+
+      let newBooks = books.filter(book => book._id.toString() !== data.bookID)
       // Set new book list
-      Bookcase.set('books', newBooks)
+      console.log('Revised book list is: ')
+      console.log(newBooks)
+      bookCase.set('books', newBooks)
       // Save to database
-      Bookcase.save(function (err, doc) {
+      bookCase.save(function (err, doc) {
         if (err) { resolve(err) }
-        resolve(doc)
+        //console.log(doc)
+        console.log('Book removed')
+        resolve('Book removed')
       })
     })
   })

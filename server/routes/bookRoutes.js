@@ -6,6 +6,7 @@ let addBook = require('../lib/books/addBook')
 let getBook = require('../lib/books/getBook')
 let addRatingToBook = require('../lib/books/addRatingToBook')
 let addComment = require('../lib/books/addCommentToBook')
+let removeBook = require('../lib/books/removeBook')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -32,13 +33,16 @@ module.exports = function (app) {
   app.post('/book', function (req, res) {
     // Add book to desired bookcase
     addBook(req.body)
-    res.send(200, 'book added')
+    res.status(200).send('book added')
   })
 
   app.delete('/book', function (req, res) {
     // Delete book from bookcase
-    console.log('Deleting book: ')
-    console.log(req.query)
+    removeBook(req.query).then(response => {
+      if (response === 'Book removed') { res.status(200).send(response) } else {
+        res.status(418).send(response)
+      }
+    })
   })
 
   app.put('/book', function (req, res) {
@@ -95,17 +99,17 @@ module.exports = function (app) {
   app.post('/rating', function (req, res) {
     addRatingToBook(req.body).then(response => {
       if (response === 'Rating saved') {
-        res.send(200, response)
+        res.status(200).send(response)
       } else {
-        res.send(418, response)
+        res.status(418).send(response)
       }
     })
   })
 
   app.post('/comment', function (req, res) {
     addComment(req.body).then(response => {
-      if (response === 'Comment saved') { res.send(200, response) } else {
-        res.send(418, response)
+      if (response === 'Comment saved') { res.status(200).send(response) } else {
+        res.status(418).send(response)
       }
     })
   })
