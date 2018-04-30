@@ -19,7 +19,7 @@
                   </tr>
                   <tr>
                   <td v-for='book in item.books' :key='book.title' class='book'>
-                    <router-link :to="{ name: 'ViewBook', params: {id: book._id, bookcase: item._id}}">
+                    <router-link :to="{ name: 'ViewBookDetails', params: {id: book._id, bookcase: item._id}}">
                   <div>
                    <p><img class='bookImage' v-bind:src="book.images[0].smallThumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
                    <figcaption>{{book.title}}</figcaption>

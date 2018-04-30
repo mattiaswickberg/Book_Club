@@ -184,7 +184,18 @@ export default {
     }
   },
   created () {
-    this.book = this.$route.params.book
+    if(this.$route.params.id) {
+      this.fetchBook(this.$route.params.id)
+    .then(response => {
+      this.book = response
+      this.bookInDb = true
+    })
+    this.bookcase = this.$route.params.bookcase
+    } else {
+      this.book = this.$route.params.book
+      }
+
+    console.log(this.book)
 
   // Check if book is already in users bookcases, and if it is, set flag and save bookcase info
 
