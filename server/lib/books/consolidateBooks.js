@@ -1,4 +1,4 @@
-// let getImage = require('../books/getImage')
+let checkIfBookInDb = require('../books/checkIfBookInDb')
 
 module.exports = function (books) {
   return new Promise(function (resolve, reject) {
@@ -29,16 +29,24 @@ module.exports = function (books) {
       consolidatedBooks.push(newBook)
       books.shift()
     }
-     // get images for books
-    /* consolidatedBooks.forEach(element => {
-      if (element.isbn !== undefined) {
-        return getImage(element.isbn).then(image => {
-          element.images.push(image)
-        })
-      }
-    }) */
 
-    // console.log(consolidatedBooks)
-    resolve(consolidatedBooks)
+    // Check if book is already in Db
+    let promises = []
+    consolidatedBooks.forEach(element => {
+      promises.push(
+        checkIfBookInDb(element.isbn).then(response => {
+          if (response !== 'Book not in Db') {
+            let index = consolidatedBooks.indexOf(element)
+            if (index !== -1) {
+              consolidatedBooks[index] = response
+            }
+          }
+        }))
+    })
+
+    Promise.all(promises).then(function () {
+      // console.log(consolidatedBooks)
+      resolve(consolidatedBooks)
+    })
   })
 }

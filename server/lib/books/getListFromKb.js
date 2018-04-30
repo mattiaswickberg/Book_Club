@@ -29,8 +29,9 @@ let getBooksFromKb = function (searchString) {
     }
     consolidateBookVersions(books.list).then(response => {
       books.list = response
+      console.log(books)
+      resolve(books) // Return result of search
     })
-    resolve(books) // Return result of search
   })
   .catch(error => {
     reject(error)

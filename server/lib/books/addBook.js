@@ -13,7 +13,8 @@ module.exports = function (book) {
         author: book.book.creator,
         publishedYear: book.book.date,
         isbn: book.book.isbn,
-        users: [book.user._id]
+        users: [book.user._id],
+        language: book.book.language
       })
 
       getImage(book.book.isbn).then(response => {

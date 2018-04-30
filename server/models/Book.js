@@ -5,6 +5,7 @@ let BookSchema = new mongoose.Schema({
   author: {type: String, required: true},
   publishedYear: String,
   isbn: [],
+  language: String,
   images: {type: Array,
     default: [{
       smallThumbnail: './static/blank-book-cover-small.png',

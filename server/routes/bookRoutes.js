@@ -11,9 +11,11 @@ let removeBook = require('../lib/books/removeBook')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
-    console.log('Searching...')
-    console.log(req.body)
+    // console.log('Searching...')
+    // console.log(req.body)
     getListFromKb(req.body.search).then(function (data) {
+      console.log('Returning search results')
+      console.log(data)
       res.send(data)
     })
   })

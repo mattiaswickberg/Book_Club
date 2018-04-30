@@ -11,30 +11,35 @@
         <th>Omslag: </th>
         <th>Författare: </th>
         <th>Titel: </th>
-        <th>Typ: </th>
-        <th>Originalspråk: </th>
+        <th>Språk: </th>
         <th>År: </th>
         <th>Detaljer</th>
         <!-- <th>Lägg till</th> -->
       </tr>
-      <tr id='bookRow' v-for="(item) in searchResult" :key='item.isbn[0]'>
-        <td>
+      <tr id='bookRow' v-for="item in searchResult" :key='item.isbn[0]'>
+        <td v-if="item.author">
+          <img class='bookCover' v-bind:src="item.images[0].smallThumbnail" v-bind:alt="item.author + ': ' + item.title">
+        </td>
+        <td v-if="item.creator">
           <img class='bookCover' src='/static/blank-book-cover-small.png'>
         </td>
-        <td>
+        <td v-if="item.creator">
           {{item.creator}}
+        </td>
+        <td v-if="item.author">
+          {{item.author}}
         </td>
         <td>
           {{item.title}}
         </td>
         <td>
-          {{item.type}}
-        </td>
-        <td>
           {{item.language}}
         </td>
-        <td>
+        <td v-if="item.date">
           {{item.date}}
+        </td>
+        <td v-if="item.publishedYear">
+          {{item.publishedYear}}
         </td>
         <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
           <td>Visa mer</td>
