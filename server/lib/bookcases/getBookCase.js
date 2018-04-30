@@ -7,7 +7,7 @@ module.exports = function (BookCaseId) {
     } else {
       Bookcase.findById(BookCaseId, function (err, bcase) {
         if (err) { resolve(err) } else {
-          return bcase
+          resolve(bcase)
         }
       })
     }

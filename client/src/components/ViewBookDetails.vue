@@ -7,7 +7,7 @@
   <div id='displayBookDetails'>
       <h1> {{book.title}}</h1>
     <div class='mainBookDetails'>
-      <!-- <img v-bind:src="book.images[0].thumbnail"> -->
+      <img id='bookCover' v-bind:src="image">
       <p>Författare: {{book.author}}</p>
       <p>Titel: {{book.title}}</p>
       <p>Utgivningsår: {{book.publishedYear}}</p>
@@ -18,9 +18,9 @@
     </div>
 
     <div id='bookAdditional'>
-      <!-- Ditt betyg: {{rating}} -->
-      Medelbetyg: {{averageRating}} 
-      Antal kommentarer: {{commentsNumber}} 
+      <strong>Ditt betyg: </strong> {{rating}}  
+      <strong>Medelbetyg:</strong> {{averageRating}}  
+      <strong>Antal kommentarer:</strong> {{commentsNumber}}  
     </div>
   </div>
       </b-col>
@@ -104,27 +104,42 @@ export default {
       bookCases: [],
       chosenBookCase: '',
       bookcase: '',
-      commentText: ''
+      commentText: '',
+      bookInDb: false
     }
   },
   computed: {
-    /* rating: function () {
-      let userRating = this.book.ratings.filter(rating => rating.user === this.user._id)
-      console.log(userRating)
-      if (userRating.length > 0) {return userRating[0].rating} else { return 0 }
+    image: function() {
+      if (this.book.images[0] !== undefined) { 
+        return this.book.images[0].thumbnail } else {
+          return '/static/blank-book-cover.png'
+        }
+    },
+    rating: function () {
+      if(this.bookInDb) {
+        let userRating = this.book.ratings.filter(rating => rating.user === this.user._id)
+        console.log(userRating)
+        if (userRating.length > 0) {return userRating[0].rating} else { return 0 }
+      } else return 'Bok ej i DB'
+      
     }, 
     averageRating: function () {
-      let count = 0
+      if (this.bookInDb) {
+        let count = 0
       let sum = 0
       this.book.ratings.forEach(element => {
         sum += element.rating
         count += 1        
       })
       if( count > 0) { return (sum / count).toPrecision(3) } else { return 'unrated' }
+      } else {return 'Unrated'}
+      
     },
     commentsNumber: function () {
-      return this.book.comments.length
-    } */
+      if(this.bookInDb) {
+        return this.book.comments.length
+      } else return 0
+    } 
   },
 
   methods: {
@@ -137,9 +152,10 @@ export default {
           }).then(response => {(console.log(response))})
     },
     addBook: function () {
+      let selectedBookCase = this.bookCases.filter(bcase => bcase.title === this.chosenBookCase)
       HTTP.post('/book', {
         user: this.user,
-        bookcase: this.chosenBookCase,
+        bookcase: selectedBookCase[0],
         book: this.book
       }).then(response => {
         console.log(response)
@@ -169,13 +185,8 @@ export default {
   },
   created () {
     this.book = this.$route.params.book
-    /* 
-    this.fetchBook(this.$route.params.id)
-    .then(response => {
-      this.book = response
-    })
-    this.bookcase = this.$route.params.bookcase
-    console.log(this.$route.params) */
+
+  // Check if book is already in users bookcases, and if it is, set flag and save bookcase info
 
     this.user = this.$session.get('user')
 
@@ -224,4 +235,9 @@ font-size: 80%;
 #reply {
   float: right;
 }
+
+#bookCover {
+  max-width: 200px;
+}
+
 </style>

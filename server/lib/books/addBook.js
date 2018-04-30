@@ -3,7 +3,7 @@ let Bookcase = require('../../models/BookCase')
 let getImage = require('../books/getImage')
 
 module.exports = function (book) {
-  console.log(book)
+  // console.log(book)
     // Check if book exists in db
   Book.findOne({isbn: book.book.isbn}).then(response => {
     // If not, add to database

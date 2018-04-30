@@ -174,6 +174,7 @@ $grey: #f5f3ee;
     background-color: $white; 
     color: $black;
     padding-bottom: 50px;
+    min-height: 579px;
 }
 
 #footer {

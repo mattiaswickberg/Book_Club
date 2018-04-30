@@ -11,9 +11,11 @@
             </b-row>
             <!-- Render book cases and books -->
               <b-row v-for='item in cases' :key='item.name' class='caseDiv'>
-                <table>
+                <table class='bookCase'>
                   <tr>
-                  <th>{{item.title}}</th>
+                    <router-link :to="{ name: 'BookCase', params: {id: item._id}}">
+                  <th class='caseTitle'>{{item.title}}</th>
+                  </router-link>
                   </tr>
                   <tr>
                   <td v-for='book in item.books' :key='book.title' class='book'>
@@ -123,13 +125,17 @@ export default {
 .caseDiv {
   overflow:hidden;
   background-color: whitesmoke;
-  border: solid grey 1px;
+  border: solid white 3px;
   margin: 1px;
   }
 
+.bookCase {
+  width: 100%;
+}
+
 .book {
   display: inline-block;
-  border: 1px solid black;
+  border: 1px solid white;
   padding: 5px;
   width: 150px;
   height: 175px;
@@ -137,6 +143,12 @@ export default {
 
 .bookImage {
   height: 100px;
+}
+
+.caseTitle {
+  font-size: 150%;
+  text-align: center;
+  color: darkslategray;
 }
 
 </style>

@@ -2,6 +2,7 @@
 let BookCase = require('../models/BookCase')
 let getListFromKb = require('../lib/books/getListFromKb')
 let getBookCases = require('../lib/bookcases/getBookCases')
+let getBookCase = require('../lib/bookcases/getBookCase')
 let addBook = require('../lib/books/addBook')
 let getBook = require('../lib/books/getBook')
 let addRatingToBook = require('../lib/books/addRatingToBook')
@@ -51,8 +52,16 @@ module.exports = function (app) {
   })
 
   app.get('/bookcase', function (req, res) {
+    // console.log(req.query)
     // Get book case from database
-    console.log(req.body)
+    getBookCase(req.query.caseID).then(response => {
+      if (response === 'Not a valid user ID') {
+        res.status(418).send(response)
+      } else {
+        // console.log('Sending bookcase')
+        res.status(200).send(response)
+      }
+    }).catch(err => console.log(err))
   })
 
   app.get('/bookcases', function (req, res) {
