@@ -8,7 +8,7 @@ import Account from '@/components/Account'
 import AddBookCase from '@/components/AddBookCase'
 import Book from '@/components/Book'
 import BookCase from '@/components/BookCase'
-import EditAccount from '@/components/EditAccount'
+import Profile from '@/components/Profile'
 import SearchResult from '@/components/SearchResult'
 import p404 from '@/components/404'
 import p403 from '@/components/403'
@@ -67,9 +67,9 @@ export default new Router({
       component: BookCase
     },
     {
-      path: '/editaccount',
-      name: 'EditAccount',
-      component: EditAccount
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     },
     {
       path: '/searchresult/:search',

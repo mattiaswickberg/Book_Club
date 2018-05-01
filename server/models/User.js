@@ -9,7 +9,8 @@ let UserSchema = new mongoose.Schema({
   mail: String,
   joined: {type: Date, default: Date.now},
   role: {type: String, default: 'student'},
-  image: String
+  image: String,
+  active: {type: Boolean, default: true}
 })
 
 UserSchema.methods.validPassword = function (psw) {
