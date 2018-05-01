@@ -17,6 +17,12 @@
     <p>isbn: {{book.isbn}}</p>
     </div>
 
+
+    <div v-if='bookcase'>
+      <p> <strong> I bokhylla: </strong> {{inBookCase.title}} </p>
+      </div>
+
+
     <div id='bookAdditional'>
       <strong>Ditt betyg: </strong> {{rating}}  
       <strong>Medelbetyg:</strong> {{averageRating}}  
@@ -32,7 +38,8 @@
         <p></p>
         <b-btn v-b-toggle.collapseRating variant='primary'>Betygsätt bok</b-btn>
         <b-btn v-b-toggle.collapseComment variant='success'>Kommentera</b-btn>
-        <b-btn v-b-toggle.collapseAddBook variant='warning'>Lägg till i bokhylla</b-btn>
+        <b-btn v-if='bookcase' v-b-toggle.collapseChangeCase variant='warning'>Byt bokhylla</b-btn>
+        <b-btn v-else v-b-toggle.collapseAddBook variant='warning'>Lägg till i bokhylla</b-btn>
         <b-btn v-b-toggle.collapseRemove variant='danger'>Ta bort bok</b-btn>
         <b-collapse id='collapseRemove' class='mt-2'>
           Are you sure you want to remove this book from your bookcase?
@@ -91,11 +98,12 @@
 <script>  
   import fetchBookMixin from '@/mixins/fetchBook'
   import fetchBookCasesMixin from '@/mixins/fetchBookCases'
+  import fetchBookCaseMixin from '@/mixins/fetchBookCase'
   import {HTTP} from '@/services/Api'
 
 export default {
   name: 'ViewBook',
-  mixins: [fetchBookMixin, fetchBookCasesMixin],
+  mixins: [fetchBookMixin, fetchBookCasesMixin, fetchBookCaseMixin],
   data () {
     return {
       user: false,
@@ -105,22 +113,25 @@ export default {
       chosenBookCase: '',
       bookcase: '',
       commentText: '',
-      bookInDb: false
+      bookInDb: false,
+      inBookCase: ''
     }
   },
   computed: {
     image: function() {
-      if (this.book.images[0] !== undefined) { 
+      if(this.bookInDb) {
+        if (this.book.images[0] !== undefined) { 
         return this.book.images[0].thumbnail } else {
           return '/static/blank-book-cover.png'
         }
+      }      
     },
     rating: function () {
       if(this.bookInDb) {
         let userRating = this.book.ratings.filter(rating => rating.user === this.user._id)
         console.log(userRating)
         if (userRating.length > 0) {return userRating[0].rating} else { return 0 }
-      } else return 'Bok ej i DB'
+      } else return 'Bok ej i databas'
       
     }, 
     averageRating: function () {
@@ -139,7 +150,7 @@ export default {
       if(this.bookInDb) {
         return this.book.comments.length
       } else return 0
-    } 
+    }
   },
 
   methods: {
@@ -191,6 +202,9 @@ export default {
       this.bookInDb = true
     })
     this.bookcase = this.$route.params.bookcase
+    this.fetchBookCase(this.bookcase).then(response => {
+      this.inBookCase = response
+    })
     } else {
       this.book = this.$route.params.book
       }
@@ -211,8 +225,7 @@ export default {
         })
         console.log(this.bookCases)
       })
-    
-  }
+  }        
 }
 </script>
 

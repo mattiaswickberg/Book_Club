@@ -23,9 +23,9 @@
             <b-btn v-on:click='editAccount'>Spara ändringar</b-btn>
             <b-btn v-b-toggle.collapseDelete variant='danger'>Ta bort konto</b-btn>
             <b-collapse id='collapseDelete' class='mt-2'>
-              Är du säker på att du vill stänga av ditt konto?
+              Är du säker på att du vill radera ditt konto? Detta kan inte ångras!
               <b-form-input type='text' v-model='closeAccountValidation' placeholder='Skriv in ditt användarnamn för att stänga av konto'></b-form-input>
-            <b-btn v-b-toggle.collapseRemove variant='danger' v-on:click='closeAccount'>Stäng konto</b-btn>
+            <b-btn v-b-toggle.collapseDelete variant='danger' v-on:click='closeAccount'>Radera konto</b-btn>
           </b-collapse>
           </b-form>
           <div v-else>
