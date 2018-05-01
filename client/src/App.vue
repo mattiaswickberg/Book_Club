@@ -226,4 +226,31 @@ a {
   color: black;
 }
 
+.flashWarning {
+  background-color: hsla(337, 100, 44, 0.51);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 130%;
+  padding: 20px;
+  margin: 10px;
+  width: 100%;
+}
+
+.flashSuccess {
+  background-color: hsla(120, 71%, 51%, 0.60);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 130%;
+  padding: 20px;
+  margin: 10px;
+  width: 100%;
+}
+
+.flashInfo {
+  background-color: hsla(62, 95%, 51%, 0.60);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 130%;
+  padding: 20px;
+  margin: 10px;
+  width: 100%;
+}
+
 </style>

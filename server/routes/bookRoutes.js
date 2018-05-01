@@ -8,6 +8,8 @@ let getBook = require('../lib/books/getBook')
 let addRatingToBook = require('../lib/books/addRatingToBook')
 let addComment = require('../lib/books/addCommentToBook')
 let removeBook = require('../lib/books/removeBook')
+let editAccount = require('../lib/account/editAccount')
+let closeAccount = require('../lib/account/closeAccount')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -17,7 +19,7 @@ module.exports = function (app) {
       console.log('Returning search results')
       console.log(data)
       res.send(data)
-    })
+    }).catch(err => console.log(err))
   })
 
   app.get('/book', function (req, res) {
@@ -25,7 +27,7 @@ module.exports = function (app) {
     getBook(req.query.bookID)
     .then(response => {
       res.send(response)
-    })
+    }).catch(err => console.log(err))
   })
 
   app.get('/books', function (req, res) {
@@ -45,7 +47,7 @@ module.exports = function (app) {
       if (response === 'Book removed') { res.status(200).send(response) } else {
         res.status(418).send(response)
       }
-    })
+    }).catch(err => console.log(err))
   })
 
   app.put('/book', function (req, res) {
@@ -114,7 +116,7 @@ module.exports = function (app) {
       } else {
         res.status(418).send(response)
       }
-    })
+    }).catch(err => console.log(err))
   })
 
   app.post('/comment', function (req, res) {
@@ -122,6 +124,26 @@ module.exports = function (app) {
       if (response === 'Comment saved') { res.status(200).send(response) } else {
         res.status(418).send(response)
       }
-    })
+    }).catch(err => console.log(err))
+  })
+
+  app.delete('/user', function (req, res) {
+    console.log('Deleting user: ')
+    console.log(req.query)
+    closeAccount(req.query).then(response => {
+      if (response === 'Account could not be removed') {
+        res.send(response)
+      } else {
+        res.redirect('/')
+      }
+    }).catch(err => console.log(err))
+  })
+
+  app.post('/editaccount', function (req, res) {
+    console.log('Making som changes: ')
+    console.log(req.body)
+    editAccount(req.body).then(response => {
+      res.send(response)
+    }).catch(err => console.log(err))
   })
 }
