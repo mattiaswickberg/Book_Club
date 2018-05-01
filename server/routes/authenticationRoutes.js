@@ -1,6 +1,8 @@
 let passport = require('passport')
 let User = require('../models/User')
 let createAccount = require('../lib/auth/createAccount')
+let editAccount = require('../lib/account/editAccount')
+let closeAccount = require('../lib/account/closeAccount')
 
 module.exports = function (app) {
   // Account creation and login routes
@@ -64,6 +66,26 @@ passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
 
   app.get('/logout', function (req, res) {
     req.logout()
-    res.redirect('/')
+    res.redirect(303, '/')
+  })
+
+  app.delete('/user', function (req, res) {
+    console.log('Deleting user: ')
+    console.log(req.query)
+    closeAccount(req.query).then(response => {
+      if (response === 'Account could not be removed') {
+        res.send(response)
+      } else {
+        res.redirect(303, '/')
+      }
+    }).catch(err => console.log(err))
+  })
+
+  app.post('/editaccount', function (req, res) {
+    console.log('Making som changes: ')
+    console.log(req.body)
+    editAccount(req.body).then(response => {
+      res.send(response)
+    }).catch(err => console.log(err))
   })
 }
