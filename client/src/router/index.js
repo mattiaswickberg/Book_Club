@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import CreateAccount from '@/components/CreateAccount'
 import Authorisation from '@/components/Authorisation'
-import Account from '@/components/Account'
+import MyBooks from '@/components/MyBooks'
 import AddBookCase from '@/components/AddBookCase'
 import Book from '@/components/Book'
 import BookCase from '@/components/BookCase'
@@ -42,9 +42,9 @@ export default new Router({
     },
 
     {
-      path: '/account',
-      name: 'Account',
-      component: Account
+      path: '/mybooks',
+      name: 'MyBooks',
+      component: MyBooks
     },
     {
       path: '/accountcreated',

@@ -28,11 +28,17 @@ module.exports = function (book) {
       })
     } else {
       let bookUsers = response.get('users')
-      bookUsers.push(book.user._id)
-      response.set('users', bookUsers)
-      response.save(function (error) {
-        if (error) { console.log(error) }
+      let userNotInList = true
+      bookUsers.forEach(element => {
+        if (element === book.user._id) { userNotInList = false }
       })
+      if (userNotInList) {
+        bookUsers.push(book.user._id)
+        response.set('users', bookUsers)
+        response.save(function (error) {
+          if (error) { console.log(error) }
+        })
+      }
       // Then, add to bookcase of choice
       addToBookCase(book)
     }
@@ -56,7 +62,7 @@ let addToBookCase = function (book) {
     }
   })
 
-  Bookcase.findById(book.bookcase).then(response => {
+  Bookcase.findById(book.bookcase._id).then(response => {
     let books = response.get('books')
     let bookExists = false
     books.forEach(element => {

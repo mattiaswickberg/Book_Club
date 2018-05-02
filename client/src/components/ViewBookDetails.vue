@@ -1,6 +1,15 @@
 <template>
 <div>
     <b-container fluid>
+      <b-row>
+        <b-col></b-col>
+        <b-col cols='8'>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
+          </b-col>
+        <b-col></b-col>
+      </b-row>
     <b-row>
       <b-col></b-col>
       <b-col cols='6'>
@@ -73,6 +82,10 @@
             <b-form-select v-model='chosenBookCase' :options='bookCaseNames' class='mb-3' />
             <b-btn variant='success' v-on:click='addBook()'>Lägg till i bokhylla</b-btn>
         </b-collapse>
+        <b-collapse id='collapseChangeCase' class='mt-2'>
+          <b-form-select v-model='chosenBookCase' :options='bookCaseNames' class='mb-3' />
+          <b-btn variant='success' v-on:click='changeBookCase()'>Flytta till bokhylla</b-btn>
+        </b-collapse>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -114,7 +127,10 @@ export default {
       bookcase: '',
       commentText: '',
       bookInDb: false,
-      inBookCase: ''
+      inBookCase: '',
+      warningFlash: '',
+      infoFlash: '',
+      successFlash: ''
     }
   },
   computed: {
@@ -160,17 +176,32 @@ export default {
           bookID: this.book._id, 
           caseID: this.bookcase
           }
-          }).then(response => {(console.log(response))})
+          }).then(response => {
+            console.log(response)
+            if (response.data === 'Book removed from bookcase') {
+              this.successFlash = response.data
+              } else {
+                this.warningFlash = 'Book could not be removed for some reason'
+              }
+              })
     },
     addBook: function () {
-      let selectedBookCase = this.bookCases.filter(bcase => bcase.title === this.chosenBookCase)
+      if (this.chosenBookCase.length === 0) {
+        this.warningFlash = 'Du måste välja en bokhylla att lägga till boken i!'
+      } else {
+        let selectedBookCase = this.bookCases.filter(bcase => bcase.title === this.chosenBookCase)
       HTTP.post('/book', {
         user: this.user,
         bookcase: selectedBookCase[0],
         book: this.book
       }).then(response => {
-        console.log(response)
+        if (response.data === 'Book added to bookcase') {
+          this.successFlash = response.data
+        } else {
+          this.warningFlash = response.data
+        }
       })
+      }      
     },
     addComment: function() {
       HTTP.post('/comment', {
@@ -192,6 +223,14 @@ export default {
     },
     replyToComment: function (commentID) {
       console.log(commentID)
+    },
+    changeBookCase: function() {
+      if (this.chosenBookCase.length === 0) {
+        this.infoFlash = 'Du måste välja en bokhylla att flytta boken till!'
+      } else {
+        this.addBook()
+        this.removeBook()
+      }
     }
   },
   created () {

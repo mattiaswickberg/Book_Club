@@ -8,7 +8,7 @@
       <b-navbar-brand href='#/'><img id='logo' src="./assets/logo.png"></b-navbar-brand>
       <b-collapse is-nav id='nav_collapse'>
         <b-navbar-nav>
-          <b-nav-item href='#/account'>Account</b-nav-item> 
+          <b-nav-item href='#/mybooks'>Mina böcker</b-nav-item> 
           <b-nav-item href='#/profile'>Profile</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class='ml-auto'>

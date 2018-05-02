@@ -14,13 +14,13 @@ module.exports = function (data) {
 
       let newBooks = books.filter(book => book._id.toString() !== data.bookID)
       // Set new book list
-      console.log('Revised book list is: ')
-      console.log(newBooks)
+      /* console.log('Revised book list is: ')
+      console.log(newBooks) */
       bookCase.set('books', newBooks)
       // Save to database
       bookCase.save(function (err, doc) {
         if (err) { resolve(err) }
-        //console.log(doc)
+        // console.log(doc)
         console.log('Book removed')
         resolve('Book removed')
       })

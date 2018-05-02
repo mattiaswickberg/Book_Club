@@ -5,7 +5,7 @@
       <b-col></b-col>
       <b-col cols='12'>
         <div>
-          <h1> Account page</h1>
+          <h1> Mina Böcker</h1>
           <b-container fluid>
             <b-row id='bookCases'>
             </b-row>
@@ -66,7 +66,7 @@ import fetchBooksMixin from '@/mixins/fetchBooks'
 import {HTTP} from '@/services/Api'
 
 export default {
-  name: 'Account',
+  name: 'MyBooks',
     mixins: [isLoggedInMixin, fetchBookCasesMixin],
   data () {
     return {
