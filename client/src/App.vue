@@ -35,9 +35,9 @@
     </div>
 </form>
 <a href="/auth/google">
-<b-button id='loginButton' size="sm" variant="primary">
+<b-btn id='loginButton' size="sm" variant="primary">
 Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
-</b-button>
+</b-btn>
 </a>
 </div>
 </b-navbar-nav>
@@ -81,11 +81,16 @@ export default {
             username: '',
             password: ''
           },
-          user: ''
+    }
+  },
+  computed: {
+    user: {
+      get: function () { 
+      return this.$session.get('user')
+    }
     }
   },
   mounted() {
-    this.userLoggedIn()
   },
   updated() {
   },
@@ -106,13 +111,6 @@ export default {
     },
     searchBook: function() {
       this.$router.push('/searchresult/' + this.search.data)
-    },
-    userLoggedIn: function() {
-    if(this.$session.exists()) {
-      this.user = this.$session.get('user')
-      console.log('Checking if session exists')
-      console.log(this.user)  
-    }
     }
   }
 }

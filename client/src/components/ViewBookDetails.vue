@@ -33,7 +33,7 @@
 
 
     <div id='bookAdditional'>
-      <strong>Ditt betyg: </strong> {{rating}}  
+      <strong>Ditt betyg: </strong> {{userRating}}  
       <strong>Medelbetyg:</strong> {{averageRating}}  
       <strong>Antal kommentarer:</strong> {{commentsNumber}}  
     </div>
@@ -93,11 +93,23 @@
       <b-col></b-col>
       <b-col>
         <p></p>
-        <div id='commentDiv' v-for='comment in book.comments' :key='comment._id'>
-        <p id='commentBody'>{{comment.comment}}</p>
-        <p id='commentUser'> Added by user: {{comment.user}} at {{comment.date}}</p>
-        <b-btn size='sm' id='reply' v-on:click='replyToComment(comment._id)'>Svara</b-btn>
+        <div class='commentDiv' v-for='comment in book.comments' :key='comment._id'>
+        <p class='commentBody'>{{comment.comment}}</p>
+        <p class='commentUser'> Added by user: {{comment.user}} at {{comment.date}}</p>
+        <div class='commentReply' v-for='reply in comment.replies' :key='reply._id'>
+          <p>{{reply.comment}}</p>
+          <p>{{reply.user}} replied on {{reply.date}}</p>
+        </div>
+        <b-btn size='sm' id='reply' v-b-toggle.collapseReply variant='success'>Svara</b-btn>
         <!-- Add collapse to reply to comment and method-->
+        <b-collapse id='collapseReply'>
+          <b-form-textarea
+            v-model='commentReply'
+            placeholder='Skriv din kommentar här'
+            :rows='4'>
+            </b-form-textarea>
+          <b-btn variant='success' v-on:click='replyToComment(comment._id)'>Spara svar</b-btn>
+        </b-collapse>
       </div>      
       </b-col>
       <b-col></b-col>
@@ -121,11 +133,13 @@ export default {
     return {
       user: false,
       book: '',
+      rating: '',
       bookCaseNames: [],
       bookCases: [],
       chosenBookCase: '',
       bookcase: '',
       commentText: '',
+      commentReply: '',
       bookInDb: false,
       inBookCase: '',
       warningFlash: '',
@@ -142,13 +156,13 @@ export default {
         }
       }      
     },
-    rating: function () {
+    userRating: {
+    get: function () {
       if(this.bookInDb) {
         let userRating = this.book.ratings.filter(rating => rating.user === this.user._id)
-        console.log(userRating)
         if (userRating.length > 0) {return userRating[0].rating} else { return 0 }
       } else return 'Bok ej i databas'
-      
+      }
     }, 
     averageRating: function () {
       if (this.bookInDb) {
@@ -212,6 +226,22 @@ export default {
         console.log(response)
       })
     },
+    replyToComment: function(commentID) {
+      if (this.commentReply.length > 0) {
+        HTTP.post('/commentreply', {
+        user: this.user,
+        book: this.book,
+        comment: commentID,
+        reply: this.commentReply
+      }).then(response => {
+        if (response === 'Reply saved') {
+          successFlash = response.data
+        } else {
+          infoFlash = response.data
+        }
+      })
+      }
+    },
     rateBook: function () {
       HTTP.post('/rating', {
         bookID: this.book._id,
@@ -220,9 +250,6 @@ export default {
       }).then(response => {
         console.log(response)
       })
-    },
-    replyToComment: function (commentID) {
-      console.log(commentID)
     },
     changeBookCase: function() {
       if (this.chosenBookCase.length === 0) {
@@ -282,17 +309,33 @@ font-size: 120%;
 font-size: 80%;
 }
 
-#commentDiv {
+.commentDiv {
   border: 1px solid black;
   background-color: bisque;
 }
 
-#commentBody {
+.commentBody {
   font-size: 110%;
 }
 
-#commentUser {
+.commentUser {
   font-size: 80%;
+}
+
+.commentReply {
+  font-size: 80%;
+  background-color: beige;
+  margin-left: 20%;
+  width: 80%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+  border: 1px solid black;
+}
+
+.commentReply p {
+  padding: 0px;
+  margin: 0px;
 }
 
 #reply {

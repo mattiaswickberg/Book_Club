@@ -35,14 +35,14 @@
       </p>
       <p>För att skapa ett konto, välj ett av nedanstående alternativ.</p>
       <router-link to="createaccount">
-        <b-button id='loginButton' :size='lg' :variant='success'>
+        <b-button id='loginButton' size='lg' variant='success'>
           Skapa med mail och lösenord.
         </b-button> </router-link>
             <div id='createAccountDiv'> 
             </div>
             <div>
       <a href='/auth/google'>
-      <b-button id='loginButton' :size="lg" :variant="primary">Logga in med ditt googlekonto
+      <b-button id='loginButton' size="lg" variant="primary">Logga in med ditt googlekonto
             <img id='googleLogo' src='../assets/google.jpg'>
             </b-button>
       </a>

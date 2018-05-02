@@ -8,6 +8,7 @@ let getBook = require('../lib/books/getBook')
 let addRatingToBook = require('../lib/books/addRatingToBook')
 let addComment = require('../lib/books/addCommentToBook')
 let removeBook = require('../lib/books/removeBook')
+let replyToComment = require('../lib/books/replyToComment')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -120,6 +121,16 @@ module.exports = function (app) {
   app.post('/comment', function (req, res) {
     addComment(req.body).then(response => {
       if (response === 'Comment saved') { res.status(200).send(response) } else {
+        res.status(418).send(response)
+      }
+    }).catch(err => console.log(err))
+  })
+
+  app.post('/commentreply', function (req, res) {
+    replyToComment(req.body).then(response => {
+      if (response === 'Reply saved') {
+        res.status(200).send(response)
+      } else {
         res.status(418).send(response)
       }
     }).catch(err => console.log(err))
