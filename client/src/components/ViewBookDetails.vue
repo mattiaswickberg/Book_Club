@@ -1,6 +1,7 @@
 <template>
 <div>
     <b-container fluid>
+      <!-- Section for feedback to user -->
       <b-row>
         <b-col></b-col>
         <b-col cols='8'>
@@ -10,6 +11,7 @@
           </b-col>
         <b-col></b-col>
       </b-row>
+      <!-- Book details area -->
     <b-row>
       <b-col></b-col>
       <b-col cols='6'>
@@ -26,11 +28,10 @@
     <p>isbn: {{book.isbn}}</p>
     </div>
 
-
+<!-- User specific book details-->
     <div v-if='bookcase'>
       <p> <strong> I bokhylla: </strong> {{inBookCase.title}} </p>
       </div>
-
 
     <div id='bookAdditional'>
       <strong>Ditt betyg: </strong> {{userRating}}  
@@ -41,6 +42,8 @@
       </b-col>
       <b-col></b-col>
     </b-row>
+
+    <!-- Buttons for user actions -->
     <b-row>
       <b-col></b-col>
       <b-col cols='6'>
@@ -49,11 +52,13 @@
         <b-btn v-b-toggle.collapseComment variant='success'>Kommentera</b-btn>
         <b-btn v-if='bookcase' v-b-toggle.collapseChangeCase variant='warning'>Byt bokhylla</b-btn>
         <b-btn v-else v-b-toggle.collapseAddBook variant='warning'>Lägg till i bokhylla</b-btn>
+        <b-btn v-b-toggle.collapeRecommendBook variant='outline-success'>Rekommendera bok</b-btn>
         <b-btn v-b-toggle.collapseRemove variant='danger'>Ta bort bok</b-btn>
         <b-collapse id='collapseRemove' class='mt-2'>
           Are you sure you want to remove this book from your bookcase?
           <b-btn v-b-toggle.collapseRemove variant='danger' v-on:click='removeBook'>Remove Book</b-btn>
           </b-collapse> 
+          <!-- Rate book -->
         <b-collapse id='collapseRating' class='mt-2'>
           <b-form>
             <label>Betyg:</label>
@@ -66,6 +71,7 @@
             </b-form-radio-group>
             <b-btn v-on:click='rateBook'>Spara betyg</b-btn>
           </b-form>
+          <!-- Add comment to book -->
         </b-collapse>
         <b-collapse id='collapseComment' class='mt-2'>
           <b-form>
@@ -78,17 +84,26 @@
             <b-btn variant='success' v-on:click='addComment'>Spara kommentar</b-btn>
           </b-form>
         </b-collapse>
+        <!-- Add book to bookcase -->
         <b-collapse id='collapseAddBook' class='mt-2'>
             <b-form-select v-model='chosenBookCase' :options='bookCaseNames' class='mb-3' />
             <b-btn variant='success' v-on:click='addBook()'>Lägg till i bokhylla</b-btn>
         </b-collapse>
+        <!-- Change which bookcase your book is in -->
         <b-collapse id='collapseChangeCase' class='mt-2'>
           <b-form-select v-model='chosenBookCase' :options='bookCaseNames' class='mb-3' />
           <b-btn variant='success' v-on:click='changeBookCase()'>Flytta till bokhylla</b-btn>
         </b-collapse>
+        <!-- Recommend book to other user -->
+        <b-collapse id='collapeRecommendBook'>
+          <b-form-input v-model='recommendToUser' type='text' placeholder='Type username of the user you want to recommend this book to'></b-form-input>
+          <b-btn variant='outline-success' v-on:click='recommend'>Skicka rekommendation</b-btn>
+        </b-collapse>
       </b-col>
       <b-col></b-col>
     </b-row>
+
+    <!-- Show comments -->
     <b-row>
       <b-col></b-col>
       <b-col>
@@ -101,7 +116,8 @@
           <p>{{reply.user}} replied on {{reply.date}}</p>
         </div>
         <b-btn size='sm' id='reply' v-b-toggle.collapseReply variant='success'>Svara</b-btn>
-        <!-- Add collapse to reply to comment and method-->
+
+        <!-- Reply to comment -->
         <b-collapse id='collapseReply'>
           <b-form-textarea
             v-model='commentReply'
@@ -144,7 +160,8 @@ export default {
       inBookCase: '',
       warningFlash: '',
       infoFlash: '',
-      successFlash: ''
+      successFlash: '',
+      recommendToUser: ''
     }
   },
   computed: {
@@ -258,6 +275,18 @@ export default {
         this.addBook()
         this.removeBook()
       }
+    },
+    recommend: function () {
+      HTTP.post('/recommend', {
+        user: this.user,
+        toUser: this.recommendToUser,
+        book: this.book
+      }).then(response => {
+        if(response.data === 'Recommendation sent') {
+          this.successFlash = response.data
+        } else { warningFlash = response.data }
+        console.log(response)
+      }).catch(err => console.log(err))
     }
   },
   created () {

@@ -9,6 +9,7 @@ let addRatingToBook = require('../lib/books/addRatingToBook')
 let addComment = require('../lib/books/addCommentToBook')
 let removeBook = require('../lib/books/removeBook')
 let replyToComment = require('../lib/books/replyToComment')
+let recommendToUser = require('../lib/books/recommendToUser')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -134,5 +135,15 @@ module.exports = function (app) {
         res.status(418).send(response)
       }
     }).catch(err => console.log(err))
+  })
+
+  app.post('/recommend', function (req, res) {
+    recommendToUser(req.body).then(response => {
+      if (response === 'Recommendation sent') {
+        res.status(200).send(response)
+      } else {
+        res.status(418).send(response)
+      }
+    }).catch(err => { console.log(err) })
   })
 }

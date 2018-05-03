@@ -16,13 +16,13 @@ export default {
         console.log(response.data)
         this.$session.start()
         this.$session.set('user', response.data)
+        this.$router.push({ name: 'MyBooks' })
             })
             .catch(error => {
               reject(error.response.data)
             })
       },
       mounted() {
-        // this.$router.push({ name: 'Account' })
       }
     }
 </script>

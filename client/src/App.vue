@@ -102,11 +102,12 @@ export default {
     login: function () {
       return HTTP.post('login', this.userData)
       .then(response => {
-        // console.log(response.data)
+        console.log('Login response: ')
+        console.log(response.data)
         this.$session.start()
         this.$session.set('user', response.data)
         this.user = response.data
-        this.$router.push({ name: 'Account' })
+        this.$router.push({ name: 'MyBooks' })
       })
     },
     searchBook: function() {
