@@ -42,8 +42,7 @@ export default new Router({
 
     {
       path: '/auth',
-      name: 'Authorisation',
-      component: Authorisation
+      redirect: '/mainloggedin'
     },
 
     {
