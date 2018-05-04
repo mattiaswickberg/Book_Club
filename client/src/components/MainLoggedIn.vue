@@ -16,7 +16,7 @@
       </b-col>
       <b-col>
         <!-- This area is for recommendations from other users -->
-        <h2>Rekommenderade böcker</h2>
+        <h3>Rekommenderade böcker</h3>
         <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
           <router-link :to="{ name: 'ViewBookDetails', params: {id: book.book._id}}">
                   <div>
@@ -83,18 +83,6 @@ export default {
     }
   },
     created() {
-      HTTP.get('/sessionstatus')
-      .then(response => {
-              console.log('session response: ')
-        console.log(response.data)
-        if(response.data !== null && response.data !== undefined) {
-          this.$session.start()
-          this.$session.set('user', response.data)
-        }
-        })
-        .catch(error => {
-              reject(error.response.data)
-            })
   },
   methods: {
     dismissRecommendation: function () {
@@ -161,6 +149,8 @@ export default {
 .recBook {
   width: 100%;
   border: 1px solid black;
+  padding: 5px;
+  margin: 1px;
 }
 
 .recBy {

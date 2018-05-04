@@ -12,11 +12,11 @@ export default {
   created() {
         HTTP.get('/sessionstatus')
             .then(response => {
-              console.log('session response: ')
-        console.log(response.data)
+              // console.log('session response: ')
+        // console.log(response.data)
         this.$session.start()
         this.$session.set('user', response.data)
-        this.$router.push({ name: 'MyBooks' })
+        this.$router.push({ name: 'Main' })
             })
             .catch(error => {
               reject(error.response.data)

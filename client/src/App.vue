@@ -5,7 +5,7 @@
     <b-col id = 'headerCol' cols='12'>
     <b-navbar toggleable='md' type='dark' variant='info'>
       <b-navbar-toggle target='nav_collapse'></b-navbar-toggle>
-      <b-navbar-brand href='#/'><img id='logo' src="./assets/logo.png"></b-navbar-brand>
+      <b-navbar-brand href='#/mainloggedin'><img id='logo' src="./assets/logo.png"></b-navbar-brand>
       <b-collapse is-nav id='nav_collapse'>
         <b-navbar-nav>
           <b-nav-item href='#/mybooks'>Mina böcker</b-nav-item> 
@@ -68,36 +68,39 @@ Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
 </template>
 
 <script>
-import isLoggedInMixin from '@/mixins/checkAuth'
 import {HTTP} from '@/services/Api'
 export default {
   name: 'App',
   data () {
     return {
-          search : {
-            data: ''
+      user: '',
+      search : {
+        data: ''
           },
-          userData: {
-            username: '',
-            password: ''
-          },
+      userData: {
+        username: '',
+        password: ''
+      },
     }
   },
-  computed: {
-    user: {
-      get: function () { 
-      return this.$session.get('user')
-    }
-    }
+  created () {
+    this.user = this.$session.get('user')
   },
   mounted() {
   },
   updated() {
   },
+  watch: {
+  },
   methods: {
     logout: function (event) {
       this.$session.destroy()
-      return HTTP.get('logout')
+      this.user = ''
+      return HTTP.get('logout').then(response => {
+        if (response.data === 'logged out') {
+          this.$router.push({name: 'Main'})
+        }
+      })
     },
     login: function () {
       return HTTP.post('login', this.userData)
@@ -106,8 +109,8 @@ export default {
         console.log(response.data)
         this.$session.start()
         this.$session.set('user', response.data)
-        this.user = response.data
-        this.$router.push({ name: 'MyBooks' })
+        this.$set(this.user = response.data)
+        this.$router.push({ name: 'MainLoggedIn' })
       })
     },
     searchBook: function() {

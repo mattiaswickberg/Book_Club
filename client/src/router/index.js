@@ -2,6 +2,7 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import Router from 'vue-router'
 import Main from '@/components/Main'
+import MainLoggedIn from '@/components/MainLoggedIn'
 import CreateAccount from '@/components/CreateAccount'
 import Authorisation from '@/components/Authorisation'
 import MyBooks from '@/components/MyBooks'
@@ -28,7 +29,11 @@ export default new Router({
       name: 'Main',
       component: Main
     },
-
+    {
+      path: '/mainloggedin',
+      name: 'MainLoggedIn',
+      component: MainLoggedIn
+    },
     {
       path: '/createaccount',
       name: 'CreateAccount',

@@ -226,7 +226,7 @@ export default {
         bookcase: selectedBookCase[0],
         book: this.book
       }).then(response => {
-        if (response.data === 'Book added to bookcase') {
+        if (response.data === 'Book added') {
           this.successFlash = response.data
         } else {
           this.warningFlash = response.data

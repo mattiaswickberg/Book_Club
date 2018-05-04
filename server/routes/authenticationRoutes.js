@@ -48,12 +48,6 @@ function (req, res) {
   res.send(req.user)
 })
 
-/* {
-  successRedirect: '/account',
-  failureRedirect: '/login',
-  failureFlash: true
-})) */
-
   // Authentication with google
 
   app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
@@ -66,7 +60,7 @@ passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
 
   app.get('/logout', function (req, res) {
     req.logout()
-    res.redirect(303, '/')
+    res.status(200).send('logged out')
   })
 
   app.delete('/user', function (req, res) {
