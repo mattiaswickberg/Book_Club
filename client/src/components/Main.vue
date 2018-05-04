@@ -17,7 +17,19 @@
           </h1>
         </div>
       </b-col>
-      <b-col></b-col>
+      <b-col>
+        <!-- This area is for recommendations from other users -->
+        <h2>Rekommenderade böcker</h2>
+        <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
+          <router-link :to="{ name: 'ViewBookDetails', params: {id: book.book._id}}">
+                  <div>
+                   <p><img class='bookImage' v-bind:src="book.book.images[0].thumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
+                   <figcaption><strong>{{book.book.author}}:</strong> <i>{{book.book.title}}</i></figcaption>
+                   <p class='recBy'> This book was recommended to you by: <strong>{{book.fromUser}}</strong></p>
+                   </div>
+                   </router-link>
+        </div>
+      </b-col>
     </b-row>
 
   </div>
@@ -61,16 +73,20 @@ import isLoggedInMixin from '@/mixins/checkAuth'
 
 export default {
   name: 'Main',
-  mixins: [isLoggedInMixin],
   data () {
     return {
-      user: false
+    }
+  },
+  computed: {
+    user: function() {
+      return this.$session.get('user')
+    },
+    recommendedBooks: function() {
+      return this.user.recommendedBooks
     }
   },
     created() {
-    if (this.$session.exists()) {
-      this.user = true
-    }
+      console.log(this.$session.get('user'))
   }
 }
 </script>
@@ -125,5 +141,19 @@ export default {
 
 #googleLogo {
   max-height: 50px;
+}
+
+.recBook {
+  width: 100%;
+  border: 1px solid black;
+}
+
+.recBy {
+  font-size: 90%;
+}
+
+.bookImage {
+  width: 50%;
+  text-align: center;
 }
 </style>
