@@ -2,6 +2,8 @@ let Bookcase = require('../../models/BookCase')
 
 module.exports = function (data) {
   return new Promise(function (resolve, reject) {
+    // Check data
+    if (data === undefined || data === null) { resolve('Function did not receive any data') }
     // Check bookID and caseID
     if (typeof data.bookID !== 'string') { resolve('Not a valid book ID') }
     if (typeof data.caseID !== 'string') { resolve('Not a valid case ID') }

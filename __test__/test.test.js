@@ -7,3 +7,16 @@ describe('Array', function () {
     })
   })
 })
+
+/* global test, expect
+
+let  = require('../server/lib/')
+
+test('', () => {
+  expect.assertions(1)
+  getBookCases()
+  .then(response => {
+    console.log(response)
+    expect(response).toEqual('Not a valid userID')
+  })
+}) */

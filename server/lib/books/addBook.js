@@ -4,6 +4,19 @@ let getImage = require('../books/getImage')
 
 module.exports = function (book) {
   // console.log(book)
+  // Check incoming data
+
+  if (book === undefined || book === null){
+    return ('Missing input data')
+  }
+
+  if (typeof book.book.title !== 'string' || typeof book.book.author !== 'string') {
+    return ('Wrong data  type in mandatory information')
+  }
+
+  if (book.bookcase._id === undefined || book.bookcase._id === null || book.bookcase._id.length === 0) {
+    return ('No bookcase provided!')
+  }
     // Check if book exists in db
   Book.findOne({isbn: book.book.isbn}).then(response => {
     // If not, add to database
