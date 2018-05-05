@@ -2,6 +2,9 @@ let Book = require('../../models/Book')
 
 module.exports = function (data) {
   return new Promise(function (resolve, reject) {
+    if (data === undefined || data === null) {
+      resolve('No data found')
+    }
     if (data.bookID === undefined) {
       resolve('Book ID missing')
     }

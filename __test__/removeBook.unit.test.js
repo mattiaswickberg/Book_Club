@@ -11,7 +11,7 @@ test('14.1: removeBook should return error message if not provided with any inpu
   })
 })
 
-test('14.1: removeBook should return error message if provided with bad bookID', () => {
+test('14.2: removeBook should return error message if provided with bad bookID', () => {
   expect.assertions(1)
   removeBook({
     bookID: 237864283746,
@@ -23,7 +23,7 @@ test('14.1: removeBook should return error message if provided with bad bookID',
   })
 })
 
-test('14.1: removeBook should return error message if provided with bad caseID', () => {
+test('14.3: removeBook should return error message if provided with bad caseID', () => {
   expect.assertions(1)
   removeBook({
     bookID: '237864283746',
