@@ -18,7 +18,8 @@
         <!-- This area is for recommendations from other users -->
         <h3>Rekommenderade böcker</h3>
         <div v-if='recommendedBooks'>
-        <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
+          {{recommendedBooks}}
+        <!-- <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
           <router-link :to="{ name: 'ViewBookDetails', params: {id: book.book._id}}">
                   <div>
                    <p><img class='bookImage' v-bind:src="book.book.images[0].thumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
@@ -27,7 +28,7 @@
                    <b-btn v-on:click='dismissRecommendation'>Ignorera rekommendation</b-btn>
                    </div>
                    </router-link>
-        </div>
+        </div> -->
         </div>
         <div v-else>
           Du har inga rekommenderade böcker just nu.
