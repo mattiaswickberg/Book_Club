@@ -109,17 +109,12 @@ export default {
         console.log(response.data)
         this.$session.start()
         this.$session.set('user', response.data)
-        this.$set(this.user, response.data)
+        this.$set(this.user = response.data)
         this.$router.push({ name: 'MainLoggedIn' })
       })
     },
     searchBook: function() {
       this.$router.push('/searchresult/' + this.search.data)
-    }
-  },
-  events: {
-    'userLoggedIn': function(userData) {
-      this.$set(this.user, userData)
     }
   }
 }
