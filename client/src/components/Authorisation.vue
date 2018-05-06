@@ -12,10 +12,17 @@
 <script>
 import {HTTP} from '@/services/Api'
 export default {
+  data () {
+    return {
+      user: ''
+    }
+  },
   created() {
         console.log('Query is: ')
         console.log(this.$route.query)
-        this.user === this.$route.query.user
+        this.$session.start()
+        this.$session.set('user', this.$route.query.user)
+        this.$set(this.user = this.$route.query.user)
         console.log('User: ')
         console.log(this.user)
       },
