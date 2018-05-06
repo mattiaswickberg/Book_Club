@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import MainLoggedIn from '@/components/MainLoggedIn'
 import CreateAccount from '@/components/CreateAccount'
-import Authorisation from '@/components/Authorisation'
+// import Authorisation from '@/components/Authorisation'
 import MyBooks from '@/components/MyBooks'
 import AddBookCase from '@/components/AddBookCase'
 import Book from '@/components/Book'
@@ -16,6 +16,8 @@ import p403 from '@/components/403'
 import p500 from '@/components/500'
 import AccountCreated from '@/components/AccountCreated'
 import ViewBookDetails from '@/components/ViewBookDetails'
+import Users from '@/components/Users'
+import Announcements from '@/components/Announcements'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -85,6 +87,16 @@ export default new Router({
       path: '/viewBookDetails',
       name: 'ViewBookDetails',
       component: ViewBookDetails
+    },
+    {
+      path: '/users',
+      name: 'Users',
+      component: Users
+    },
+    {
+      path: '/announcements',
+      name: 'Announcements',
+      component: Announcements
     },
     {
       path: '/404',
