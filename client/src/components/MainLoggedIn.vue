@@ -69,28 +69,30 @@
 <script>
 import {HTTP} from '@/services/Api'
 export default {
-  name: 'Main',
+  name: 'MainLoggedIn',
   data () {
     return {
+      user: ''
     }
   },
   computed: {
-    user: function() {
-      return this.$session.get('user')
-    },
     recommendedBooks: function() {
       return this.user.recommendedBooks
     }
   },
     created() {
-      if(!this.$session.exists()) {
+      if(this.$session.exists()) {
+        this.$set(this.user = this.$session.get('user'))
+      } else {
         HTTP.get('/sessionstatus')
       .then(response => {
-              console.log('session response: ')
+        console.log('session response: ')
         console.log(response.data)
         if(response.data !== null && response.data !== undefined) {
           this.$session.start()
           this.$session.set('user', response.data)
+          this.$set(this.user = this.$session.get('user'))
+          console.log('User set')
         }
         })
         .catch(error => {
