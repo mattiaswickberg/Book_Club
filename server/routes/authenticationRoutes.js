@@ -55,7 +55,7 @@ function (req, res) {
   app.get('/auth/google/callback',
 passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
   console.log(req.user)
-  res.redirect(303, process.env.SERVER_URL + '/#/auth')
+  res.redirect(303, process.env.SERVER_URL + '/#/auth?user=' + req.user)
 })
 
   app.get('/logout', function (req, res) {

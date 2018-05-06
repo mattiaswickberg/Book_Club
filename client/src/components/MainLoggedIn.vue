@@ -86,6 +86,8 @@ export default {
     }
   },
     created() {
+      console.log('Query is: ')
+      console.log(this.$route.query)
       if(this.$session.exists()) {
         this.$set(this.user = this.$session.get('user'))
       } else {
