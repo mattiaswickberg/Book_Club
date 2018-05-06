@@ -24,11 +24,20 @@ export default {
     }
   },
   created() {
-        console.log('Query is: ')
-        console.log(this.$route.query)
-        this.$session.start()
-        this.$session.set('user', this.$route.query.user)
-        this.vueRoot.user =  this.$session.get('user')
+    HTTP.get('/sessionstatus')
+      .then(response => {
+        console.log('session response: ')
+        console.log(response.data)
+        if(response.data !== null && response.data !== undefined) {
+          this.$session.start()
+          this.$session.set('user', response.data)
+          this.user = this.$session.get('user')
+          console.log('User set')
+        }
+        })
+        // this.$session.start()
+        //this.$session.set('user', this.$route.query.user)
+        // this.vueRoot.user =  this.$session.get('user')
       }
     }
 </script>

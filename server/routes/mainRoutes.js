@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.get('/sessionstatus', function (req, res) {
     console.log('Req.user is: ')
     console.log(req.user)
-    res.send(req.user)
+    res.send(req.user._id)
   })
 
   app.get('/account', function (req, res) {
