@@ -87,13 +87,7 @@ export default {
   },
     created() {
       if(this.$session.exists()) {
-        this.$set(this.user = this.$session.get('user'))
-      } else if(this.$route.query) {
-        console.log('Query is: ')
-        console.log(this.$route.query)
-        this.$set(this.user === this.$route.query.user)
-        console.log('User: ')
-        console.log(this.user)
+        this.user = this.$session.get('user')
       } else {
         HTTP.get('/sessionstatus')
       .then(response => {
@@ -102,7 +96,7 @@ export default {
         if(response.data !== null && response.data !== undefined) {
           this.$session.start()
           this.$session.set('user', response.data)
-          this.$set(this.user = this.$session.get('user'))
+          this.user = this.$session.get('user')
           console.log('User set')
         }
         })
