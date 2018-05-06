@@ -1,8 +1,11 @@
 <template>
   <div>
     <h1>
-      Auth page
+      Inloggningen lyckades!
     </h1>
+    <router-link to="MainLoggedIn">
+      <b-btn>Gå till huvudsidan</b-btn>
+    </router-link>
   </div>
 </template>
 
@@ -10,17 +13,11 @@
 import {HTTP} from '@/services/Api'
 export default {
   created() {
-        HTTP.get('/sessionstatus')
-            .then(response => {
-              // console.log('session response: ')
-        // console.log(response.data)
-        this.$session.start()
-        this.$session.set('user', response.data)
-        this.$router.push({ name: 'Main' })
-            })
-            .catch(error => {
-              reject(error.response.data)
-            })
+        console.log('Query is: ')
+        console.log(this.$route.query)
+        this.user === this.$route.query.user
+        console.log('User: ')
+        console.log(this.user)
       },
       mounted() {
       }
