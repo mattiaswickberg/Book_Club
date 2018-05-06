@@ -8,7 +8,6 @@
       <b-navbar-brand href='#/mainloggedin'><img id='logo' src="./assets/logo.png"></b-navbar-brand>
       <b-collapse is-nav id='nav_collapse'>
         <b-navbar-nav>
-          Name: {{test.name}}
           <b-nav-item href='#/mybooks'>Mina böcker</b-nav-item> 
           <b-nav-item href='#/profile'>Profile</b-nav-item>
         </b-navbar-nav>
@@ -82,7 +81,6 @@ export default {
         username: '',
         password: ''
       },
-      test: ''
     }
   },
   created () {
