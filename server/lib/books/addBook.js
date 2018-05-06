@@ -51,23 +51,25 @@ module.exports = function (book) {
       if (userNotInList) {
         bookUsers.push(book.user._id)
         response.set('users', bookUsers)
-        response.save(function (error) {
-          if (error) { console.log(error) }
+        response.save(function (err, doc) {
+          if (err) {
+            console.log(err)
+          }
+          // Then, add to bookcase of choice
+          addToBookCase(book)
         })
       }
-      // Then, add to bookcase of choice
-      addToBookCase(book)
     }
   })
 }
 
 let addToBookCase = function (book) {
-  console.log('Adding book to bookcase')
-  console.log(book)
+  // console.log('Adding book to bookcase')
+  // console.log(book)
   let bookToAdd
   Book.findOne({isbn: book.book.isbn}).then(response => {
-    // console.log('response is:')
-    // console.log(response)
+    console.log('response is:')
+    console.log(response)
     if (response !== null && response !== undefined) {
       bookToAdd = {
         _id: response._id,
