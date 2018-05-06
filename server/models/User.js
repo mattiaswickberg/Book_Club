@@ -11,11 +11,11 @@ let UserSchema = new mongoose.Schema({
   role: {type: String, default: 'student'},
   image: String,
   active: {type: Boolean, default: true},
-  recommendedBooks: {type: Array, default: [{
+  recommendedBooks: [{
     book: {type: Object},
     fromUser: String,
     date: {type: Date, default: Date.now}
-  }]}
+  }]
 })
 
 UserSchema.methods.validPassword = function (psw) {

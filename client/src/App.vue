@@ -89,6 +89,7 @@ export default {
   mounted() {
   },
   updated() {
+    this.$set(this.user === this.$session.get('user'))
   },
   watch: {
   },

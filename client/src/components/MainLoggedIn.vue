@@ -17,6 +17,7 @@
       <b-col>
         <!-- This area is for recommendations from other users -->
         <h3>Rekommenderade böcker</h3>
+        <div v-if='recommendedBooks'>
         <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
           <router-link :to="{ name: 'ViewBookDetails', params: {id: book.book._id}}">
                   <div>
@@ -27,7 +28,11 @@
                    </div>
                    </router-link>
         </div>
-      </b-col>
+        </div>
+        <div v-else>
+          Du har inga rekommenderade böcker just nu.
+          </div>
+          </b-col>
     </b-row>
 
   </div>
