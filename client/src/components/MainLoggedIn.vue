@@ -97,6 +97,7 @@ export default {
           this.$session.start()
           this.$session.set('user', response.data)
           this.user = this.$session.get('user')
+          this.$parent.$data.user = this.$session.get('user')
           console.log('User set')
         }
         })
@@ -104,6 +105,8 @@ export default {
               reject(error.response.data)
             })
       }
+  },
+  mounted() {
   },
   methods: {
     dismissRecommendation: function () {
