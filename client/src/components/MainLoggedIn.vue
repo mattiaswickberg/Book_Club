@@ -18,8 +18,7 @@
         <!-- This area is for recommendations from other users -->
         <h3>Rekommenderade böcker</h3>
         <div v-if='recommendedBooks'>
-          {{recommendedBooks}}
-        <!-- <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
+        <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
           <router-link :to="{ name: 'ViewBookDetails', params: {id: book.book._id}}">
                   <div>
                    <p><img class='bookImage' v-bind:src="book.book.images[0].thumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
@@ -28,7 +27,7 @@
                    <b-btn v-on:click='dismissRecommendation'>Ignorera rekommendation</b-btn>
                    </div>
                    </router-link>
-        </div> -->
+        </div>
         </div>
         <div v-else>
           Du har inga rekommenderade böcker just nu.
@@ -87,12 +86,14 @@ export default {
     }
   },
     created() {
-      if(this.$route.query) {
+      if(this.$session.exists()) {
+        this.$set(this.user = this.$session.get('user'))
+      } else if(this.$route.query) {
+        console.log('Query is: ')
+        console.log(this.$route.query)
         this.$set(this.user === this.$route.query.user)
         console.log('User: ')
         console.log(this.user)
-      } else if(this.$session.exists()) {
-        this.$set(this.user = this.$session.get('user'))
       } else {
         HTTP.get('/sessionstatus')
       .then(response => {
