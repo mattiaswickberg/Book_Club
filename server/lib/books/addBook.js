@@ -3,18 +3,21 @@ let Bookcase = require('../../models/BookCase')
 let getImage = require('../books/getImage')
 
 module.exports = function (book) {
-  // console.log(book)
+  console.log(book)
   // Check incoming data
 
-  if (book === undefined || book === null){
+  if (book === undefined || book === null) {
+    console.log('Missing data')
     return ('Missing input data')
   }
 
-  if (typeof book.book.title !== 'string' || typeof book.book.author !== 'string') {
+  if (typeof book.book.title !== 'string') {
+    console.log('Bad info')
     return ('Wrong data  type in mandatory information')
   }
 
   if (book.bookcase._id === undefined || book.bookcase._id === null || book.bookcase._id.length === 0) {
+    console.log('bad bookcase')
     return ('No bookcase provided!')
   }
     // Check if book exists in db

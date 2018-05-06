@@ -17,7 +17,7 @@
                   <th class='caseTitle'>{{item.title}}</th>
                   </router-link>
                   </tr>
-                  <tr>
+                  <tr class='bookCaseRow'>
                   <td v-for='book in item.books' :key='book.title' class='book'>
                     <router-link :to="{ name: 'ViewBookDetails', params: {id: book._id, bookcase: item._id}}">
                   <div>
@@ -131,6 +131,12 @@ export default {
 
 .bookCase {
   width: 100%;
+  table-layout: fixed;
+}
+
+.bookCaseRow{
+  overflow: scroll;
+  height: 200px;
 }
 
 .book {
