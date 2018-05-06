@@ -11,10 +11,16 @@
 
 <script>
 import {HTTP} from '@/services/Api'
+import App from '@/App'
 export default {
   data () {
     return {
       user: ''
+    }
+  },
+  computed: {
+    vueRoot() {
+      return this.$root
     }
   },
   created() {
@@ -22,12 +28,7 @@ export default {
         console.log(this.$route.query)
         this.$session.start()
         this.$session.set('user', this.$route.query.user)
-        this.user = this.$route.query.user
-        console.log('User: ')
-        console.log(this.user)
-        App.$forceupdate()
-      },
-      mounted() {
+        this.vueRoot.user =  this.$session.get('user')
       }
     }
 </script>
