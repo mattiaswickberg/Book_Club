@@ -26,7 +26,7 @@ export default {
   },
   beforeCreate: function () {
     let user = this.$session.get('user')
-    if (user.role !== 'student') {
+    if (user.role !== 'admin') {
       router.push('/')
     }
   }

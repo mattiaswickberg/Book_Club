@@ -86,7 +86,8 @@ export default {
     }
   },
     created() {
-      if(this.$session.exists()) {
+      if (this.user.length === 0) {
+        if(this.$session.exists()) {
         this.user = this.$session.get('user')
       } else {
         HTTP.get('/sessionstatus')
@@ -104,6 +105,7 @@ export default {
         .catch(error => {
               reject(error.response.data)
             })
+      }
       }
   },
   mounted() {

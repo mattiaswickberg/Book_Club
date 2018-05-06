@@ -10,10 +10,12 @@
         <b-navbar-nav>
           <b-nav-item href='#/mybooks'>Mina böcker</b-nav-item> 
           <b-nav-item href='#/profile'>Profile</b-nav-item>
+          <div v-if='user'>
           <b-nav-item-dropdown text='Admin' right v-if='user.role === "admin"'>
             <b-dropdown-item href='#/users'>Users</b-dropdown-item>
             <b-dropdown-item href='#/announcements'>Announcements</b-dropdown-item>
             </b-nav-item-dropdown>
+            </div>
         </b-navbar-nav>
         <b-navbar-nav class='ml-auto'>
         <b-nav-form id='searchField' @submit.prevent='searchBook'>
@@ -77,7 +79,9 @@ export default {
   name: 'App',
   data () {
     return {
-      user: '',
+      user: {
+        role: ''
+      },
       search : {
         data: ''
           },

@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.get('/sessionstatus', function (req, res) {
     console.log('Req.user is: ')
     console.log(req.user)
-    if (req.user !== undefined || req.user !== null) {
+    if (req.user !== undefined && req.user !== null) {
       res.send(req.user._id)
     } else {
       res.send(undefined)

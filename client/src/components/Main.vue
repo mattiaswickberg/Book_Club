@@ -83,7 +83,8 @@ export default {
     }
   },
     created() {
-      HTTP.get('/sessionstatus')
+      if(!this.$session.exists()) {
+        HTTP.get('/sessionstatus')
       .then(response => {
               console.log('session response: ')
         console.log(response.data)
@@ -95,6 +96,7 @@ export default {
         .catch(error => {
               reject(error.response.data)
             })
+      }
   },
   methods: {
     dismissRecommendation: function () {
