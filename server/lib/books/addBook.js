@@ -89,7 +89,12 @@ const createBook = function (book) {
 
     getImage(book.book.isbn).then(response => {
       newBook.images = response
-      resolve(newBook)
+
+      let book = new Book(newBook)
+      book.save(function (err, doc) {
+        if (err) { console.log(err) }
+        resolve(doc)
+      })
     })
   })
 }
