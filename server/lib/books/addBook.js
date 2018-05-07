@@ -3,106 +3,143 @@ let Bookcase = require('../../models/BookCase')
 let getImage = require('../books/getImage')
 
 module.exports = function (book) {
-  console.log(book)
-  // Check incoming data
-
-  if (book === undefined || book === null) {
-    console.log('Missing data')
-    return ('Missing input data')
-  }
-
-  if (typeof book.book.title !== 'string') {
-    console.log('Bad info')
-    return ('Wrong data  type in mandatory information')
-  }
-
-  if (book.bookcase._id === undefined || book.bookcase._id === null || book.bookcase._id.length === 0) {
-    console.log('bad bookcase')
-    return ('No bookcase provided!')
-  }
-    // Check if book exists in db
-  Book.findOne({isbn: book.book.isbn}).then(response => {
-    // If not, add to database
-    if (response === null) {
-      let newBook = new Book({
-        title: book.book.title,
-        author: book.book.creator,
-        publishedYear: book.book.date,
-        isbn: book.book.isbn,
-        users: [book.user._id],
-        language: book.book.language
-      })
-
-      getImage(book.book.isbn).then(response => {
-        newBook.images = response
-        newBook.save(function (error) {
-          if (error) { console.log(error) }
-          // Then, add to bookcase of choice
-          addToBookCase(book)
-        })
-        // console.log(newBook)
-      })
-    } else {
-      let bookUsers = response.get('users')
-      let userNotInList = true
-      bookUsers.forEach(element => {
-        if (element === book.user._id) { userNotInList = false }
-      })
-      if (userNotInList) {
-        bookUsers.push(book.user._id)
-        response.set('users', bookUsers)
-        response.save(function (err, doc) {
-          if (err) {
-            console.log(err)
+  return new Promise(function (resolve, reject) {
+    checkData(book).then(response => {
+      if (response === 'Data ok') {
+        checkBookInDatabase(book).then(response => {
+          if (response !== null) {
+            saveToBookcase(book, response).then(response => {
+              resolve(response)
+            })
+          } else {
+            createBook(book).then(response => {
+              saveToBookcase(book, response).then(response => {
+                resolve(response)
+              })
+            })
           }
-          // Then, add to bookcase of choice
-          addToBookCase(book)
         })
+      } else {
+        resolve(response)
       }
+    })
+    .catch(err => { console.log(err) })
+  })
+}
+
+const checkData = function (book) {
+  return new Promise(function (resolve, reject) {
+    if (book === undefined || book === null) {
+      console.log('Missing data')
+      resolve('Missing input data')
+    } else if (typeof book.book.title !== 'string') {
+      console.log('Bad info')
+      resolve('Wrong data type in mandatory information')
+    } else if (book.bookcase._id === undefined || book.bookcase._id === null || book.bookcase._id.length === 0) {
+      console.log('bad bookcase')
+      resolve('No bookcase provided!')
+    } else {
+      resolve('Data ok')
     }
   })
 }
 
-let addToBookCase = function (book) {
-  // console.log('Adding book to bookcase')
-  // console.log(book)
-  let bookToAdd
-  Book.findOne({isbn: book.book.isbn}).then(response => {
-    console.log('response is:')
-    console.log(response)
-    if (response !== null && response !== undefined) {
-      bookToAdd = {
-        _id: response._id,
-        title: response.title,
-        author: response.author,
-        images: response.images
-      }
-    }
-  })
-
-  Bookcase.findById(book.bookcase._id).then(response => {
-    let books = response.get('books')
-    let bookExists = false
-    books.forEach(element => {
-      // console.log('Element is: ')
-      // console.log(element)
-      if (element !== null && element !== undefined) {
-        if (element._id.toString() === bookToAdd._id) {
-          bookExists = true
-        }
-      }
+const checkBookInDatabase = function (book) {
+  return new Promise(function (resolve, reject) {
+    Book.findOne({isbn: book.book.isbn}, function (err, doc) {
+      if (err) { reject(err) }
+      resolve(doc)
     })
-    if (!bookExists) {
-      books.push(bookToAdd)
-      // console.log('adding book ')
-      // console.log(books)
-      response.set('books', books)
-      response.save(function (error) {
-        if (error) { console.log(error) }
-      })
-    }
   })
-  .catch(err => {
-    console.log(err)
+}
+
+const createBook = function (book) {
+  return new Promise(function (resolve, reject) {
+    let newBook = {}
+    if (book.book.title.length < 1) {
+      newBook.title = 'Untitled'
+    } else {
+      newBook.title = book.book.title
+    }
+
+    if (book.book.creator === undefined) {
+      if (book.book.author === undefined) {
+        newBook.author = 'Author unknown'
+      } else {
+        newBook.author = book.book.author
+      }
+    } else {
+      newBook.author = book.book.creator
+    }
+
+    if (book.book.date === undefined || book.book.date === null) {
+      book.publishedYear = 'Unknown'
+    } else {
+      book.publishedYear = book.book.date
+    }
+
+    newBook.isbn = book.book.isbn
+    newBook.users = [book.user_id]
+
+    if (book.book.language === undefined || book.book.language === null) {
+      newBook.language = 'unknown'
+    } else {
+      newBook.language = book.book.language
+    }
+
+    getImage(book.book.isbn).then(response => {
+      newBook.images = response
+      resolve(newBook)
+    })
+  })
+}
+
+const saveToBookcase = function (book, newBook) {
+  return new Promise(function (resolve, reject) {
+    addUserToBook(book, newBook).then(response => {
+      let bookToAdd = response
+      Bookcase.findById(book.bookcase._id).then(response => {
+        let books = response.get('books')
+        books.forEach(element => {
+          // console.log('Element is: ')
+          // console.log(element)
+          if (element !== null && element !== undefined) {
+            if (element._id.toString() === bookToAdd._id) {
+              resolve('Book already in Bookcase')
+            }
+          }
+        })
+        books.push(bookToAdd)
+        // console.log('adding book ')
+        // console.log(books)
+        response.set('books', books)
+        response.save(function (err, doc) {
+          if (err) { console.log(err) }
+          resolve('Book added')
+        })
+      })
+    })
+  })
+}
+
+const addUserToBook = function (book, newBook) {
+  return new Promise(function (resolve, reject) {
+    let bookUsers = newBook.get('users')
+    let userNotInList = true
+    bookUsers.forEach(element => {
+      if (element === book.user._id) { userNotInList = false }
+    })
+    if (userNotInList) {
+      bookUsers.push(book.user._id)
+      newBook.set('users', bookUsers)
+      newBook.save(function (err, doc) {
+        if (err) {
+          console.log(err)
+        }
+        resolve(doc)
+      })
+    } else {
+      resolve(newBook)
+    }
   })
 }

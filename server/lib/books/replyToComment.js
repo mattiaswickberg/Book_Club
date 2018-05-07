@@ -25,7 +25,7 @@ module.exports = function (data) {
           resolve('Error in saving reply')
         } else {
           resolve('Reply saved')
-        }     
+        }
       })
     })
   })

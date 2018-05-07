@@ -4,21 +4,17 @@
     <b-row>
       <b-col></b-col>
       <b-col cols='10'>
-        <table class='bookCase'>
-                  <tr>
-                  <th class='caseTitle'>{{bookCase.title}}</th>
-                  </tr>
-                  <tr>
-                  <td v-for='book in bookCase.books' :key='book.title' class='book'>
+        <div class='bookCase'>
+                  <div class='caseTitle'>{{bookCase.title}}</div>
+                  <div v-for='book in bookCase.books' :key='book.title' class='book'>
                     <router-link :to="{ name: 'ViewBookDetails', params: {book: book, bookcase: bookCase._id}}">
-                  <div>
-                   <p><img class='bookImage' v-bind:src="book.images[0].smallThumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
-                   <figcaption>{{book.title}}</figcaption>
+                      <div>
+                   <img class='bookImage' v-bind:src="book.images[0].smallThumbnail" v-bind:alt="book.author + ': ' + book.title">
                    </div>
+                   <div class='bookTitle'>{{book.title}}</div>
                    </router-link>
-                  </td>
-                  </tr>
-                </table>
+                  </div>
+        </div>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -54,23 +50,29 @@ export default {
 <style lang="scss" scoped>
 .bookCase {
   width: 100%;
+  overflow: auto;
 }
 
 .book {
   display: inline-block;
   border: 1px solid white;
   padding: 5px;
-  width: 150px;
-  height: 175px;
+  max-height: 10%;
 }
 
 .bookImage {
-  height: 100%;
+  height: 175px;
 }
 
 .caseTitle {
   font-size: 150%;
   text-align: center;
   color: darkslategray;
+  padding: 20px;
 }
+
+.bookTitle {
+  font-size: 95%;
+}
+
 </style>
