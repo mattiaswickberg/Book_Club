@@ -3,6 +3,7 @@ let User = require('../models/User')
 let createAccount = require('../lib/auth/createAccount')
 let editAccount = require('../lib/account/editAccount')
 let closeAccount = require('../lib/account/closeAccount')
+let getUser = require('../lib/admin/getUser')
 
 module.exports = function (app) {
   // Account creation and login routes
@@ -56,7 +57,7 @@ function (req, res) {
 passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
   console.log('User: ')
   console.log(req.user)
-  res.redirect(303, process.env.SERVER_URL + '/#/auth?user=' + req.user)
+  res.redirect(303, process.env.SERVER_URL + '/#/auth?user=' + req.user._id)
 })
 
   app.get('/logout', function (req, res) {
@@ -82,5 +83,11 @@ passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
     editAccount(req.body).then(response => {
       res.send(response)
     }).catch(err => console.log(err))
+  })
+
+  app.get('/user', function (req, res) {
+    getUser(req.query.userID).then(response => {
+      res.send(response)
+    })
   })
 }

@@ -25,7 +25,16 @@ export default {
   },
   
   mounted() {
-    console.log(typeof this.$route.query.user)
+    console.log(this.$route.query.user)
+    HTTP.get('/user?userID=' + this.$route.query.user).then(response => {
+      if(response !== null) {
+        this.$session.start()
+        this.$session.set('user', response)
+        console.log('User logged in: ')
+        console.log(this.$session.get('user'))
+        this.$parent.$data.user = this.$session.get('user')
+      }
+    })
     if(this.$route.query.user !== null) {
       this.$session.start()
       this.$session.set('user', this.$route.query.user)
