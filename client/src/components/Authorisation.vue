@@ -27,9 +27,9 @@ export default {
   mounted() {
     console.log(this.$route.query.user)
     HTTP.get('/user?userID=' + this.$route.query.user).then(response => {
-      if(response !== null) {
+      if(response.data !== null) {
         this.$session.start()
-        this.$session.set('user', response)
+        this.$session.set('user', response.data)
         console.log('User logged in: ')
         console.log(this.$session.get('user'))
         this.$parent.$data.user = this.$session.get('user')
