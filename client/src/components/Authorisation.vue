@@ -22,16 +22,16 @@ export default {
   computed: {
   },
   created() {
-    console.log(this.$route.query.keys)
+  },
+  
+  mounted() {
+    console.log(this.$route.query)
     if(this.$route.query.user !== null) {
       this.$session.start()
       this.$session.user = this.$route.query.user
       console.log('User logged in: ')
       console.log(this.$session.get('user'))
     }
-  },
-  
-  mounted() {
     this.$router.push('mainloggedin')
   }
 }
