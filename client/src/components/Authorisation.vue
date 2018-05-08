@@ -28,7 +28,7 @@ export default {
     console.log(this.$route.query)
     if(this.$route.query.user !== null) {
       this.$session.start()
-      this.$session.user = this.$route.query.user
+      this.$session.set('user', this.$route.query.user)
       console.log('User logged in: ')
       console.log(this.$session.get('user'))
     }
