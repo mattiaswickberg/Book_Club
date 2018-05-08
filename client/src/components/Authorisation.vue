@@ -31,6 +31,7 @@ export default {
       this.$session.set('user', this.$route.query.user)
       console.log('User logged in: ')
       console.log(this.$session.get('user'))
+      this.$parent.$data.user = this.$session.get('user')
     }
     this.$router.push('mainloggedin')
   }
