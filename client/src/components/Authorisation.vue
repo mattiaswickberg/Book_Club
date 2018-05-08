@@ -22,6 +22,7 @@ export default {
   computed: {
   },
   created() {
+    console.log(this.$route.query.keys)
     if(this.$route.query.user !== null) {
       this.$session.start()
       this.$session.user = this.$route.query.user
