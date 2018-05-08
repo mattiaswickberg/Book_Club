@@ -86,9 +86,9 @@ export default {
     }
   },
     created() {
-      if (this.user.length === 0) {
         if(this.$session.exists()) {
         this.user = this.$session.get('user')
+        console.log('User found')
       } else {
         HTTP.get('/sessionstatus')
       .then(response => {
@@ -105,7 +105,6 @@ export default {
         .catch(error => {
               reject(error.response.data)
             })
-      }
       }
   },
   mounted() {
