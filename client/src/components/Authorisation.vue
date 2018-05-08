@@ -12,6 +12,7 @@
 <script>
 import {HTTP} from '@/services/Api'
 import App from '@/App'
+import router from '@/services/Api'
 export default {
   data () {
     return {
@@ -19,27 +20,20 @@ export default {
     }
   },
   computed: {
-    vueRoot() {
-      return this.$root
-    }
   },
   created() {
-    HTTP.get('/sessionstatus')
-      .then(response => {
-        console.log('session response: ')
-        console.log(response.data)
-        if(response.data !== null && response.data !== undefined) {
-          this.$session.start()
-          this.$session.set('user', response.data)
-          this.user = this.$session.get('user')
-          console.log('User set')
-        }
-        })
-        // this.$session.start()
-        //this.$session.set('user', this.$route.query.user)
-        // this.vueRoot.user =  this.$session.get('user')
-      }
+    if(this.$route.query.user !== null) {
+      this.$session.start()
+      this.$session.user = this.$route.query.user
+      console.log('User logged in: ')
+      console.log(this.$session.get('user'))
     }
+  },
+  
+  mounted() {
+    this.$router.push('mainloggedin')
+  }
+}
 </script>
 
 <style lang="scss" scoped>

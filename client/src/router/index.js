@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 import MainLoggedIn from '@/components/MainLoggedIn'
 import CreateAccount from '@/components/CreateAccount'
-// import Authorisation from '@/components/Authorisation'
+import Authorisation from '@/components/Authorisation'
 import MyBooks from '@/components/MyBooks'
 import AddBookCase from '@/components/AddBookCase'
 import Book from '@/components/Book'
@@ -44,7 +44,8 @@ export default new Router({
 
     {
       path: '/auth',
-      redirect: '/mainloggedin'
+      name: 'Auth',
+      component: Authorisation
     },
 
     {

@@ -56,8 +56,7 @@ function (req, res) {
 passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
   console.log('User: ')
   console.log(req.user)
-  res.send('Hello this is a message')
-  // res.redirect(303, process.env.SERVER_URL + '/#/auth')
+  res.redirect(303, process.env.SERVER_URL + '/#/auth?user=' + req.user)
 })
 
   app.get('/logout', function (req, res) {
