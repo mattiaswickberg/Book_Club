@@ -25,7 +25,7 @@ export default {
   },
   
   mounted() {
-    console.log(this.$route.query)
+    console.log(typeof this.$route.query.user)
     if(this.$route.query.user !== null) {
       this.$session.start()
       this.$session.set('user', this.$route.query.user)

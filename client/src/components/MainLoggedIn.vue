@@ -7,6 +7,7 @@
       <b-col sm='6'>
         <div id='loggedIn'>
           <h1>Välkommen {{user.username}}!</h1>
+          {{user}}
         </div>
         <div id='adminInfo'>
           <h1>
@@ -89,6 +90,7 @@ export default {
         if(this.$session.exists()) {
         this.user = this.$session.get('user')
         console.log('User found')
+        console.log(this.user)
       } else {
         HTTP.get('/sessionstatus')
       .then(response => {
