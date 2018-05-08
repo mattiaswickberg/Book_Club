@@ -7,7 +7,6 @@
       <b-col sm='6'>
         <div id='loggedIn'>
           <h1>Välkommen {{user.username}}!</h1>
-          {{user}}
         </div>
         <div id='adminInfo'>
           <h1>
