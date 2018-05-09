@@ -110,10 +110,10 @@
         <p></p>
         <div class='commentDiv' v-for='comment in book.comments' :key='comment._id'>
         <p class='commentBody'>{{comment.comment}}</p>
-        <p class='commentUser'> Added by user: {{comment.user}} at {{comment.date}}</p>
+        <p class='commentUser'> Kommentar tillagd av: {{comment.user}} at {{comment.date}}</p>
         <div class='commentReply' v-for='reply in comment.replies' :key='reply._id'>
           <p>{{reply.comment}}</p>
-          <p>{{reply.user}} replied on {{reply.date}}</p>
+          <p>{{reply.user}} svarade {{reply.date}}</p>
         </div>
         <b-btn size='sm' id='reply' v-b-toggle.collapseReply variant='success'>Svara</b-btn>
 
@@ -340,7 +340,7 @@ font-size: 80%;
 
 .commentDiv {
   border: 1px solid black;
-  background-color: bisque;
+  background-color: beige;
 }
 
 .commentBody {
