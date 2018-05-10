@@ -1,6 +1,7 @@
 let createAnnouncement = require('../lib/admin/createAnnouncement')
 let getAnnouncements = require('../lib/admin/getAnnouncements')
 let getAnnouncement = require('../lib/admin/getAnnouncement')
+let archiveAnnouncement = require('../lib/admin/archiveAnnouncement')
 
 module.exports = function (app) {
   app.post('/announcement', function (req, res) {
@@ -26,5 +27,12 @@ module.exports = function (app) {
       res.send(response)
     })
     .catch(err => { console.log(err) })
+  })
+
+  app.post('/archiveannouncement', function (req, res) {
+    archiveAnnouncement(req.body)
+    .then(response => {
+      res.send(response)
+    })
   })
 }

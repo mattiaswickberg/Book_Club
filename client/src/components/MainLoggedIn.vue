@@ -3,18 +3,22 @@
 <b-container fluid>
   <div id='mainLoggedIn' v-if='user'>
     <b-row>
-      <b-col></b-col>
-      <b-col sm='6'>
+      <b-col cols='1'></b-col>
+      <b-col sm='8'>
         <div id='loggedIn'>
           <h1>Välkommen {{user.username}}!</h1>
         </div>
         <div id='adminInfo'>
-          <h1>
-            Info div for admins
-          </h1>
+          <h4>Meddelanden från admin</h4>
+          <div v-for='announcement in announcements' :key='announcement._id'>
+          <h2>{{announcement.title}}</h2>
+          <img id ='previewImage' v-bind:src="announcement.image">
+          <div id='previewText'>{{announcement.content}}</div>
+          <span v-if='announcement.date' id='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span id='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
+        </div>
         </div>
       </b-col>
-      <b-col>
+      <b-col cols='3'>
         <!-- This area is for recommendations from other users -->
         <h3>Rekommenderade böcker</h3>
         <div v-if='recommendedBooks'>
@@ -77,7 +81,8 @@ export default {
   name: 'MainLoggedIn',
   data () {
     return {
-      user: ''
+      user: '',
+      announcements: []
     }
   },
   computed: {
@@ -86,6 +91,21 @@ export default {
     }
   },
     created() {
+      HTTP.get('/announcements').then(response => {
+      console.log(response.data)
+      if(response.data.length !== 0) {
+        response.data.forEach(element => {
+          if(element.archived !== true) {
+            this.announcements.push(element)
+          }
+        });
+        
+      } else {
+        this.announcements.push({
+          title: 'No announcements yet'
+        })
+      }
+    })
         if(this.$session.exists()) {
         this.user = this.$session.get('user')
         console.log('User found')

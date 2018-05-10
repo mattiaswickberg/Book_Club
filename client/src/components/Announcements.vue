@@ -8,13 +8,21 @@
         </b-col>
       <b-col></b-col>      
     </b-row>
-    <b-row>
-      <b-col cols='3'><h2>Aktiva meddelanden</h2></b-col>
-      <b-col cols='6'><h2>Nytt meddelande</h2></b-col>
-      <b-col cols='3'><h2>Arkiverade meddelanden</h2></b-col>
+    <b-row id='titlebar'>
+      <b-col cols='3'><h4>Aktiva meddelanden</h4></b-col>
+      <b-col cols='6'><h4>Nytt meddelande</h4></b-col>
+      <b-col cols='3'><h4>Arkiverade meddelanden</h4></b-col>
     </b-row>
         <b-row>
-      <b-col></b-col>
+      <b-col>
+        <div v-for='announcement in announcements' :key='announcement._id'>
+          <h2>{{announcement.title}}</h2>
+          <img id ='previewImage' v-bind:src="announcement.image">
+          <div id='previewText'>{{announcement.content}}</div>
+          <span v-if='announcement.date' id='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span id='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
+          <br><b-btn v-on:click='archiveAnnouncement(announcement._id)'>Archive</b-btn>
+        </div>
+      </b-col>
       <b-col cols='4'>
         <div v-if='newAnnouncement.title' id='preview'>
           <h4>Förhandsgranskning av ditt meddelande</h4>
@@ -112,7 +120,14 @@
           </b-form>
         </div>
       </b-col>
-      <b-col></b-col>
+      <b-col>
+        <div v-for='announcement in archived' :key='announcement._id'>
+          <h2>{{announcement.title}}</h2>
+          <img id ='previewImage' v-bind:src="announcement.image">
+          <div id='previewText'>{{announcement.content}}</div>
+          <span v-if='announcement.date' id='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span id='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
+        </div>
+      </b-col>
     </b-row>
   </b-container>
 </div>
@@ -143,6 +158,25 @@ export default {
       router.push('/')
     }
   },
+  created () {
+    HTTP.get('/announcements').then(response => {
+      console.log(response.data)
+      if(response.data.length !== 0) {
+        response.data.forEach(element => {
+          if(element.archived === true) {
+            this.archived.push(element)
+          } else {
+            this.announcements.push(element)
+          }
+        });
+        
+      } else {
+        this.announcements.push({
+          title: 'No announcements yet'
+        })
+      }
+    })
+  },
   methods: {
       saveAnnouncement: function () {
         console.log(this.newAnnouncement)
@@ -151,6 +185,17 @@ export default {
           console.log(response)
         })
         .catch(err => console.log(err))
+      },
+      archiveAnnouncement: function (id) {
+        console.log('Archiving announcement')
+        HTTP.post('/archiveannouncement', {id: id}).then(response => {
+          console.log(response)
+          this.announcements.forEach(element => {
+            if(element._id === id) {
+              element.archived = true
+            }
+          });
+        })
       }
     }
   }
@@ -158,6 +203,9 @@ export default {
 
 <style lang="scss" scoped>
 
+#titlebar {
+  background-color: lightgray;
+}
 #preview {
   border: 1px solid whitesmoke;
   padding: 10px;
