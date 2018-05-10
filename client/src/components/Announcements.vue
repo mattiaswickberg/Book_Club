@@ -120,6 +120,7 @@
 </template>
 
 <script>
+import {HTTP} from '@/services/Api'
 import router from '@/router/index'
 export default {
   data() {
@@ -145,6 +146,11 @@ export default {
   methods: {
       saveAnnouncement: function () {
         console.log(this.newAnnouncement)
+        HTTP.post('/announcement', this.newAnnouncement)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => console.log(err))
       }
     }
   }
@@ -161,6 +167,12 @@ export default {
 #announcementHeader {
   padding: 10px;
   margin: 10px;
+}
+
+#previewImage {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 </style>
