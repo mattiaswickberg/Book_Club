@@ -12,6 +12,7 @@ let replyToComment = require('../lib/books/replyToComment')
 let recommendToUser = require('../lib/books/recommendToUser')
 let updateBookCaseName = require('../lib/bookcases/updateBookCaseName')
 let removeBookCase = require('../lib/bookcases/removeBookCase')
+let dismissRecommendation = require('../lib/books/dismissRecommendation')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -152,6 +153,12 @@ module.exports = function (app) {
       } else {
         res.status(418).send(response)
       }
+    }).catch(err => { console.log(err) })
+  })
+
+  app.post('/dismissrecommendation', function (req, res) {
+    dismissRecommendation(req.body).then(response => {
+      res.send(response)
     }).catch(err => { console.log(err) })
   })
 }

@@ -57,6 +57,9 @@
         <b-collapse id='collapseRemove' class='mt-2'>
           Are you sure you want to remove this book from your bookcase?
           <b-btn v-b-toggle.collapseRemove variant='danger' v-on:click='removeBook'>Remove Book</b-btn>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
           </b-collapse> 
           <!-- Rate book -->
         <b-collapse id='collapseRating' class='mt-2'>
@@ -71,6 +74,9 @@
             </b-form-radio-group>
             <b-btn v-on:click='rateBook'>Spara betyg</b-btn>
           </b-form>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
           <!-- Add comment to book -->
         </b-collapse>
         <b-collapse id='collapseComment' class='mt-2'>
@@ -83,21 +89,33 @@
             </b-form-textarea>
             <b-btn variant='success' v-on:click='addComment'>Spara kommentar</b-btn>
           </b-form>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
         </b-collapse>
         <!-- Add book to bookcase -->
         <b-collapse id='collapseAddBook' class='mt-2'>
             <b-form-select v-model='chosenBookCase' :options='bookCaseNames' class='mb-3' />
             <b-btn variant='success' v-on:click='addBook()'>Lägg till i bokhylla</b-btn>
+            <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
         </b-collapse>
         <!-- Change which bookcase your book is in -->
         <b-collapse id='collapseChangeCase' class='mt-2'>
           <b-form-select v-model='chosenBookCase' :options='bookCaseNames' class='mb-3' />
           <b-btn variant='success' v-on:click='changeBookCase()'>Flytta till bokhylla</b-btn>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
         </b-collapse>
         <!-- Recommend book to other user -->
         <b-collapse id='collapeRecommendBook'>
           <b-form-input v-model='recommendToUser' type='text' placeholder='Type username of the user you want to recommend this book to'></b-form-input>
           <b-btn variant='outline-success' v-on:click='recommend'>Skicka rekommendation</b-btn>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
         </b-collapse>
       </b-col>
       <b-col></b-col>
@@ -209,7 +227,7 @@ export default {
           }
           }).then(response => {
             console.log(response)
-            if (response.data === 'Book removed from bookcase') {
+            if (response.data === 'Book removed') {
               this.successFlash = response.data
               } else {
                 this.warningFlash = 'Book could not be removed for some reason'
@@ -240,7 +258,7 @@ export default {
         comment: this.commentText,
         user: this.$session.get('user')
       }).then(response => {
-        console.log(response)
+        this.infoFlash = response.data
       })
     },
     replyToComment: function(commentID) {
@@ -265,7 +283,11 @@ export default {
         rating: this.rating,
         user: this.$session.get('user')
       }).then(response => {
-        console.log(response)
+        if (response.data = 'Rating saved') {
+          this.successFlash = response.data
+        } else {
+          this.infoFlash = response.data
+        }
       })
     },
     changeBookCase: function() {

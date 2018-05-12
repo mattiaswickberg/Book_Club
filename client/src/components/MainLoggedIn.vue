@@ -17,6 +17,9 @@
           <span v-if='announcement.date' id='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span id='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
         </div>
         </div>
+        <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
       </b-col>
       <b-col cols='3'>
         <!-- This area is for recommendations from other users -->
@@ -25,12 +28,12 @@
         <div class='recBook' v-for='book in recommendedBooks' :key='book.title'>
           <router-link :to="{ name: 'ViewBookDetails', params: {id: book.book._id}}">
                   <div>
-                   <p><img class='bookImage' v-bind:src="book.book.images[0].thumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
+                   <p><img v-if='book.book.images[0]' class='bookImage' v-bind:src="book.book.images[0].thumbnail" v-bind:alt="book.author + ': ' + book.title"></p>
                    <figcaption><strong>{{book.book.author}}:</strong> <i>{{book.book.title}}</i></figcaption>
                    <p class='recBy'> This book was recommended to you by: <strong>{{book.fromUser}}</strong></p>
-                   <b-btn v-on:click='dismissRecommendation'>Ignorera rekommendation</b-btn>
                    </div>
                    </router-link>
+                   <b-btn v-on:click='dismissRecommendation(book.book._id)'>Ignorera rekommendation</b-btn>
         </div>
         </div>
         <div v-else>
@@ -82,7 +85,10 @@ export default {
   data () {
     return {
       user: '',
-      announcements: []
+      announcements: [],
+      infoFlash: '',
+      warningFlash: '',
+      successFlash: ''
     }
   },
   computed: {
@@ -110,30 +116,29 @@ export default {
         this.user = this.$session.get('user')
         console.log('User found')
         console.log(this.user)
-      }/*  else {
-        HTTP.get('/sessionstatus')
-      .then(response => {
-        console.log('session response: ')
-        console.log(response.data)
-        if(response.data !== null && response.data !== undefined) {
-          this.$session.start()
-          this.$session.set('user', response.data)
-          this.user = this.$session.get('user')
-          this.$parent.$data.user = this.$session.get('user')
-          console.log('User set')
-        }
-        })
-        .catch(error => {
-              reject(error.response.data)
-            })
-      } */
+      }
   },
   mounted() {
   },
   methods: {
-    dismissRecommendation: function () {
+    dismissRecommendation: function (bookID) {
       // send to server to remove recommendations
-
+      HTTP.post('/dismissrecommendation', {
+        bookID: bookID,
+        user: this.user._id
+      }).then(response => {
+        if ( response.data === 'Recommendation removed') {
+          this.successFlash = response.data
+          this.user.recommendedBooks.forEach(element => {
+            if (element.book._id === bookID) {
+          this.user.recommendedBooks.splice(this.user.recommendedBooks.indexOf(element), 1)
+        }
+        this.$session.set('user', this.user)
+          })
+        } else {
+          console.log(response.data)
+        }
+      }).catch(err => { console.log(err) })
       // fetch revised list
     }
   }
