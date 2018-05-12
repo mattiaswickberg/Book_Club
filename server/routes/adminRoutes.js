@@ -4,6 +4,7 @@ let getAnnouncement = require('../lib/admin/getAnnouncement')
 let archiveAnnouncement = require('../lib/admin/archiveAnnouncement')
 let getUsers = require('../lib/admin/getUsers')
 let getUser = require('../lib/admin/getUser')
+let updateUser = require('../lib/admin/updateUser')
 
 module.exports = function (app) {
   app.get('/users', function (req, res) {
@@ -20,6 +21,12 @@ module.exports = function (app) {
       res.send(response)
     })
     .catch(err => { console.log(err) })
+  })
+
+  app.post('/updateuser', function (req, res) {
+    updateUser(req.body).then(response => {
+      console.log(response)
+    })
   })
 
   app.post('/announcement', function (req, res) {

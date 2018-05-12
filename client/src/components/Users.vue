@@ -11,27 +11,39 @@
     <b-row>
       <b-col></b-col>
       <b-col cols='4'>
-          <div id="editModal" class="modal fade">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Item Clicked!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div>
+          <b-modal 
+              id='editingUser'
+              title='Edit user'
+              @ok='saveUser'>
+            <div class="modal-body">
+              <form>
+                <label>Username:</label>
+                <b-form-input type='text'
+                              v-model='editingUser.username'>
+                </b-form-input>
+                <label>Mail:</label>
+                <b-form-input type='mail'
+                              v-model='editingUser.mail'>
+                </b-form-input>
+                <label>Role:</label>
+                <b-form-input type='text'
+                              v-model='editingUser.role'>
+                </b-form-input>
+                <label>Active:</label>
+                <b-form-input type='text'
+
+                              v-model='editingUser.active'>
+                </b-form-input>
+                <label>Enter new Password:</label>
+                <b-form-input type='password'
+                              v-model='editingUser.password'>
+                </b-form-input>
+              </form>
         </div>
-        <div class="modal-body">
-          <p>Name: {{editingUser.username }}</p>
-          <p>Description: {{ editingUser.role }}</p>
-          <p>Price: {{ editingUser.mail }}</p>
+          </b-modal>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-        </div>
+      
         <div id='userList'>
           <div v-for='user in users' :key='user._id'>
             <br>Username: {{user.username}}
@@ -40,7 +52,7 @@
             <br>Joined: {{user.joined}}
             <br>Active:{{user.active}}
             <br>Id: {{user._id}}
-            <b-btn on:click='userClicked(user)' class='editButton'>Edit User</b-btn>
+            <b-btn v-b-modal.editingUser @click='userClicked(user)'>Edit User</b-btn>
           </div>
         </div>
       </b-col>
@@ -59,12 +71,14 @@ export default {
   data() {
     return {
       users: [],
+      modalVisible: false,
       editingUser: {
         username: '',
         role: '',
         mail: '',
         active: '',
-        id: ''
+        _id: '',
+        password: ''
       }
     }
   },
@@ -75,7 +89,14 @@ export default {
       this.editingUser.mail = user.mail
       this.editingUser.active = user.active
       this.editingUser.password = ''
-      $('#editModal').modal('show')
+      this.editingUser._id = user._id
+      this.modalVisible = true
+    },
+    saveUser: function() {
+      console.log(this.editingUser)
+      HTTP.post('/updateuser', this.editingUser).then(responce => {
+        console.log(response)
+      })
     }
   },
   beforeCreate: function () {
