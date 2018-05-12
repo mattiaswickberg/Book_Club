@@ -9,7 +9,12 @@ module.exports = function (data) {
     }
 
   // Check if user exists
-    User.findOne({'username': data.toUser}).then(user => {
+    User.findOne({
+      $or: [
+        {'username': data.toUser},
+        {'mail': data.toUser}
+      ]
+    }).then(user => {
       if (user === null || user === undefined) {
         resolve('User not found')
       }
