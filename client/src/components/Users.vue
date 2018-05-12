@@ -1,6 +1,16 @@
 <template>
 <div>
   <b-container fluid>
+    <!-- Section for feedback to user -->
+      <b-row>
+        <b-col></b-col>
+        <b-col cols='8'>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
+          </b-col>
+        <b-col></b-col>
+      </b-row>
     <b-row>
     <b-col></b-col>
     <b-col cols='8'>
@@ -101,7 +111,10 @@ export default {
         password: '',
       },
       deleteuser: '',
-      userInFocus: ''
+      userInFocus: '',
+      warningFlash: '',
+      infoFlash: '',
+      successFlash: '',
     }
   },
   methods: {
@@ -122,7 +135,7 @@ export default {
     },
     removeUser: function() {
       if(this.deleteuser === 'Delete ' + this.editingUser.username) {
-        HTTP.delete('user', { params: { user: this.userInFocus } }).then(response => {
+        HTTP.delete('/user', { params: { user: this.userInFocus } }).then(response => {
           if (response.data === 'Account could not be removed') {
             this.infoFlash = response.data
           } else if (response.data === 'Account removed') {

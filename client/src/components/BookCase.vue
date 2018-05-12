@@ -1,7 +1,31 @@
 <template>
 <div>
     <b-container fluid>
+      <!-- Section for feedback to user -->
+      <b-row>
+        <b-col></b-col>
+        <b-col cols='8'>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
+          </b-col>
+        <b-col></b-col>
+      </b-row>
     <b-row>
+      <b-modal 
+              id='changeBookCaseModal'
+              title='Byt namn på bokhylla'
+              @ok='changeCase'>
+            <div class="modal-body">
+              <form>
+                <label>Skriv in det nya namnet:</label>
+                <b-form-input type='text'
+                              v-model='newCaseName'
+                              placeholder='Bokhyllans namn'>
+                </b-form-input>
+              </form>
+        </div>
+          </b-modal>
       <b-col></b-col>
       <b-col cols='10'>
         <div class='bookCase'>
@@ -15,6 +39,8 @@
                    </router-link>
                   </div>
         </div>
+        <b-btn variant='danger' id='removeBookCase' @click='removeCase'>Ta bort bokhylla</b-btn>
+        <b-btn v-b-modal.changeBookCaseModal variant='warning' id='renameBookCase'>Byt namn på bokhylla</b-btn>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -26,6 +52,7 @@
 
 <script>  
 import fetchBookCaseMixin from '@/mixins/fetchBookCase'
+import {HTTP} from '@/services/Api'
 
 export default {
   name: 'BookCase',
@@ -33,7 +60,11 @@ export default {
   data () {
     return {
       user: false,
-      bookCase: ''
+      bookCase: '',
+      newCaseName: '',
+      successFlash: '',
+      infoFlash: '',
+      warningFlash: '',
     }
   },
     created() {
@@ -43,6 +74,20 @@ export default {
         console.log(response)
         this.bookCase = response
       })
+  },
+  methods: {
+    changeCase: function () {
+      HTTP.post('/changebookcasename', {id: this.bookCase._id, newName: this.newCaseName}).then(response => {
+        if(response.data === 'Bookcase updated') {
+          this.successFlash = response.data
+          this.bookCase.title = this.newCaseName
+        } else { this.infoFlash = response.data }
+            })
+    },
+    removeCase: function() {
+      HTTP.delete('/bookcase', { params: {id: this.bookCase._id} })
+      console.log(this.bookCase)
+    }
   }
 }
 </script>

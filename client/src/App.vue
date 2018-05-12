@@ -35,7 +35,7 @@
 
               <div id='userArea' v-if='user'>
                 <img :src='user.image'> 
-                <p> {{user.username}} </p>  
+                <b-nav-item href='#/profile'> {{user.username}} </b-nav-item>  
                 <b-button id='logoutButton' size='sm' v-on:click='logout'>Logga ut</b-button>
                 </div>
       <div id='loginForm' v-else>
@@ -252,6 +252,10 @@ form input button {
 
 a {
   color: black;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: whitesmoke;
 }
 
 .flashWarning {

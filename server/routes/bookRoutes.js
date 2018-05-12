@@ -10,6 +10,7 @@ let addComment = require('../lib/books/addCommentToBook')
 let removeBook = require('../lib/books/removeBook')
 let replyToComment = require('../lib/books/replyToComment')
 let recommendToUser = require('../lib/books/recommendToUser')
+let updateBookCaseName = require('../lib/bookcases/updateBookCaseName')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -105,9 +106,11 @@ module.exports = function (app) {
     console.log(req.body)
   })
 
-  app.put('/bookcase', function (req, res) {
+  app.post('/changebookcasename', function (req, res) {
     // Update bookcase
-    console.log(req.body)
+    updateBookCaseName(req.body).then(response => {
+      res.send(response)
+    })
   })
 
   app.post('/rating', function (req, res) {
