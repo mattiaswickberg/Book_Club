@@ -11,6 +11,7 @@ let removeBook = require('../lib/books/removeBook')
 let replyToComment = require('../lib/books/replyToComment')
 let recommendToUser = require('../lib/books/recommendToUser')
 let updateBookCaseName = require('../lib/bookcases/updateBookCaseName')
+let removeBookCase = require('../lib/bookcases/removeBookCase')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
@@ -103,7 +104,10 @@ module.exports = function (app) {
 
   app.delete('/bookcase', function (req, res) {
     // Delete bookcase from database
-    console.log(req.body)
+    console.log('removing case')
+    removeBookCase(req.query).then(response => {
+      res.send(response)
+    })
   })
 
   app.post('/changebookcasename', function (req, res) {

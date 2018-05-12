@@ -26,6 +26,14 @@
               </form>
         </div>
           </b-modal>
+          <b-modal 
+              id='removeBookCaseModal'
+              title='Ta bort bokhylla'
+              @ok='removeCase'>
+              <div class='modal-body'>
+                Är du säker på att du vill ta bort den här bokhyllan?
+              </div>
+          </b-modal>
       <b-col></b-col>
       <b-col cols='10'>
         <div class='bookCase'>
@@ -39,7 +47,7 @@
                    </router-link>
                   </div>
         </div>
-        <b-btn variant='danger' id='removeBookCase' @click='removeCase'>Ta bort bokhylla</b-btn>
+        <b-btn v-b-modal.removeBookCaseModal variant='danger' id='removeBookCase'>Ta bort bokhylla</b-btn>
         <b-btn v-b-modal.changeBookCaseModal variant='warning' id='renameBookCase'>Byt namn på bokhylla</b-btn>
       </b-col>
       <b-col></b-col>
@@ -70,8 +78,6 @@ export default {
     created() {
       this.user = this.$session.user
       this.fetchBookCase(this.$route.params.id).then(response => {
-        console.log('bookcase:')
-        console.log(response)
         this.bookCase = response
       })
   },
@@ -85,8 +91,13 @@ export default {
             })
     },
     removeCase: function() {
-      HTTP.delete('/bookcase', { params: {id: this.bookCase._id} })
-      console.log(this.bookCase)
+      HTTP.delete('/bookcase', { params: {id: this.bookCase._id} }).then(response => {
+        if (response.data === 'Bookcase removed') {
+          this.successFlash = response.data
+        } else {
+          this.infoFlash = response.data
+        }
+      })
     }
   }
 }
