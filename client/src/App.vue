@@ -1,6 +1,16 @@
 <template>
 <b-container fluid>
   <div>
+    <!-- Section for feedback to user -->
+      <b-row>
+        <b-col></b-col>
+        <b-col cols='8'>
+          <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
+          <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
+          <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
+          </b-col>
+        <b-col></b-col>
+      </b-row>
   <b-row id='header'>
     <b-col id = 'headerCol' cols='12'>
     <b-navbar toggleable='md' type='dark' variant='info'>
@@ -89,6 +99,9 @@ export default {
         username: '',
         password: ''
       },
+      warningFlash: '',
+      infoFlash: '',
+      successFlash: ''
     }
   },
   created () {
@@ -115,10 +128,15 @@ export default {
       .then(response => {
         console.log('Login response: ')
         console.log(response.data)
+        if(response.data._id !== undefined) {
         this.$session.start()
         this.$session.set('user', response.data)
         this.$set(this.user = response.data)
         this.$router.push({ name: 'MainLoggedIn' })
+        }
+        if(response.data.message) {
+          this.infoFlash = response.data.message
+        }        
       })
     },
     searchBook: function() {

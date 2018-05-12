@@ -26,6 +26,10 @@ passport.use(new LocalStrategy(
         console.log('Incorrect password')
         return done(null, false, { message: 'Incorrect password' })
       }
+      if (user.active === false) {
+        console.log('User is not active')
+        return done(null, false, { message: 'User is inactive, contact admin' })
+      }
       console.log('User logged in: ' + user.username)
       return done(null, user)
     })
@@ -46,6 +50,8 @@ passport.use(new GoogleStrategy({
       User.findOne({ 'googleId': profile.id }, function (err, user) {
         if (err) return done
 
+        if (user.active === false) return done
+
         if (user) {
           console.log('User logged in with Google')
           return done(null, user)
@@ -65,7 +71,7 @@ passport.use(new GoogleStrategy({
           newUser.save(function (err) {
             if (err) throw err
             console.log('New user created')
-            createBookCase(profile.displayname, 'My book case')
+            createBookCase(profile.displayName, 'My book case')
             return done(null, newUser)
           })
         }

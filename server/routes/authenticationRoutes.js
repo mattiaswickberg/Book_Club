@@ -42,12 +42,17 @@ module.exports = function (app) {
   })
 
   // Login with username/password
-  app.post('/login',
-passport.authenticate('local', {failureRedirect: '/'}),
-function (req, res) {
-  // console.log(req.user)
-  res.send(req.user)
-})
+  app.post('/login', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+      if (err) {
+        console.log(err)
+        return next(err)
+      }
+      if (!user) { res.send(info) }
+      res.send(user)
+    })(req, res, next)
+  }
+)
 
   // Authentication with google
 
@@ -70,6 +75,8 @@ passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
     console.log(req.query)
     closeAccount(req.query).then(response => {
       if (response === 'Account could not be removed') {
+        res.send(response)
+      } else if (response === 'Account removed') {
         res.send(response)
       } else {
         res.redirect(303, '/')

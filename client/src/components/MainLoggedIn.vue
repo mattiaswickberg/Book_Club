@@ -110,7 +110,7 @@ export default {
         this.user = this.$session.get('user')
         console.log('User found')
         console.log(this.user)
-      } else {
+      }/*  else {
         HTTP.get('/sessionstatus')
       .then(response => {
         console.log('session response: ')
@@ -126,7 +126,7 @@ export default {
         .catch(error => {
               reject(error.response.data)
             })
-      }
+      } */
   },
   mounted() {
   },

@@ -32,7 +32,6 @@
                 </b-form-input>
                 <label>Active:</label>
                 <b-form-input type='text'
-
                               v-model='editingUser.active'>
                 </b-form-input>
                 <label>Enter new Password:</label>
@@ -42,17 +41,38 @@
               </form>
         </div>
           </b-modal>
+          <b-modal 
+              id='deletingUser'
+              title='Delete user'
+              @ok='removeUser'>
+            <div class="modal-body">
+              <form>
+                <label>Delete User Account for {{editingUser.username}}</label>
+                <b-form-input type='text'
+                              v-model='deleteuser'
+                              placeholder='Type "Delete" + users username'>
+                </b-form-input>
+              </form>
+        </div>
+          </b-modal>
         </div>
       
         <div id='userList'>
-          <div v-for='user in users' :key='user._id'>
+          <div v-for='user in users' :key='user._id' class='editUserInfo  '>
+            <div>
             <br>Username: {{user.username}}
             <br>Mail: {{user.mail}}
             <br>Role: {{user.role}}
             <br>Joined: {{user.joined}}
             <br>Active:{{user.active}}
             <br>Id: {{user._id}}
+            </div>
+            <div class='deleteButton'>
+            <b-btn variant='danger' v-b-modal.deletingUser @click='userClicked(user)'>Delete User</b-btn>
+            </div>
+            <div class='editButton'>
             <b-btn v-b-modal.editingUser @click='userClicked(user)'>Edit User</b-btn>
+            </div>
           </div>
         </div>
       </b-col>
@@ -78,12 +98,15 @@ export default {
         mail: '',
         active: '',
         _id: '',
-        password: ''
-      }
+        password: '',
+      },
+      deleteuser: '',
+      userInFocus: ''
     }
   },
   methods: {
     userClicked: function (user) {
+      this.userInFocus = user
       this.editingUser.username = user.username
       this.editingUser.role = user.role
       this.editingUser.mail = user.mail
@@ -93,11 +116,21 @@ export default {
       this.modalVisible = true
     },
     saveUser: function() {
-      console.log(this.editingUser)
-      HTTP.post('/updateuser', this.editingUser).then(responce => {
+      HTTP.post('/updateuser', this.editingUser).then(response => {
         console.log(response)
       })
+    },
+    removeUser: function() {
+      if(this.deleteuser === 'Delete ' + this.editingUser.username) {
+        HTTP.delete('user', { params: { user: this.userInFocus } }).then(response => {
+          if (response.data === 'Account could not be removed') {
+            this.infoFlash = response.data
+          } else if (response.data === 'Account removed') {
+            this.successFlash = response.data
+          } else { console.log (response.data) }
+      })
     }
+  }
   },
   beforeCreate: function () {
     let user = this.$session.get('user')
@@ -120,5 +153,13 @@ export default {
 
 .editButton {
   float: right;
+}
+
+.deleteButton {
+  float: left;
+}
+
+.editUserInfo {
+  display: inline-block;
 }
 </style>

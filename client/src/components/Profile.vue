@@ -89,11 +89,14 @@ export default {
       console.log(this.closeAccountValidation)
       if (this.closeAccountValidation === this.user.username) {
         return HTTP.delete('user', { params: { user: this.user } }).then(response => {
-          if (response.data === 'Account could not be removed') {
-            this.flash = response.data
+          if (response.data === 'Account removed') {
+            this.$session.destroy()
+            this.$router.push({name: 'Main'})
+          } else if (response.data === 'Account could not be removed') {
+            this.infoFlash = response.data
           }
         })
-      } else { this.flash = 'Account not closed, verification failed.' }
+      } else { this.infoFlash = 'Account not closed, verification failed.' }
     }
   }
 }
