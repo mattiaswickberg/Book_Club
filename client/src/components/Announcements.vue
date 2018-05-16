@@ -218,7 +218,7 @@ export default {
 }
 
 #previewImage {
-  width: 100%;
+  width: 50%;
   margin-top: 10px;
   margin-bottom: 20px;
 }

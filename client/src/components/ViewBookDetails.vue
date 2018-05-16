@@ -111,7 +111,26 @@
         </b-collapse>
         <!-- Recommend book to other user -->
         <b-collapse id='collapeRecommendBook'>
-          <b-form-input v-model='recommendToUser' type='text' placeholder='Type username of the user you want to recommend this book to'></b-form-input>
+          <div class="completeSearch">
+            <b-form-input 
+              type="text" 
+              v-model='search' 
+              @input='onChange'
+              placeholder='Type username of the user you want to recommend this book to'
+              ></b-form-input>
+            <ul 
+              v-show='isOpen' 
+              class="completeSearch-results">
+              <li 
+                v-for='(result, i) in results' 
+                :key='i'
+                @click='setResult(result)'
+                class="completeSearch-result"
+              >
+                {{ result }}
+              </li>
+            </ul>
+          </div>
           <b-btn variant='outline-success' v-on:click='recommend'>Skicka rekommendation</b-btn>
           <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
           <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
@@ -179,7 +198,10 @@ export default {
       warningFlash: '',
       infoFlash: '',
       successFlash: '',
-      recommendToUser: ''
+      users: [],
+      search: '',
+      results: [],
+      isOpen: false
     }
   },
   computed: {
@@ -301,7 +323,7 @@ export default {
     recommend: function () {
       HTTP.post('/recommend', {
         user: this.user,
-        toUser: this.recommendToUser,
+        toUser: this.search,
         book: this.book
       }).then(response => {
         if(response.data === 'Recommendation sent') {
@@ -309,6 +331,18 @@ export default {
         } else { warningFlash = response.data }
         console.log(response)
       }).catch(err => console.log(err))
+    },
+    // Methods to autocomplete user search
+    onChange: function () {
+      this.isOpen = true
+      this.filterResults()
+    },
+    filterResults: function () {
+      this.results = this.users.filter(user => user.toLowerCase().indexOf(this.search.toLowerCase()) > -1)
+    },
+    setResult: function(result) {
+      this.search = result
+      this.isOpen = false
     }
   },
   created () {
@@ -342,7 +376,14 @@ export default {
         })
         console.log(this.bookCases)
       })
-  }        
+      HTTP.get('/users').then(response => {
+        response.data.forEach(element => {
+          this.users.push(element.username)
+          this.users.push(element.mail) 
+        })
+        console.log(this.users)
+    })
+  }
 }
 </script>
 
@@ -395,6 +436,30 @@ font-size: 80%;
 
 #bookCover {
   max-width: 200px;
+}
+
+.completeSearch {
+    position: relative;
+  }
+
+.completeSearch-results {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  height: 120px;
+  overflow: auto;
+}
+
+.completeSearch-result {
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.completeSearch-result:hover {
+  background-color: #4AAE9B;
+  color: white;
 }
 
 </style>

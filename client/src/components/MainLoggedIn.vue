@@ -9,12 +9,11 @@
           <h1>Välkommen {{user.username}}!</h1>
         </div>
         <div id='adminInfo'>
-          <h4>Meddelanden från admin</h4>
-          <div v-for='announcement in announcements' :key='announcement._id'>
+          <div class='announcement' v-for='announcement in announcements' :key='announcement._id'>
           <h2>{{announcement.title}}</h2>
-          <img id ='previewImage' v-bind:src="announcement.image">
-          <div id='previewText'>{{announcement.content}}</div>
-          <span v-if='announcement.date' id='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span id='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
+          <img class='announcementImage' v-bind:src="announcement.image">
+          <div class='announcementText'>{{announcement.content}}</div>
+          <span v-if='announcement.date' class='announcementDate'>Meddelandet publicerades: {{announcement.date}} </span> <span class='announcementUser' v-if='announcement.user'> av {{announcement.user}}</span>
         </div>
         </div>
         <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
@@ -208,8 +207,27 @@ export default {
   font-size: 90%;
 }
 
+#adminInfo {
+ margin-left: 15%;
+ margin-right: 15%;
+ text-align: center;
+}
+
 .bookImage {
   width: 50%;
   text-align: center;
 }
+
+.announcement {
+  border: 2px solid whitesmoke;
+  padding: 10px;
+  margin: 20px;
+}
+
+.announcementImage {
+  width: 40%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 </style>
