@@ -12,6 +12,7 @@ let replyToComment = require('../lib/books/replyToComment')
 let recommendToUser = require('../lib/books/recommendToUser')
 let updateBookCaseName = require('../lib/bookcases/updateBookCaseName')
 let removeBookCase = require('../lib/bookcases/removeBookCase')
+let getRecommendations = require('../lib/books/getRecommendations')
 let dismissRecommendation = require('../lib/books/dismissRecommendation')
 
 module.exports = function (app) {
@@ -153,6 +154,12 @@ module.exports = function (app) {
       } else {
         res.status(418).send(response)
       }
+    }).catch(err => { console.log(err) })
+  })
+
+  app.get('/recommendedbooks', function (req, res) {
+    getRecommendations(req.query.user).then(response => {
+      res.send(response)
     }).catch(err => { console.log(err) })
   })
 

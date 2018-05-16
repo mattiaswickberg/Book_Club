@@ -87,12 +87,8 @@ export default {
       announcements: [],
       infoFlash: '',
       warningFlash: '',
-      successFlash: ''
-    }
-  },
-  computed: {
-    recommendedBooks: function() {
-      return this.user.recommendedBooks
+      successFlash: '',
+      recommendedBooks: []
     }
   },
     created() {
@@ -103,7 +99,7 @@ export default {
           if(element.archived !== true) {
             this.announcements.push(element)
           }
-        });
+        })
         
       } else {
         this.announcements.push({
@@ -116,6 +112,9 @@ export default {
         console.log('User found')
         console.log(this.user)
       }
+    HTTP.get('/recommendedbooks?user=' + this.user._id).then(response => {
+      this.recommendedBooks = response.data
+    })
   },
   mounted() {
   },
