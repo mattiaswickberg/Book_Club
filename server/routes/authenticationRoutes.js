@@ -43,6 +43,7 @@ module.exports = function (app) {
 
   // Login with username/password
   app.post('/login', function (req, res, next) {
+    console.log(req.headers)
     passport.authenticate('local', function (err, user, info) {
       if (err) {
         console.log(err)

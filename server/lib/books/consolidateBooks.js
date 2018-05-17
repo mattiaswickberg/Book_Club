@@ -16,7 +16,14 @@ module.exports = function (books) {
       })
 
       let book = books[0]
-      let newBook = {creator: book.creator, title: book.title, isbn: [book.isbn], type: book.type, date: book.date, language: book.language, images: []}
+      let newBook = {
+        creator: book.creator || 'Unknown',
+        title: book.title || 'Unknown',
+        isbn: [book.isbn] || 'Unknown',
+        type: book.type || 'Unknown',
+        date: book.date || 'Unknown',
+        language: book.language || 'Unknown',
+        images: []}
       for (var i = 0; i < books.length; i += 1) {
         if (book.creator === books[i].creator && book.title === books[i].title && book.language === books[i].language) {
           newBook.isbn.push(books[i].isbn)

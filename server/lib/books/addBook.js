@@ -73,9 +73,9 @@ const createBook = function (book) {
     }
 
     if (book.book.date === undefined || book.book.date === null) {
-      book.publishedYear = 'Unknown'
+      newBook.publishedYear = 'Unknown'
     } else {
-      book.publishedYear = book.book.date
+      newBook.publishedYear = book.book.date
     }
 
     newBook.isbn = book.book.isbn
