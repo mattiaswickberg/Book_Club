@@ -2,7 +2,7 @@ let Book = require('../../models/Book')
 
 module.exports = function (bookID) {
   return new Promise(function (resolve, reject) {
-    if (typeof bookID !== 'string') {
+    if (bookID === undefined || bookID === null) {
       resolve('Invalid book ID')
     } else {
       Book.findById(bookID, function (err, book) {

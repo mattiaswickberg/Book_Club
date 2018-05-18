@@ -8,8 +8,6 @@ let getUser = require('../lib/admin/getUser')
 module.exports = function (app) {
   // Account creation and login routes
   app.post('/createaccount', function (req, res) {
-    console.log('Recieved data')
-
     // create user based on information and save to database
     User.find({username: req.body.username}).then(function (data) {
       if (data.length > 0) {
@@ -85,14 +83,14 @@ passport.authenticate('google', {failureRedirect: '/'}), function (req, res) {
     }).catch(err => console.log(err))
   })
 
+  // call function to edit account and send response back to client
   app.post('/editaccount', function (req, res) {
-    console.log('Making som changes: ')
-    console.log(req.body)
     editAccount(req.body).then(response => {
       res.send(response)
     }).catch(err => console.log(err))
   })
 
+  // Get user with sent ID and return to client
   app.get('/user', function (req, res) {
     getUser(req.query.userID).then(response => {
       res.send(response)

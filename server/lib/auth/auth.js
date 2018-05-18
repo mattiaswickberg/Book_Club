@@ -57,9 +57,6 @@ passport.use(new GoogleStrategy({
           return done(null, user)
         } else {
           // create new user
-          console.log('Creating new user')
-          console.log(profile.photos[0].value)
-          console.log(profile)
           let newUser = new User()
 
           newUser.googleId = profile.id

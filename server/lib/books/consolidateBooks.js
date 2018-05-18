@@ -7,7 +7,6 @@ module.exports = function (books) {
       resolve(consolidatedBooks)
     }
     // take book in array, get list of versions from KB
-    // console.log(books)
     while (books.length > 0) {
       books.forEach(element => {
         if (element.date === undefined) {
@@ -52,7 +51,6 @@ module.exports = function (books) {
     })
 
     Promise.all(promises).then(function () {
-      // console.log(consolidatedBooks)
       resolve(consolidatedBooks)
     })
   })

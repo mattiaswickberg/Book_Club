@@ -10,7 +10,6 @@ module.exports = function (data) {
     // Get bookcase from database
     let query = Bookcase.findById(data.caseID)
     query.exec().then(bookCase => {
-      // console.log(bookCase)
       // Get book list from bookcase and remove book
       let books = bookCase.get('books')
 

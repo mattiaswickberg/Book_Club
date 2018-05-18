@@ -2,12 +2,13 @@ let Book = require('../../models/Book')
 
 module.exports = function (data) {
   return new Promise(function (resolve, reject) {
+    // Check data
     if (data.book === undefined || data.user === undefined || data.comment === undefined || data.reply === undefined) {
       resolve('Error in saving reply - data missing')
     }
-
+    // Get book with correct id
     let query = Book.findById(data.book._id)
-
+    // If book exists, and save reply to correct comment
     query.exec().then(function (doc) {
       if (doc.comments === undefined) { resolve('Error in saving reply - data missing') }
       if (doc.comments.length === 0) { resolve('Error in saving reply - data missing') }
@@ -19,6 +20,7 @@ module.exports = function (data) {
           })
         }
       })
+      // Save updated book to database
       doc.save(function (err, savedDoc) {
         if (err) {
           console.log(err)

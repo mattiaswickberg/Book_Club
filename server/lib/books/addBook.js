@@ -4,14 +4,18 @@ let getImage = require('../books/getImage')
 
 module.exports = function (book) {
   return new Promise(function (resolve, reject) {
+    // Call function to check data
     checkData(book).then(response => {
       if (response === 'Data ok') {
+        // Check if book is aready in database
         checkBookInDatabase(book).then(response => {
           if (response !== null) {
+            // If book is in database, add book to bookcase
             saveToBookcase(book, response).then(response => {
               resolve(response)
             })
           } else {
+            // If book is not in database, create one and then save to user bookcase
             createBook(book).then(response => {
               saveToBookcase(book, response).then(response => {
                 resolve(response)
@@ -87,6 +91,7 @@ const createBook = function (book) {
       newBook.language = book.book.language
     }
 
+    // Call function to get image from google books api
     getImage(book.book.isbn).then(response => {
       newBook.images = response
 
@@ -103,21 +108,21 @@ const saveToBookcase = function (book, newBook) {
   return new Promise(function (resolve, reject) {
     addUserToBook(book, newBook).then(response => {
       let bookToAdd = response
+      // Get bookcase with provided id
       Bookcase.findById(book.bookcase._id).then(response => {
         let books = response.get('books')
+        // Check if book is already in bookcase, to prevent duplicates
         books.forEach(element => {
-          // console.log('Element is: ')
-          // console.log(element)
           if (element !== null && element !== undefined) {
             if (element._id.toString() === bookToAdd._id) {
               resolve('Book already in Bookcase')
             }
           }
         })
+        // Add book to array
         books.push(bookToAdd)
-        // console.log('adding book ')
-        // console.log(books)
         response.set('books', books)
+        // Save updated bookcase to db
         response.save(function (err, doc) {
           if (err) { console.log(err) }
           resolve('Book added')
@@ -127,6 +132,7 @@ const saveToBookcase = function (book, newBook) {
   })
 }
 
+// Function to add users to array of users that have had book in bookcase
 const addUserToBook = function (book, newBook) {
   return new Promise(function (resolve, reject) {
     let bookUsers = newBook.get('users')
