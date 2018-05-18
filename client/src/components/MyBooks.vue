@@ -80,18 +80,11 @@ export default {
     }
   },
     created() {
-      // Check who's logged in
-/*       console.log('checking user')
-      console.log(this.$session.get('user')) */
-
       // fetch book cases from user
       let user = this.$session.get('user')
       this.fetchBookCases(user._id)
       .then(response => {
-/*         console.log('Book cases are: ')
-        console.log(response) */
         this.cases = response
-        console.log(this.cases)
 
       })
   },

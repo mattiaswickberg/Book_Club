@@ -30,7 +30,6 @@ export default {
     this.checkIfLoggedIn()
     .then(response => {
       this.user = response
-      console.log(this.user)
     })
     .catch(error => console.log(error))
   }

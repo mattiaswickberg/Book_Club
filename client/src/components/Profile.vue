@@ -64,8 +64,6 @@ export default {
   },
     created() {
       this.user = this.$session.get('user')
-      console.log('User is: ')
-      console.log(this.user)
   },
   methods: {
     editAccount: function () {
@@ -86,7 +84,6 @@ export default {
       })
     },
     closeAccount: function () {
-      console.log(this.closeAccountValidation)
       if (this.closeAccountValidation === this.user.username) {
         return HTTP.delete('user', { params: { user: this.user } }).then(response => {
           if (response.data === 'Account removed') {

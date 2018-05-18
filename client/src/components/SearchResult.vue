@@ -82,13 +82,10 @@ export default {
       let user = this.$session.get('user')
       this.fetchBookCases(user._id)
       .then(response => {
-        console.log('Fething book cases...')
-        console.log(response)
         this.bookCases = response
         response.forEach(element => {
           this.bookCaseNames.push(element.title)
         })
-        console.log(this.bookCases)
       })
   },
     watch: {
@@ -98,10 +95,8 @@ export default {
   },
     methods: {
       getSearchResults(searchTerms) {
-        console.log(this.$route.params.search)
       return HTTP.post('search', searchTerms)
       .then(response => {
-        console.log(response.data.list)
         this.searchResult = response.data.list
       })
       },
@@ -117,7 +112,6 @@ export default {
           bookcase: selectedBookCase,
           user: this.$session.get('user')
       }).then(response => {
-        console.log(response)
         this.$router.push('/account')
       })
       }

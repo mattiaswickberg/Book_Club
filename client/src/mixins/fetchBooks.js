@@ -8,7 +8,6 @@ const fetchBooksMixin = {
       return new Promise((resolve, reject) => {
         HTTP.get('/books', bookCaseId)
             .then(response => {
-              console.log(response)
               resolve(response.data)
             })
             .catch(error => {

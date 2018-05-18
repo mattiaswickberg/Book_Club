@@ -93,7 +93,6 @@ export default {
   },
     created() {
       HTTP.get('/announcements').then(response => {
-      console.log(response.data)
       if(response.data.length !== 0) {
         response.data.forEach(element => {
           if(element.archived !== true) {
@@ -109,8 +108,6 @@ export default {
     })
         if(this.$session.exists()) {
         this.user = this.$session.get('user')
-        console.log('User found')
-        console.log(this.user)
       }
     HTTP.get('/recommendedbooks?user=' + this.user._id).then(response => {
       this.recommendedBooks = response.data

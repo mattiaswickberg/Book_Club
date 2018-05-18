@@ -44,11 +44,8 @@ export default {
   methods: {
 
      sendForm: function () {
-      console.log('Adding user')
       return HTTP.post('createaccount', this.user)
       .then( function (response) {
-        console.log('response is')
-        console.log(response)
         if(response) {
           router.push('accountcreated')
         }

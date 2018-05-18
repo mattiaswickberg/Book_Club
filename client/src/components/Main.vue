@@ -86,8 +86,6 @@ export default {
       if(!this.$session.exists()) {
         HTTP.get('/sessionstatus')
       .then(response => {
-              console.log('session response: ')
-        console.log(response.data)
         if(response.data !== null && response.data !== undefined) {
           this.$session.start()
           this.$session.set('user', response.data)
@@ -97,13 +95,6 @@ export default {
               reject(error.response.data)
             })
       }
-  },
-  methods: {
-    dismissRecommendation: function () {
-      // send to server to remove recommendations
-
-      // fetch revised list
-    }
   }
 }
 </script>

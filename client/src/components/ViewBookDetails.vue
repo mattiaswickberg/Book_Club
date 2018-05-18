@@ -248,7 +248,6 @@ export default {
           caseID: this.bookcase
           }
           }).then(response => {
-            console.log(response)
             if (response.data === 'Book removed') {
               this.successFlash = response.data
               } else {
@@ -329,7 +328,6 @@ export default {
         if(response.data === 'Recommendation sent') {
           this.successFlash = response.data
         } else { warningFlash = response.data }
-        console.log(response)
       }).catch(err => console.log(err))
     },
     // Methods to autocomplete user search
@@ -360,28 +358,22 @@ export default {
       this.book = this.$route.params.book
       }
 
-    console.log(this.book)
-
   // Check if book is already in users bookcases, and if it is, set flag and save bookcase info
 
     this.user = this.$session.get('user')
 
     this.fetchBookCases(this.user._id)
       .then(response => {
-        console.log('Fething book cases...')
-        console.log(response)
         this.bookCases = response
         response.forEach(element => {
           this.bookCaseNames.push(element.title)
         })
-        console.log(this.bookCases)
       })
       HTTP.get('/users').then(response => {
         response.data.forEach(element => {
           this.users.push(element.username)
           this.users.push(element.mail) 
         })
-        console.log(this.users)
     })
   }
 }
