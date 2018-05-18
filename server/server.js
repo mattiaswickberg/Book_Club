@@ -36,19 +36,6 @@ app.use(session({
   saveUninitialized: false
 }))
 
-/* // CSRF
-app.use(require('csurf')())
-app.use(function (req, res, next) {
-  res.locals._csrfToken = req.csrfToken()
-  next()
-})
-app.use(function (err, req, res, next) {
-  if (err.code !== 'EBADCSRFTOKEN') return next(err)
-  console.log(err)
-  res.status(403)
-  res.render('403')
-})
- */
 // Flash messages
 app.use(flash())
 

@@ -4,8 +4,6 @@ module.exports = function (app) {
   })
 
   app.get('/sessionstatus', function (req, res) {
-    console.log('Req.user is: ')
-    console.log(req.user)
     if (req.user !== undefined && req.user !== null) {
       res.send(req.user._id)
     } else {
@@ -18,7 +16,6 @@ module.exports = function (app) {
     res.redirect(303, process.env.SERVER_URL + '/#/account')
   })
 
-  // Usual routes
   app.get('/unauthorised',
 function (req, res) {
   console.log('403')

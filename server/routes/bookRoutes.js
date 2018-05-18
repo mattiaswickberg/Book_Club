@@ -1,4 +1,3 @@
-// let Book = require('../models/Book')
 let BookCase = require('../models/BookCase')
 let getListFromKb = require('../lib/books/getListFromKb')
 let getBookCases = require('../lib/bookcases/getBookCases')
@@ -17,11 +16,8 @@ let dismissRecommendation = require('../lib/books/dismissRecommendation')
 
 module.exports = function (app) {
   app.post('/search', function (req, res) {
-    // console.log('Searching...')
-    // console.log(req.body)
+    // Call libris API with search terms and send reply to client
     getListFromKb(req.body.search).then(function (data) {
-      console.log('Returning search results')
-      console.log(data)
       res.send(data)
     }).catch(err => console.log(err))
   })
@@ -61,13 +57,11 @@ module.exports = function (app) {
   })
 
   app.get('/bookcase', function (req, res) {
-    // console.log(req.query)
     // Get book case from database
     getBookCase(req.query.caseID).then(response => {
       if (response === 'Not a valid user ID') {
         res.status(418).send(response)
       } else {
-        // console.log('Sending bookcase')
         res.status(200).send(response)
       }
     }).catch(err => console.log(err))
@@ -120,6 +114,7 @@ module.exports = function (app) {
   })
 
   app.post('/rating', function (req, res) {
+    // Add rating to book and return reply
     addRatingToBook(req.body).then(response => {
       if (response === 'Rating saved') {
         res.status(200).send(response)
@@ -130,6 +125,7 @@ module.exports = function (app) {
   })
 
   app.post('/comment', function (req, res) {
+    // Save comment to books
     addComment(req.body).then(response => {
       if (response === 'Comment saved') { res.status(200).send(response) } else {
         res.status(418).send(response)
@@ -138,6 +134,7 @@ module.exports = function (app) {
   })
 
   app.post('/commentreply', function (req, res) {
+    // Save reply to book
     replyToComment(req.body).then(response => {
       if (response === 'Reply saved') {
         res.status(200).send(response)
@@ -148,6 +145,7 @@ module.exports = function (app) {
   })
 
   app.post('/recommend', function (req, res) {
+    // Add recommendation to user
     recommendToUser(req.body).then(response => {
       if (response === 'Recommendation sent') {
         res.status(200).send(response)
@@ -158,12 +156,14 @@ module.exports = function (app) {
   })
 
   app.get('/recommendedbooks', function (req, res) {
+    // Fetch all recommendations that a user has
     getRecommendations(req.query.user).then(response => {
       res.send(response)
     }).catch(err => { console.log(err) })
   })
 
   app.post('/dismissrecommendation', function (req, res) {
+    // Remove recommendation from user
     dismissRecommendation(req.body).then(response => {
       res.send(response)
     }).catch(err => { console.log(err) })
