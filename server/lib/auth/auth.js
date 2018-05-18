@@ -50,9 +50,8 @@ passport.use(new GoogleStrategy({
       User.findOne({ 'googleId': profile.id }, function (err, user) {
         if (err) return done
 
-        if (user.active === false) return done
-
         if (user) {
+          if (user.active === false) return done
           console.log('User logged in with Google')
           return done(null, user)
         } else {
