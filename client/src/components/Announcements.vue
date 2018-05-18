@@ -17,19 +17,24 @@
       <b-col>
         <div v-for='announcement in announcements' :key='announcement._id'>
           <h2>{{announcement.title}}</h2>
-          <img id ='previewImage' v-bind:src="announcement.image">
-          <div id='previewText'>{{announcement.content}}</div>
-          <span v-if='announcement.date' id='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span id='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
-          <br><b-btn v-on:click='archiveAnnouncement(announcement._id)'>Archive</b-btn>
+          <img class ='previewImage' v-bind:src="announcement.image">
+          <div class='previewText'>{{announcement.content}}</div>
+          <span v-if='announcement.date' class='previewDate'>Meddelandet publicerades {{announcement.date}} </span> 
+          <span class='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
+          <p><b-btn v-on:click='archiveAnnouncement(announcement._id)'>Archive</b-btn></p>
         </div>
       </b-col>
       <b-col cols='4'>
         <div v-if='newAnnouncement.title' id='preview'>
           <h4>Förhandsgranskning av ditt meddelande</h4>
           <h2>{{newAnnouncement.title}}</h2>
-          <img id ='previewImage' v-bind:src="newAnnouncement.image">
-          <div id='previewText'>{{newAnnouncement.content}}</div>
-          <span v-if='newAnnouncement.date' id='previewDate'>Meddelandet publicerades: {{newAnnouncement.date}} </span> <span id='previewUser' v-if='newAnnouncement.user'> av {{newAnnouncement.user}}</span>
+          <img class ='previewImage' v-bind:src="newAnnouncement.image">
+          <div class='previewText'>{{newAnnouncement.content}}</div>
+          <p>
+            Meddelandet publicerades
+          <span v-if='newAnnouncement.date' class='previewDate'> {{newAnnouncement.date}}: </span> 
+          <span class='previewUser' v-if='newAnnouncement.user'> av {{newAnnouncement.user}}</span>
+          </p>
         </div>
         <div>
           <b-form>
@@ -123,9 +128,9 @@
       <b-col>
         <div v-for='announcement in archived' :key='announcement._id'>
           <h2>{{announcement.title}}</h2>
-          <img id ='previewImage' v-bind:src="announcement.image">
-          <div id='previewText'>{{announcement.content}}</div>
-          <span v-if='announcement.date' id='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span id='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
+          <img class ='previewImage' v-bind:src="announcement.image">
+          <div class='previewText'>{{announcement.content}}</div>
+          <span v-if='announcement.date' class='previewDate'>Meddelandet publicerades: {{announcement.date}} </span> <span class='previewUser' v-if='announcement.user'> av {{announcement.user}}</span>
         </div>
       </b-col>
     </b-row>
@@ -160,7 +165,6 @@ export default {
   },
   created () {
     HTTP.get('/announcements').then(response => {
-      console.log(response.data)
       if(response.data.length !== 0) {
         response.data.forEach(element => {
           if(element.archived === true) {
@@ -179,17 +183,13 @@ export default {
   },
   methods: {
       saveAnnouncement: function () {
-        console.log(this.newAnnouncement)
         HTTP.post('/announcement', this.newAnnouncement)
         .then(response => {
-          console.log(response)
         })
         .catch(err => console.log(err))
       },
       archiveAnnouncement: function (id) {
-        console.log('Archiving announcement')
         HTTP.post('/archiveannouncement', {id: id}).then(response => {
-          console.log(response)
           this.announcements.forEach(element => {
             if(element._id === id) {
               element.archived = true
@@ -206,7 +206,7 @@ export default {
 #titlebar {
   background-color: lightgray;
 }
-#preview {
+.preview {
   border: 1px solid whitesmoke;
   padding: 10px;
   margin: 10px;
@@ -217,10 +217,19 @@ export default {
   margin: 10px;
 }
 
-#previewImage {
+.previewText {
+  white-space: pre-wrap;
+  margin-bottom: 15px;
+}
+
+.previewImage {
   width: 50%;
   margin-top: 10px;
   margin-bottom: 20px;
+}
+
+.previewUser {
+  font-weight: bold;
 }
 
 </style>

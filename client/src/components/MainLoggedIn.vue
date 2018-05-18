@@ -13,7 +13,11 @@
           <h2>{{announcement.title}}</h2>
           <img class='announcementImage' v-bind:src="announcement.image">
           <div class='announcementText'>{{announcement.content}}</div>
-          <span v-if='announcement.date' class='announcementDate'>Meddelandet publicerades: {{announcement.date}} </span> <span class='announcementUser' v-if='announcement.user'> av {{announcement.user}}</span>
+          <p>
+            Meddelandet publicerades
+            <span v-if='announcement.date' class='announcementDate'> {{announcement.date}}: </span> 
+            <span class='announcementUser' v-if='announcement.user'> av {{announcement.user}}</span>
+            </p>
         </div>
         </div>
         <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
@@ -224,6 +228,15 @@ export default {
   width: 40%;
   margin-top: 10px;
   margin-bottom: 20px;
+}
+
+.announcementText {
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+}
+
+.announcementUser {
+  font-weight: bold;
 }
 
 </style>
