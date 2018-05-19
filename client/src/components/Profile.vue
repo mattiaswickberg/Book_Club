@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row>
         <b-col></b-col>
-        <b-col cols='8'>
+        <b-col sm='8'>
           <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
           <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
           <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
@@ -12,7 +12,7 @@
       </b-row>
     <b-row>
       <b-col></b-col>
-      <b-col cols='10'>
+      <b-col sm='10'>
         <div id='ProfileDiv'>
           <h1> {{user.username}}s profilsida </h1>
           <b-form v-if='editing'>

@@ -126,7 +126,7 @@ export default {
   background-color: #c2eee7;
   color: black;
   width: 100%;  
-  font-size: 120%;
+  font-size: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;

@@ -4,7 +4,7 @@
       <!-- Section for feedback to user -->
       <b-row>
         <b-col></b-col>
-        <b-col cols='8'>
+        <b-col sm='8'>
           <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
           <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
           <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
@@ -35,7 +35,7 @@
               </div>
           </b-modal>
       <b-col></b-col>
-      <b-col cols='10'>
+      <b-col sm='10'>
         <div class='bookCase'>
                   <div class='caseTitle'>{{bookCase.title}}</div>
                   <div v-for='book in bookCase.books' :key='book.title' class='book'>

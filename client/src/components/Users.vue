@@ -4,7 +4,7 @@
     <!-- Section for feedback to user -->
       <b-row>
         <b-col></b-col>
-        <b-col cols='8'>
+        <b-col sm='8'>
           <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
           <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
           <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
@@ -13,14 +13,14 @@
       </b-row>
     <b-row>
     <b-col></b-col>
-    <b-col cols='8'>
+    <b-col sm='8'>
       <h1>SSIS bokklubbs användare</h1>
       </b-col>
     <b-col></b-col>
     </b-row>
     <b-row>
       <b-col></b-col>
-      <b-col cols='4'>
+      <b-col sm='4'>
         <div>
           <b-modal 
               id='editingUser'

@@ -3,15 +3,15 @@
   <b-container fluid>
     <b-row id='announcementHeader'>
       <b-col></b-col>
-      <b-col cols='10'>
+      <b-col sm='10'>
         <h1>Meddelanden till SSIS bokcirkel</h1>
         </b-col>
       <b-col></b-col>      
     </b-row>
     <b-row id='titlebar'>
-      <b-col cols='3'><h4>Aktiva meddelanden</h4></b-col>
-      <b-col cols='6'><h4>Nytt meddelande</h4></b-col>
-      <b-col cols='3'><h4>Arkiverade meddelanden</h4></b-col>
+      <b-col sm='3'><h4>Aktiva meddelanden</h4></b-col>
+      <b-col sm='6'><h4>Nytt meddelande</h4></b-col>
+      <b-col sm='3'><h4>Arkiverade meddelanden</h4></b-col>
     </b-row>
         <b-row>
       <b-col>
@@ -24,7 +24,7 @@
           <p><b-btn v-on:click='archiveAnnouncement(announcement._id)'>Archive</b-btn></p>
         </div>
       </b-col>
-      <b-col cols='4'>
+      <b-col sm='4'>
         <div v-if='newAnnouncement.title' id='preview'>
           <h4>Förhandsgranskning av ditt meddelande</h4>
           <h2>{{newAnnouncement.title}}</h2>

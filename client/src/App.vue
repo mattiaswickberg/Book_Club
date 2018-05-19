@@ -4,7 +4,7 @@
     <!-- Section for feedback to user -->
       <b-row>
         <b-col></b-col>
-        <b-col cols='8'>
+        <b-col sm='8'>
           <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
           <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
           <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
@@ -12,7 +12,7 @@
         <b-col></b-col>
       </b-row>
   <b-row id='header'>
-    <b-col id = 'headerCol' cols='12'>
+    <b-col id = 'headerCol' sm='12'>
     <b-navbar toggleable='md' type='dark' variant='info'>
       <b-navbar-toggle target='nav_collapse'></b-navbar-toggle>
       <b-navbar-brand href='#/mainloggedin'><img id='logo' src="./assets/logo.png"></b-navbar-brand>
@@ -64,7 +64,7 @@ Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
   <b-row id='middle'>
     <b-col>
     </b-col>
-    <b-col cols='10'>
+    <b-col sm='10'>
        <div id='app'>
     <router-view/>
   </div>
@@ -73,7 +73,7 @@ Or sign In with <img id='googleLogo' src='./assets/google.jpg'>
     </b-col>
   </b-row>
   <b-row id='footer'>
-    <b-col cols='12'>
+    <b-col sm='12'>
       <div id='author'>
           <h5>Site author: Mattias Wickberg</h5>
       </div>

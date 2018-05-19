@@ -3,7 +3,7 @@
     <b-container fluid>
     <b-row>
       <b-col></b-col>
-      <b-col cols = '8'>
+      <b-col sm = '8'>
   <h1>Sökresultat:</h1>
   <div class='pagination'>
     <table id='result'>

@@ -3,7 +3,7 @@
 <b-container fluid>
   <div id='mainLoggedIn' v-if='user'>
     <b-row>
-      <b-col cols='1'></b-col>
+      <b-col sm='1'></b-col>
       <b-col sm='8'>
         <div id='loggedIn'>
           <h1>Välkommen {{user.username}}!</h1>
@@ -24,7 +24,7 @@
           <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
           <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
       </b-col>
-      <b-col cols='3'>
+      <b-col sm='3'>
         <!-- This area is for recommendations from other users -->
         <h3>Rekommenderade böcker</h3>
         <div v-if='recommendedBooks'>

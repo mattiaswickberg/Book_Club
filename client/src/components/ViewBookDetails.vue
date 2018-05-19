@@ -4,7 +4,7 @@
       <!-- Section for feedback to user -->
       <b-row>
         <b-col></b-col>
-        <b-col cols='8'>
+        <b-col sm='8'>
           <div class='flashWarning' v-if='warningFlash'> {{warningFlash}}</div>
           <div class='flashInfo' v-if='infoFlash'> {{infoFlash}}</div>
           <div class='flashSuccess' v-if='successFlash'> {{successFlash}}</div>
@@ -14,7 +14,7 @@
       <!-- Book details area -->
     <b-row>
       <b-col></b-col>
-      <b-col cols='6'>
+      <b-col sm='6'>
   <div id='displayBookDetails'>
       <h1> {{book.title}}</h1>
     <div class='mainBookDetails'>
@@ -46,7 +46,7 @@
     <!-- Buttons for user actions -->
     <b-row>
       <b-col></b-col>
-      <b-col cols='6'>
+      <b-col sm='6'>
         <p></p>
         <b-btn v-b-toggle.collapseRating variant='primary'>Betygsätt bok</b-btn>
         <b-btn v-b-toggle.collapseComment variant='success'>Kommentera</b-btn>

@@ -3,7 +3,7 @@
   <b-container fluid>
     <b-row>
       <b-col></b-col>
-      <b-col cols='12'>
+      <b-col sm='12'>
         <div>
           <h1> Mina Böcker</h1>
           <b-container fluid>
@@ -43,7 +43,7 @@
     </b-row>
     <b-row>
       <b-col></b-col>
-      <b-col cols='6'>
+      <b-col sm='6'>
         <div v-if='newCase'>
           <form id='createBookcase' @submit.prevent='createBookCase'>
         <input type='text' v-model='bookCase.title' class='form-control' placeholder="Name of bookcase">
