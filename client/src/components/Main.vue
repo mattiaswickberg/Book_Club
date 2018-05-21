@@ -41,7 +41,8 @@
           <h1>Välkommen till SSIS bokcirkel!</h1>
           <p>
       Här kommer du att kunna lägga till böcker du läst, eller vill läsa, och diskutera, 
-      kommentera och rekommendera böcker till andra elever på skolan. 
+      kommentera och rekommendera böcker till andra elever på skolan. Du kommer också få 
+      boktips från lärare på skolan, eller kanske vill du tipsa resten av skolan?
       </p>
       <p>För att skapa ett konto, välj ett av nedanstående alternativ.</p>
       <router-link to="createaccount">
@@ -56,7 +57,7 @@
             <img id='googleLogo' src='../assets/google.jpg'>
             </b-button>
       </a>
-      <p>Eller logga in uppe till höger</p>
+      <p>Om du redan har ett konto, logga in uppe till höger</p>
       </div>
       </div>
     </b-col>
@@ -105,7 +106,6 @@ export default {
   background-image: url('../assets/book_circle.jpeg');
   background-size: 100%;
   background-repeat: no-repeat;
-  min-height: 300px;
 }
 
 #loggedIn {
@@ -116,8 +116,8 @@ export default {
 }
 
 #welcome {
-  background-color: hsla(279, 56%, 31%, 0.75);
-  color: white;
+  background-color: hsla(0, 0%, 100%, 0.60);
+  color: black;
   font-size: 120%;
   padding: 20px;
 }

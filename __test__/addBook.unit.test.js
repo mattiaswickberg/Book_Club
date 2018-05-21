@@ -1,9 +1,5 @@
 /* global test, expect */
 
-/* |U12.1|Lägga till bok|Utan argument||
-|U12.2|Lägga till bok|Med fel format på title/author||
-|U12.3|Lägga till bok|Utan hylla|| */
-
 let AddBook = require('../server/lib/books/addBook')
 
 test('12.1: AddBook should return error message when not provided vid any arguments', () => {

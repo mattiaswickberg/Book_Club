@@ -2,7 +2,7 @@
 
 let getBookCases = require('../server/lib/bookcases/getBookCases')
 
-test('28.4: getBookcases should return error message if called without argument', () => {
+test('28.3: getBookcases should return error message if called without argument', () => {
   expect.assertions(1)
   getBookCases()
   .then(response => {

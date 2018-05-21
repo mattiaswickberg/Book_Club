@@ -11,7 +11,7 @@ test('25.1: closeAccount should return error message if called without data', ()
   })
 })
 
-test('25.2: closeAccount should return error if called with bad userID', () => {
+test('25.2: closeAccount should return error if called with no userID', () => {
   expect.assertions(1)
   closeAccount({
     user: '{}'

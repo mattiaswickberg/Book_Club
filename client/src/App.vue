@@ -215,7 +215,7 @@ $grey: #f5f3ee;
   color: $white;
   right: 0px;
   left: 0px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 #userArea, #loginForm {
@@ -234,7 +234,6 @@ h1 {
 
 b-row {
   padding: 10px;
-  margin: 10px;
 }
 
 #searchButton {

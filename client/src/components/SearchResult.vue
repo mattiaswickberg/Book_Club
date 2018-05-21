@@ -14,7 +14,6 @@
         <th>Språk: </th>
         <th>År: </th>
         <th>Detaljer</th>
-        <!-- <th>Lägg till</th> -->
       </tr>
       <tr id='bookRow' v-for="item in searchResult" :key='item.isbn[0]'>
         <td v-if="item.author">
@@ -43,9 +42,6 @@
         </td>
         <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
           <td>Visa mer</td>
-        <!-- <td>
-          <b-form-select v-model='bookCase' :options='bookCaseNames' class='mb-3' /><b-btn variant='success' v-on:click='addBook(index)'>Lägg till i bokhylla</b-btn>
-          </td> -->
           </router-link>
       </tr>
       
