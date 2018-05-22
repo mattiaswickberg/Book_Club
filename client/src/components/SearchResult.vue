@@ -5,6 +5,9 @@
       <b-col></b-col>
       <b-col sm = '8'>
   <h1>Sökresultat:</h1>
+  <div v-if='searchResult.length === 0'>
+          <h2>No results found</h2>
+        </div>
   <div class='pagination'>
     <table id='result'>
       <tr>
@@ -13,23 +16,32 @@
         <th>Titel: </th>
         <th>Språk: </th>
         <th>År: </th>
-        <th>Detaljer</th>
       </tr>
       <tr id='bookRow' v-for="item in searchResult" :key='item.isbn[0]'>
         <td v-if="item.author">
+          <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
           <img class='bookCover' v-bind:src="item.images[0].smallThumbnail" v-bind:alt="item.author + ': ' + item.title">
+          </router-link>
         </td>
         <td v-if="item.creator">
+          <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
           <img class='bookCover' src='/static/blank-book-cover-small.png'>
+          </router-link>
         </td>
         <td v-if="item.creator">
+          <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
           {{item.creator}}
+          </router-link>
         </td>
         <td v-if="item.author">
+          <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
           {{item.author}}
+          </router-link>
         </td>
         <td>
+          <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
           {{item.title}}
+          </router-link>
         </td>
         <td>
           {{item.language}}
@@ -37,12 +49,12 @@
         <td v-if="item.date">
           {{item.date}}
         </td>
-        <td v-if="item.publishedYear">
+        <td v-else-if="item.publishedYear">
           {{item.publishedYear}}
         </td>
-        <router-link :to="{ name: 'ViewBookDetails', params: {book: item}}">
-          <td>Visa mer</td>
-          </router-link>
+        <td v-else>
+          Unknown
+        </td>
       </tr>
       
     </table>
@@ -120,16 +132,16 @@ export default {
 
 <style lang="scss" scoped>
 #searchBody {
-  background-color: whitesmoke;
   width: 100%;
 }
 
 #result {
+  width: 100%;
+  background-color: whitesmoke;
   border: solid black 2px;
 }
 
 td {
-  border: solid black 1px;
   padding: 2px;
 }
 
