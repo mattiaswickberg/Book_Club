@@ -147,10 +147,10 @@ export default {
 <style lang="scss" scoped>
 
 #mainNotLoggedIn {
+  height: 100%;
   background-image: url('../assets/book_circle.jpeg');
   background-size: 100%;
   background-repeat: no-repeat;
-  min-height: 300px;
 }
 
 #loggedIn {

@@ -165,7 +165,16 @@ $black: #333333;
 $white: #ffffff;
 $grey: #f5f3ee;
 
+html {
+height: 100%;
+}
+
+body {
+height: 100%;
+}
+
 #app {
+  height: 100%;
   font-family: $fonts;
   color: $black;
   -webkit-font-smoothing: antialiased;
@@ -206,12 +215,12 @@ $grey: #f5f3ee;
 }
 
 #footer {
-  position: relative;
+  position: absolute;
   bottom: 0px;
   width: auto;
   height: 50px;
   text-align: center;
-  background-color:$darkPink;
+  background-color: black;
   color: $white;
   right: 0px;
   left: 0px;
