@@ -215,7 +215,7 @@ height: 100%;
 }
 
 #footer {
-  position: absolute;
+  position: relative;
   bottom: 0px;
   width: auto;
   height: 50px;
